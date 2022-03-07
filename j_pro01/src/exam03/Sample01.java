@@ -54,6 +54,15 @@ public class Sample01 {
 		
 		char c1 = 'a';
 		String s1 = "a";
+		
+		byte b3 = 1;
+		short s2 = 2;
+		int i1 = 3;
+		long l1 = 4;
+		long l2 = 4L;	// 접두사로 L 을 생략해도 된다.
+		
+		float f1 = 5.0f;	// 접두사로 f 를 반드시 작성해야 한다.
+		double d1 = 6.0;
 	}
 
 }
