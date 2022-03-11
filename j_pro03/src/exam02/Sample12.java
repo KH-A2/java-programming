@@ -31,6 +31,7 @@ public class Sample12 {
 			}
 			
 			if(player.equals("exit")) {
+				System.out.printf("%d전 %d승 %d무 %d패", wCnt + dCnt + lCnt, wCnt, dCnt, lCnt);
 				break;
 			} else if(player.equals("가위")) {
 				if(computer == 0) {
@@ -58,14 +59,17 @@ public class Sample12 {
 				}
 			} else {
 				System.out.println("잘못 입력하였습니다.");
+				continue;
 			}
 			
 			System.out.printf("컴퓨터 : %s\n%s : %s\n", sCom, name, player);
 			switch(result) {
 				case -1:
 					System.out.println("졌습니다.");
+					break;
 				case 0:
 					System.out.println("비겼습니다.");
+					break;
 				case 1:
 					System.out.println("이겼습니다.");
 			}
