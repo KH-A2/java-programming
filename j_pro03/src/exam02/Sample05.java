@@ -42,7 +42,7 @@ public class Sample05 {
 				default:
 					System.out.println("잘못된 메뉴 번호 입니다. 다시 입력하세요.");
 			}
-			if(existed)	break;
+			if(existed) break;
 		}
 	}
 
