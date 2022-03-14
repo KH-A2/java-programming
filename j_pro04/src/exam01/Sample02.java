@@ -71,6 +71,7 @@ public class Sample02 {
 			System.out.print(arr4[i] + "\t");
 		}
 		System.out.print("\n");
+		
 	}
 
 }
