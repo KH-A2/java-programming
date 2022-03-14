@@ -21,10 +21,14 @@ public class Sample05 {
 		System.out.print("영단어 입력 : ");
 		String sInput = sc.nextLine();
 		
+		// 문자열을 문자 배열로 변환
 		char[] origin = new char[sInput.length()];
 		for(int i = 0; i < origin.length; i++) {
 			origin[i] = sInput.charAt(i);
 		}
+		
+		// .tocharArray 메서드를 사용하여 문자열을 문자 배열로 변환
+		origin = sInput.toCharArray();
 		
 		char[] crypto = new char[origin.length];
 		for(int i = 0; i < crypto.length; i++) {
@@ -37,10 +41,20 @@ public class Sample05 {
 		
 		String res1 = "";
 		String res2 = "";
+		// 문자 배열을 문자열로 만들어서 출력하기 위해 반복문을 사용.
 		for(int i = 0; i < origin.length; i++) {
 			res1 += origin[i];
 			res2 += crypto[i];
 		}
+		
+		// new 연산으로 문자열 생성을 할 때 문자 배열을 넣는다.
+		res1 = new String(origin);
+		res2 = new String(crypto);
+		
+		// String.valueOf(문자배열) 메서드를 사용한다.
+		res1 = String.valueOf(origin);
+		res2 = String.valueOf(crypto);
+		
 		System.out.println("암호화 전 : " + res1);
 		System.out.println("암호화 후 : " + res2);
 	}
