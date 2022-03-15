@@ -14,6 +14,9 @@ public class Sample12 {
 		Random random = new Random();
 		
 		String name, strPly, strCom = "";
+		int idxCom, idxPly = 0;
+		int result = 0;		// 지면 0, 비기면 1, 이기면 2
+		
 		String[] data = {"가위", "바위", "보"};
 		String[] resMessage = {"졌습니다.", "비겼습니다.", "이겼습니다."};
 		int[][] arrResult = new int[][] {
@@ -21,8 +24,6 @@ public class Sample12 {
 			{2, 1, 0},
 			{0, 2, 1}
 		};
-		int idxCom, idxPly = 0;
-		int result = 0;		// 지면 0, 비기면 1, 이기면 2
 		int[] record = new int[3];
 		
 		System.out.print("당신의 이름을 입력하세요 : ");
