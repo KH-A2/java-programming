@@ -21,15 +21,24 @@ public class Sample10 {
 		 * 		총 합 : 43
 		 * 		평 균 : 14.3
 		 */
-		Scanner sc = new Scanner(System.in);
-		int cnt = 1;
+		int cnt = 1, tot = 0;
+		double avg;
 		int[] arr1 = new int[0];
+		Scanner sc = new Scanner(System.in);
+		
 		while(true) {
 			System.out.printf("%d 번째 정수값 입력 : ", cnt);
-			int num = sc.nextInt();
 			
-			if(num == -1) {
-				break;
+			int num;
+			if(sc.hasNextInt()) {
+				num = sc.nextInt();	sc.nextLine();
+			} else {
+				if(sc.nextLine().equals("exit")) {
+					break;
+				} else {
+					System.out.println("정수 값 또는 exit 를 입력하세요.");
+					continue;
+				}
 			}
 			
 			int[] temp = Arrays.copyOf(arr1, arr1.length + 1);
@@ -41,8 +50,6 @@ public class Sample10 {
 			System.out.println(Arrays.toString(arr1));
 		}
 		
-		int tot = 0;
-		double avg;
 		for(int i = 0; i < arr1.length; i++) {
 			tot += arr1[i];
 		}
