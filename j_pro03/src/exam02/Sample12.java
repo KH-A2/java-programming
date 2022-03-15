@@ -14,7 +14,13 @@ public class Sample12 {
 		Random random = new Random();
 		
 		String name, player, sCom = "";
-		int computer;
+		String[] data = {"가위", "바위", "보"};
+		int[][] arrResult = new int[][] {
+			{1, 0, 2},
+			{2, 1, 0},
+			{0, 2, 1}
+		};
+		int computer, ply = 0;
 		int result = 0;		// 지면 0, 비기면 1, 이기면 2
 		int[] record = new int[3];
 		
@@ -26,44 +32,20 @@ public class Sample12 {
 			player = sc.nextLine();
 			computer = random.nextInt(3);
 			
-			if(computer == 0) {
-				sCom = "가위";
-			} else if(computer == 1) {
-				sCom = "바위";
-			} else if(computer == 2) {
-				sCom = "보";
-			}
+			sCom = data[computer];
 			
 			if(player.equals("exit")) {
 				System.out.printf("%d전 %d승 %d무 %d패", record[0] + record[1] + record[2]
 						, record[2], record[1], record[0]);
 				break;
-			} else if(player.equals("가위")) {
-				if(computer == 0) {
-					result = 1;
-				} else if(computer == 1) {
-					result = 0;
-				} else if(computer == 2) {
-					result = 2;
+			} else if(player.equals("가위") || player.equals("바위") || player.equals("보")) {
+				for(int i = 0; i < data.length; i++) {
+					if(data[i].equals(player)) {
+						ply = i;
+						break;
+					}
 				}
-				record[result]++;
-			} else if(player.equals("바위")) {
-				if(computer == 0) {
-					result = 2;
-				} else if(computer == 1) {
-					result = 1;
-				} else if(computer == 2) {
-					result = 0;
-				}
-				record[result]++;
-			} else if(player.equals("보")) {
-				if(computer == 0) {
-					result = 0;
-				} else if(computer == 1) {
-					result = 2;
-				} else if(computer == 2) {
-					result = 1;
-				}
+				result = arrResult[ply][computer];
 				record[result]++;
 			} else {
 				System.out.println("잘못 입력하였습니다.");
