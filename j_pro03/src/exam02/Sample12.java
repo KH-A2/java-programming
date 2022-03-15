@@ -13,14 +13,15 @@ public class Sample12 {
 		Scanner sc = new Scanner(System.in);
 		Random random = new Random();
 		
-		String name, player, sCom = "";
+		String name, strPly, strCom = "";
 		String[] data = {"가위", "바위", "보"};
+		String[] resMessage = {"졌습니다.", "비겼습니다.", "이겼습니다."};
 		int[][] arrResult = new int[][] {
 			{1, 0, 2},
 			{2, 1, 0},
 			{0, 2, 1}
 		};
-		int computer, ply = 0;
+		int idxCom, idxPly = 0;
 		int result = 0;		// 지면 0, 비기면 1, 이기면 2
 		int[] record = new int[3];
 		
@@ -29,40 +30,39 @@ public class Sample12 {
 		
 		for(;;) {
 			System.out.print("가위 바위 보 입력 : ");
-			player = sc.nextLine();
-			computer = random.nextInt(3);
+			strPly = sc.nextLine();
 			
-			sCom = data[computer];
-			
-			if(player.equals("exit")) {
+			// exit 입력 되면 바로 전적 출력 후 종료
+			if(strPly.equals("exit")) {
 				System.out.printf("%d전 %d승 %d무 %d패", record[0] + record[1] + record[2]
 						, record[2], record[1], record[0]);
 				break;
-			} else if(player.equals("가위") || player.equals("바위") || player.equals("보")) {
+			}
+			
+			idxCom = random.nextInt(3);	// 컴퓨터가 생성하는 가위바위보
+			strCom = data[idxCom];	// 컴퓨터가 생성한 가위바위보를 문자열로 치환
+			
+			// 플레이어가 가위바위보를 올바르게 입력한 경우에만 비교 진행.
+			if(strPly.equals("가위") || strPly.equals("바위") || strPly.equals("보")) {
+				// 플레이어가 입력한 가위바위보를 정수코드로 치환
 				for(int i = 0; i < data.length; i++) {
-					if(data[i].equals(player)) {
-						ply = i;
+					if(data[i].equals(strPly)) {
+						idxPly = i;
 						break;
 					}
 				}
-				result = arrResult[ply][computer];
+				// 플레이어 코드와 컴퓨터 코드를 배열의 인덱스로 적용하여 승패무 판별
+				result = arrResult[idxPly][idxCom];
+				
+				// 판별된 승패무로 전적 기록
 				record[result]++;
+				
+				System.out.printf("컴퓨터 : %s\n%s : %s\n", strCom, name, strPly);
+				System.out.println(resMessage[result]);	// 미리 배열에 만들어 둔 메시지 출력
 			} else {
 				System.out.println("잘못 입력하였습니다.");
-				continue;
 			}
 			
-			System.out.printf("컴퓨터 : %s\n%s : %s\n", sCom, name, player);
-			switch(result) {
-				case 0:
-					System.out.println("졌습니다.");
-					break;
-				case 1:
-					System.out.println("비겼습니다.");
-					break;
-				case 2:
-					System.out.println("이겼습니다.");
-			}
 		}
 	}
 
