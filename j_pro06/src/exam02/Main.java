@@ -14,7 +14,10 @@ public class Main {
 		report.setSubjects(subjects);
 		
 		report.setGrades("수학", 92.5);
-		System.out.println(Arrays.toString(report.getGrades()));
+		System.out.println(report.getGrade("사회"));
+		
+		report.addSubject("과학", 86.9);
+		System.out.println(report.getGrade("과학"));
 	}
 
 }

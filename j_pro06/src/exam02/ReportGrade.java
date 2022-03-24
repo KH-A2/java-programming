@@ -1,5 +1,7 @@
 package exam02;
 
+import java.util.Arrays;
+
 public class ReportGrade {
 	private String name;
 	private String[] subjects;
@@ -55,6 +57,33 @@ public class ReportGrade {
 			}
 		}
 		this.grades[idx] = grade;
+	}
+	
+	public double getGrade(String subject) {
+		int idx = -1;
+		for(int i = 0; i < this.subjects.length; i++) {
+			if(this.subjects[i].equals(subject)) {
+				idx = i;
+				break;
+			}
+		}
+		
+		return this.grades[idx];
+	}
+	
+	// 동적배열을 사용하여 새로운 과목과 점수를 추가....
+	public void addSubject(String subject) {
+		// 점수는 0 점으로 추가.
+		this.addSubject(subject, 0);
+	}
+	
+	public void addSubject(String subject, double grade) {
+		// 점수는 grade 값으로 추가.
+		this.subjects = Arrays.copyOf(this.subjects, this.subjects.length + 1);
+		this.grades = Arrays.copyOf(this.grades, this.grades.length + 1);
+		
+		this.subjects[this.subjects.length - 1] = subject;
+		this.grades[this.grades.length - 1] = grade;
 	}
 	
 }
