@@ -22,23 +22,35 @@ public class Page {
 	}
 	
 	public void nextPage() {
+		this.nextPage(1);
+	}
+	
+	public void nextPage(int number) {
 		if(this.existsNextPage()) {
-			this.pageNumber++;
+			this.pageNumber += number;
 		} else {
 			System.out.println("더 이상 페이지를 넘길 수 없습니다.");
 		}
 	}
 	
 	public void prevPage() {
+		this.prevPage(1);
+	}
+	
+	public void prevPage(int number) {
 		if(this.existsPrevPage()) {
-			this.pageNumber--;
+			this.pageNumber -= number;
 		} else {
 			System.out.println("더 이상 페이지를 넘길 수 없습니다.");
 		}
 	}
 	
 	public boolean existsNextPage() {
-		if(this.pageNumber + 1 > this.limitPageNumber) {
+		return this.existsNextPage(1);
+	}
+	
+	public boolean existsNextPage(int number) {
+		if(this.pageNumber + number > this.limitPageNumber) {
 			return false;
 		} else {
 			return true;
@@ -46,7 +58,11 @@ public class Page {
 	}
 	
 	public boolean existsPrevPage() {
-		if(this.pageNumber - 1 < 1) {
+		return this.existsPrevPage(1);
+	}
+	
+	public boolean existsPrevPage(int number) {
+		if(this.pageNumber - number < 1) {
 			return false;
 		} else {
 			return true;
