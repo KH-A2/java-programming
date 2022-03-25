@@ -135,18 +135,22 @@ public class GradeList {
 	
 	public String getTop() {
 		// 최고 득점을 받은 과목을 찾아내는 함수
+		return null;
 	}
 	
 	public String[] getTop(int count) {
 		// 최고 득점을 받은 과목을 count 만큼 찾아내는 함수
+		return null;
 	}
 	
 	public String getBottom() {
 		// 최저 득점을 받은 과목을 찾아내는 함수
+		return null;
 	}
 	
 	public String[] getBottom(int count) {
 		// 최저 득점을 받은 과목을 count 만큼 찾아내는 함수
+		return null;
 	}
 	
 	public int findIndex(String name) {
