@@ -70,35 +70,41 @@ public class GradeList {
 	//     1. 수정 할 자료를 찾는다.
 	//     2. 찾은 자료에 대해 수정을 한다.
 	public void update(String search, String change) {
-		
+		int idx = findIndex(search);
+		this.gArr[idx].setName(change);
 	}
 	
 	public void update(String search, double change) {
-		
+		int idx = findIndex(search);
+		this.gArr[idx].setScore(change);
 	}
 	
 	public void update(String search, String changeName, double changeScore) {
-		
+		int idx = findIndex(search);
+		this.gArr[idx].setName(changeName);
+		this.gArr[idx].setScore(changeScore);
 	}
 	
 	public void update(String search, Grade change) {
-		
+		int idx = findIndex(search);
+		this.gArr[idx] = change;
 	}
 	
 	public void update(int index, String change) {
-		
+		this.gArr[index].setName(change);
 	}
 	
 	public void update(int index, double change) {
-		
+		this.gArr[index].setScore(change);
 	}
 	
 	public void update(int index, String changeName, double changeScore) {
-		
+		this.gArr[index].setName(changeName);
+		this.gArr[index].setScore(changeScore);
 	}
 	
 	public void update(int index, Grade change) {
-		
+		this.gArr[index] = change;
 	}
 	
 	// 삭제
@@ -106,4 +112,16 @@ public class GradeList {
 	
 	// 조회
 	
+	
+	public int findIndex(String name) {
+		int idx = -1;
+		for(int i = 0; i < length(); i++) {
+			Grade data = get(i);
+			if(name.equals(data.getName())) {
+				idx = i;
+				break;
+			}
+		}
+		return idx;
+	}
 }
