@@ -33,18 +33,6 @@ public class GradeList {
 		}
 	}
 	
-	public Grade get(int index) {
-		return this.gArr[index];
-	}
-	
-	public String getName(int index) {
-		return this.gArr[index].getName();
-	}
-	
-	public double getScore(int index) {
-		return this.gArr[index].getScore();
-	}
-	
 	public int length() {
 		return this.gArr.length;
 	}
@@ -111,7 +99,55 @@ public class GradeList {
 	
 	
 	// 조회
+	public Grade get(int index) {
+		return this.gArr[index];
+	}
 	
+	public String getName(int index) {
+		return this.gArr[index].getName();
+	}
+	
+	public double getScore(int index) {
+		return this.gArr[index].getScore();
+	}
+	
+	public double getScore(String name) {
+		return 0;
+	}
+	
+	public double getAvg() {
+		return 0;
+	}
+	
+	public double getTotal() {
+		return 0;
+	}
+	
+	public String[] getUnder() {
+		// 과락의 기준은 100점 만점을 기준으로 40점 미만인 것.
+		return null;
+	}
+	
+	public String[] getUnder(double score) {
+		// 과락의 기준을 외부 값으로 받아서 찾아내는 함수.
+		return null;
+	}
+	
+	public String getTop() {
+		// 최고 득점을 받은 과목을 찾아내는 함수
+	}
+	
+	public String[] getTop(int count) {
+		// 최고 득점을 받은 과목을 count 만큼 찾아내는 함수
+	}
+	
+	public String getBottom() {
+		// 최저 득점을 받은 과목을 찾아내는 함수
+	}
+	
+	public String[] getBottom(int count) {
+		// 최저 득점을 받은 과목을 count 만큼 찾아내는 함수
+	}
 	
 	public int findIndex(String name) {
 		int idx = -1;
