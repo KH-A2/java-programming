@@ -37,7 +37,7 @@ public class Main {
 		pList.update(1, "박재은");
 		
 		pList.remove("김정우");
-		// pList.remove(2);
+		pList.remove(2);
 		
 		for(int i = 0; i < pList.length(); i++) {
 			Person data = pList.get(i);

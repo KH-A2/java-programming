@@ -23,14 +23,7 @@ public class PersonList {
 	}
 	
 	public void update(String find, String change) {
-		int idx = -1;
-		for(int i = 0; i < length(); i++) {
-			Person data = get(i);
-			if(find.equals(data.getName())) {
-				idx = i;
-				break;
-			}
-		}
+		int idx = findIndex(find);
 		this.pArr[idx].setName(change);
 	}
 	
@@ -39,14 +32,7 @@ public class PersonList {
 	}
 	
 	public void remove(String name) {
-		int idx = -1;
-		for(int i = 0; i < length(); i++) {
-			Person data = get(i);
-			if(name.equals(data.getName())) {
-				idx = i;
-				break;
-			}
-		}
+		int idx = findIndex(name);
 		
 		int index = 0;
 		Person[] temp = new Person[length() - 1];
@@ -59,8 +45,26 @@ public class PersonList {
 	}
 	
 	public void remove(int index) {
-		
+		int idx = 0;
+		Person[] temp = new Person[length() - 1];
+		for(int i = 0; i < length(); i++) {
+			if(index != i) {
+				temp[idx++] = this.pArr[i];
+			}
+		}
+		this.pArr = temp;
 	}
 	
+	public int findIndex(String name) {
+		int idx = -1;
+		for(int i = 0; i < length(); i++) {
+			Person data = get(i);
+			if(name.equals(data.getName())) {
+				idx = i;
+				break;
+			}
+		}
+		return idx;
+	}
 	
 }
