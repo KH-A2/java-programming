@@ -8,15 +8,20 @@ public class Grade extends Score {
 	
 	public Grade(double point) {
 		super(point);
+		this._setLevel();
+	}
+	
+	private void _setLevel() {
+		char[] rank = new char[] {
+				'F', 'F', 'F', 'F', 'E', 'E', 'D', 'C', 'B', 'A', 'A'
+		};
+		this.level = rank[(int)(this.getPoint() / 10)];
 	}
 	
 	@Override
 	public void setPoint(double point) {
-		char[] rank = new char[] {
-				'F', 'F', 'F', 'F', 'E', 'E', 'D', 'C', 'B', 'A', 'A'
-		};
 		super.setPoint(point);
-		this.level = rank[(int)(this.getPoint() / 10)];
+		this._setLevel();
 	}
 
 	@Override

@@ -10,6 +10,7 @@ public class Main {
 		System.out.println(s2.getName());
 		
 		System.out.println(s1.getGrade());
+		System.out.println(s2.getGrade());
 		System.out.println(s2.getGrade().getPoint());
 	}
 
