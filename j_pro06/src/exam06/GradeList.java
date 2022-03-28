@@ -112,45 +112,84 @@ public class GradeList {
 	}
 	
 	public double getScore(String name) {
-		return 0;
+		return gArr[findIndex(name)].getScore();
 	}
 	
 	public double getAvg() {
-		return 0;
+		return getTotal() / length();
 	}
 	
 	public double getTotal() {
-		return 0;
+		double tot = 0;
+		for(int i = 0; i < length(); i++) {
+			tot += gArr[i].getScore();
+		}
+		return tot;
 	}
 	
 	public String[] getUnder() {
 		// 과락의 기준은 100점 만점을 기준으로 40점 미만인 것.
-		return null;
+		return getUnder(40);
 	}
 	
 	public String[] getUnder(double score) {
 		// 과락의 기준을 외부 값으로 받아서 찾아내는 함수.
-		return null;
+		String[] result = new String[0];
+		for(int i = 0; i < length(); i++) {
+			if(gArr[i].getScore() < score) {
+				result = Arrays.copyOf(result, result.length + 1);
+				result[result.length - 1] = gArr[i].getName();
+			}
+		}
+		return result;
 	}
 	
 	public String getTop() {
 		// 최고 득점을 받은 과목을 찾아내는 함수
-		return null;
+		Grade top = gArr[0];
+		for(int i = 1; i < length(); i++) {
+			if(top.getScore() < gArr[i].getScore()) {
+				top = gArr[i];
+			}
+		}
+		return top.getName();
 	}
 	
 	public String[] getTop(int count) {
 		// 최고 득점을 받은 과목을 count 만큼 찾아내는 함수
-		return null;
+		Grade[] tArr = _sort(true);
+		
+		String[] result = new String[0];
+		for(int i = 0; i < count; i++) {
+			result = Arrays.copyOf(result, result.length + 1);
+			result[result.length - 1] = tArr[i].getName();
+		}
+		
+		return result;
 	}
 	
 	public String getBottom() {
 		// 최저 득점을 받은 과목을 찾아내는 함수
-		return null;
+		Grade bottom = gArr[0];
+		for(int i = 1; i < length(); i++) {
+			if(bottom.getScore() > gArr[i].getScore()) {
+				bottom = gArr[i];
+			}
+		}
+		return bottom.getName();
 	}
 	
 	public String[] getBottom(int count) {
 		// 최저 득점을 받은 과목을 count 만큼 찾아내는 함수
-		return null;
+		Grade[] tArr = _sort(false);
+		
+		String[] result = new String[0];
+		for(int i = 0; i < count; i++) {
+			result = Arrays.copyOf(result, result.length + 1);
+			result[result.length - 1] = tArr[i].getName();
+		}
+		
+		return result;
 	}
 	
 	public int findIndex(String name) {
@@ -163,5 +202,33 @@ public class GradeList {
 			}
 		}
 		return idx;
+	}
+	
+	private Grade[] _sort(boolean descending) {
+		Grade[] tArr = gArr.clone();
+		
+		if(descending) {
+			for(int i = 0; i < tArr.length - 1; i++) {
+				for(int j = i + 1; j < tArr.length; j++) {
+					if(tArr[i].getScore() < tArr[j].getScore()) {
+						Grade temp = tArr[i];
+						tArr[i] = tArr[j];
+						tArr[j] = temp;
+					}
+				}
+			}
+		} else {
+			for(int i = 0; i < tArr.length - 1; i++) {
+				for(int j = i + 1; j < tArr.length; j++) {
+					if(tArr[i].getScore() > tArr[j].getScore()) {
+						Grade temp = tArr[i];
+						tArr[i] = tArr[j];
+						tArr[j] = temp;
+					}
+				}
+			}
+		}
+		
+		return tArr;
 	}
 }

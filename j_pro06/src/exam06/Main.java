@@ -1,5 +1,7 @@
 package exam06;
 
+import java.util.Arrays;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -27,6 +29,16 @@ public class Main {
 		for(int i = 0; i < gList4.length(); i++) {
 			System.out.println(gList4.getName(i) + ":" + gList4.getScore(i));
 		}
+		
+		GradeList gList5 = new GradeList();
+		gList5.add("과학", 83.6);
+		gList5.add("국어", 67.8);
+		gList5.add("수학", 82.8);
+		gList5.add("영어", 78.4);
+		gList5.add("사회", 93.2);
+		
+		System.out.println(Arrays.toString(gList5.getTop(3)));
+		System.out.println(Arrays.toString(gList5.getBottom(3)));
 	}
 
 }
