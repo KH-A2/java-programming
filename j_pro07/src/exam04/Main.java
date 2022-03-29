@@ -7,8 +7,10 @@ public class Main {
 		
 		PremiumCustomer p1 = new PremiumCustomer();
 		
-		c1.buy("루이비통", 5000000);
-		p1.buy("루이비통", 5000000);
+		c1.buy("루이비통", 1000000);
+		for(int i = 0; i < 12; i++) {
+			p1.buy("루이비통", 1000000);			
+		}
 	}
 
 }
