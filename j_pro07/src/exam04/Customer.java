@@ -31,6 +31,10 @@ public class Customer {
 		this.gender = gender;
 	}
 	
+	public void buy(String productName, int price) {
+		System.out.printf("%s 상품을 %,d 원에 구입하였습니다.\n", productName, price);
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(age, gender, name);
