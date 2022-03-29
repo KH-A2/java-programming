@@ -28,7 +28,7 @@ public class Main {
 		int unit = 10000;
 		for(int i = 0; i < 100; i++) {
 			int idx = rand.nextInt(cArr.length);
-			int price = (rand.nextInt(1990000) + unit) / unit * unit;
+			int price = (rand.nextInt(190000) + unit) / unit * unit;
 			
 			if(cArr[idx] instanceof NormalCustomer) {
 				NormalCustomer c = (NormalCustomer) cArr[idx];
