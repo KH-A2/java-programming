@@ -11,6 +11,14 @@ public class DepartmentManager extends Employee {
 		this.setSalary(4000);
 	}
 	
+	@Override
+	public void bonus(int month) {
+		switch(month) {
+			case 4: case 8: case 12:
+				super.bonus(month);
+		}
+	}
+	
 	public void corpCard(int amount) {
 		if((getSalary() * 0.015) * 10000 > corpCardTotal + amount) {
 			System.out.printf("%,d 원을 법인카드로 지출하였습니다.\n", amount);

@@ -10,6 +10,14 @@ public class AssistantManager extends Employee {
 		this.setSalary(3000);
 	}
 	
+	@Override
+	public void bonus(int month) {
+		switch(month) {
+			case 6: case 12:
+				super.bonus(month);
+		}
+	}
+	
 	public void corpCard(int amount) {
 		if((getSalary() * 0.015) * 10000 > corpCardTotal + amount) {
 			System.out.printf("%,d 원을 법인카드로 지출하였습니다.\n", amount);

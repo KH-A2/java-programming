@@ -20,22 +20,7 @@ public class Main {
 				System.out.printf("%d년 %d월 급여명세\n", year + (i + 1) / 12, month);
 				System.out.printf("이름 : %s\n", empArr[idx].getName());
 				empArr[idx].payMonth();
-				if(empArr[idx] instanceof Staff || empArr[idx] instanceof AssistantManager) {
-					switch(month) {
-						case 6:	case 12:
-							empArr[idx].bonus();
-					}
-				} else if(empArr[idx] instanceof DepartmentManager || empArr[idx] instanceof DeputyGeneralManager) {
-					switch(month) {
-						case 4: case 8: case 12:
-							empArr[idx].bonus();
-					}
-				} else if(empArr[idx] instanceof Director) {
-					switch(month) {
-						case 1:
-							empArr[idx].bonus();
-					}
-				}
+				empArr[idx].bonus(month);
 				System.out.println("==============================");
 			}
 		}

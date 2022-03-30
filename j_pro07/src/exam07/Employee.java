@@ -16,7 +16,7 @@ public class Employee {
 		System.out.printf("급여액 : %,.0f 원\n", (double)getSalary() / 12 * 10000);
 	}
 	
-	public void bonus() {
+	public void bonus(int month) {
 		System.out.printf("보너스 : %,.0f 원\n", getSalary() * 0.25 * 10000);
 	}
 	
