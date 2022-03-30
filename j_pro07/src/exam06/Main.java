@@ -18,37 +18,53 @@ public class Main {
 		 *     PremiumCustomer p1 = new PremiumCustomer();  // 새로운 프리미엄 객체를 생성하여
 		 *     p1.setName(n1.getName);  // 고객 정보만 프리미엄 객체에 저장한다.
 		 */
-		Random rand = new Random();
-		Customer[] cArr = new Customer[5];
+		
+		Customer[] cArr = new Customer[3];
+		cArr[0] = new NormalCustomer();
+		cArr[1] = new PremiumCustomer();
+		cArr[2] = new EmployeeCustomer();
 		
 		for(int i = 0; i < cArr.length; i++) {
-			cArr[i] = new NormalCustomer();
+			// cArr[i].buy("xxxxx", 3000000);
+			// cArr[i].refund();
+			System.out.println(cArr[i].getClass());
+			cArr[i] = cArr[i].renewal();
+			System.out.println(cArr[i].getClass());
 		}
 		
-		int unit = 10000;
-		for(int i = 0; i < 100; i++) {
-			int idx = rand.nextInt(cArr.length);
-			int price = (rand.nextInt(190000) + unit) / unit * unit;
-			
-			if(cArr[idx] instanceof NormalCustomer) {
-				NormalCustomer c = (NormalCustomer) cArr[idx];
-				c.buy("xxxxxx", price);
-				
-				if(price > 1000000) {
-					PremiumCustomer p = new PremiumCustomer();
-					p.setName(c.getName());
-					p.setAge(c.getAge());
-					p.setGender(c.getGender());
-					p.setPriceTotal(price);
-					cArr[idx] = p;
-					System.out.println("축하합니다 구입액이 1,000,000 원을 초과하여 프리미엄 등급으로 상승하였습니다.");
-					System.out.println("앞으로 물품 구입 누적액에 따른 할인율이 적용됩니다.");
-				}
-			} else {
-				PremiumCustomer p = (PremiumCustomer) cArr[idx];
-				p.buy("xxxxxx", price);
-			}
-		}
+		
+		
+//		Random rand = new Random();
+//		Customer[] cArr = new Customer[5];
+//		
+//		for(int i = 0; i < cArr.length; i++) {
+//			cArr[i] = new NormalCustomer();
+//		}
+//		
+//		int unit = 10000;
+//		for(int i = 0; i < 100; i++) {
+//			int idx = rand.nextInt(cArr.length);
+//			int price = (rand.nextInt(190000) + unit) / unit * unit;
+//			
+//			if(cArr[idx] instanceof NormalCustomer) {
+//				NormalCustomer c = (NormalCustomer) cArr[idx];
+//				c.buy("xxxxxx", price);
+//				
+//				if(price > 1000000) {
+//					PremiumCustomer p = new PremiumCustomer();
+//					p.setName(c.getName());
+//					p.setAge(c.getAge());
+//					p.setGender(c.getGender());
+//					p.setPriceTotal(price);
+//					cArr[idx] = p;
+//					System.out.println("축하합니다 구입액이 1,000,000 원을 초과하여 프리미엄 등급으로 상승하였습니다.");
+//					System.out.println("앞으로 물품 구입 누적액에 따른 할인율이 적용됩니다.");
+//				}
+//			} else {
+//				PremiumCustomer p = (PremiumCustomer) cArr[idx];
+//				p.buy("xxxxxx", price);
+//			}
+//		}
 	}
 
 }

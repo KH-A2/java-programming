@@ -19,6 +19,11 @@ public class NormalCustomer extends Customer {
 		super.buy(productName, price);
 	}
 	
+	@Override
+	public void refund() {
+		System.out.println("일반 고객은 영수증이 있어야 환불을 할 수 있습니다.");
+	}
+	
 	private void _addCoupon() {
 		System.out.println("쿠폰을 발급합니다.");
 		System.out.println("다음에 물품을 구입할 때 자동으로 해당 쿠폰이 사용됩니다.");

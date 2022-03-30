@@ -35,6 +35,20 @@ public class Customer {
 		System.out.printf("%s 상품을 %,d 원에 구입하였습니다.\n", productName, price);
 	}
 	
+	public void refund() {
+		System.out.println("영수증 없이 환불 조치를 하였습니다.");
+	}
+	
+	public void refund(String receipt) {
+		System.out.println("영수증을 확인하였습니다.");
+		System.out.printf("%s 물품을 환불 조치 합니다.\n", receipt);
+	}
+	
+	public Customer renewal() {
+		System.out.println("고객 정보를 갱신합니다.");
+		return this;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(age, gender, name);
