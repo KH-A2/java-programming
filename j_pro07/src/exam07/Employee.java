@@ -13,13 +13,11 @@ public class Employee {
 	}
 	
 	public void payMonth() {
-		System.out.println("급여를 지급하였습니다.");
-		System.out.printf("지급액 : %.1f\n", (double)getSalary() / 12);
+		System.out.printf("급여액 : %,.0f 원\n", (double)getSalary() / 12 * 10000);
 	}
 	
 	public void bonus() {
-		System.out.println("보너스를 지급하였습니다.");
-		System.out.printf("지급액 : %.1f\n", getSalary() * 0.25);
+		System.out.printf("보너스 : %,.0f 원\n", getSalary() * 0.25 * 10000);
 	}
 	
 	public String getName() {
