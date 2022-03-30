@@ -29,6 +29,8 @@ public class PremiumCustomer extends Customer {
 	
 	@Override
 	public Customer renewal() {
+		// 누적사용액이 500만원 미만이면 일반고객
+		// 누적사용액이 500만원 이상이면 프리미엄고객
 		Customer c = this;
 		if(priceTotal < 5000000) {
 			c = new NormalCustomer();
