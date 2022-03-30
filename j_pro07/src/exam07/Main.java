@@ -10,10 +10,10 @@ public class Main {
 		Employee e5 = new Director("곽부장", 48);
 		
 		e1.payMonth();	e1.bonus();
-		e2.payMonth();	e2.bonus();
-		e3.payMonth();	e3.bonus();
-		e4.payMonth();	e4.bonus();
-		e5.payMonth();	e5.bonus();
+		e2.payMonth();	e2.bonus();	((AssistantManager)e2).corpCard(460000);
+		e3.payMonth();	e3.bonus();	((DepartmentManager)e3).corpCard(610000);
+		e4.payMonth();	e4.bonus();	((DeputyGeneralManager)e4).corpCard(826000);
+		e5.payMonth();	e5.bonus();	((Director)e5).corpCard(1300000);
 	}
 
 }
