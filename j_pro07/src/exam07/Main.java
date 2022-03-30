@@ -1,8 +1,12 @@
 package exam07;
 
+import java.util.Random;
+
 public class Main {
 
 	public static void main(String[] args) {
+		Random rand = new Random();
+		
 		Employee e1 = new Staff("김사원", 28);
 		Employee e2 = new AssistantManager("박대리", 32);
 		Employee e3 = new DepartmentManager("이과장", 38);
@@ -22,6 +26,25 @@ public class Main {
 				empArr[idx].payMonth();
 				empArr[idx].bonus(month);
 				System.out.println("==============================");
+			}
+			if((rand.nextInt(9) + 1) % 4 == 0) {
+				switch(rand.nextInt(4)) {
+					case 0:
+						System.out.printf("%s 가 ", empArr[1].getName());
+						((AssistantManager)empArr[1]).corpCard(1000);
+						break;
+					case 1:
+						System.out.printf("%s 가 ", empArr[2].getName());
+						((DepartmentManager)empArr[2]).corpCard(1000);
+						break;
+					case 2:
+						System.out.printf("%s 가 ", empArr[3].getName());
+						((DeputyGeneralManager)empArr[3]).corpCard(1000);
+						break;
+					case 3:
+						System.out.printf("%s 가 ", empArr[4].getName());
+						((Director)empArr[4]).corpCard(1000);
+				}
 			}
 		}
 		
