@@ -17,6 +17,11 @@ public class Main {
 		empArr[0] = e1;	empArr[1] = e2;	empArr[2] = e3;
 		empArr[3] = e4;	empArr[4] = e5;
 		
+		((DepartmentManager)e3).setTeamManager(true);
+		((DeputyGeneralManager)e4).setHeadManager(true);
+		((Director)e5).setTeamManager(true);
+		((Director)e5).setHeadManager(true);
+		
 		int year = 2022;
 		for(int i = 0; i < 30; i++) {
 			int month = (i + 1) % 12 == 0 ? 12 : (i + 1) % 12;
@@ -25,6 +30,12 @@ public class Main {
 				System.out.printf("이름 : %s\n", empArr[idx].getName());
 				empArr[idx].payMonth();
 				empArr[idx].bonus(month);
+				if(empArr[idx] instanceof TeamManager) {
+					((TeamManager)empArr[idx]).teamPayBonus();
+				}
+				if(empArr[idx] instanceof HeadManager) {
+					((HeadManager)empArr[idx]).headPayBonus();
+				}
 				System.out.println("==============================");
 			}
 			if((rand.nextInt(9) + 1) % 4 == 0) {
