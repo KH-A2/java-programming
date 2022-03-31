@@ -12,7 +12,7 @@ public class Staff extends Employee {
 	public void bonus(int month) {
 		switch(month) {
 			case 6: case 12:
-				super.bonus(month);
+				System.out.printf("보너스 : %,.0f 원\n", getSalary() * 0.25 * 10000);
 		}
 	}
 	
