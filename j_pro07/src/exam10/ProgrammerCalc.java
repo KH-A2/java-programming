@@ -15,7 +15,7 @@ public class ProgrammerCalc extends Calculator implements Programmer {
 	@Override
 	public String octal(int n1) {
 		String o = "";
-		while(n1 > 1) {
+		while(n1 > 7) {
 			o = n1 % 8 + o;
 			n1 /= 8;
 		}
@@ -23,9 +23,9 @@ public class ProgrammerCalc extends Calculator implements Programmer {
 	}
 
 	@Override
-	public String Hexa(int n1) {
+	public String hexa(int n1) {
 		String h = "";
-		while(n1 > 1) {
+		while(n1 > 15) {
 			int x = n1 % 16;
 			if(x >= 10) {
 				h = hexCode(x) + h;
