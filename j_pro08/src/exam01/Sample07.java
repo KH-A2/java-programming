@@ -80,17 +80,34 @@ public class Sample07 {
 		// .after()   .before()
 		if(c1.after(c2)) {
 			while(c1.compareTo(c2) != 0) {
-				c1.add(Calendar.DATE, -1);
+				c1.add(Calendar.DATE, 1);
 				totalDate++;
 			}
 		} else {
 			while(c1.compareTo(c2) != 0) {
-				c1.add(Calendar.DATE, 1);
+				c1.add(Calendar.DATE, -1);
 				totalDate--;
 			}
 		}
 		
 		System.out.println("D-Day " + totalDate);
+		
+//		int year = c1.get(Calendar.YEAR) - c2.get(Calendar.YEAR);
+//		int month = c1.get(Calendar.MONTH) - c2.get(Calendar.MONTH);
+//		int date = c1.get(Calendar.DATE) - c2.get(Calendar.DATE);
+//		
+//		int totalDate = 0;
+//		if(year != 0) {
+//			totalDate += year * 365;
+//		}
+//		if(month != 0) {
+//			totalDate += month * 30;
+//		}
+//		if(date != 0) {
+//			totalDate += date;
+//		}
+//		
+//		System.out.println("D-Day " + totalDate);
 	}
 	
 	public void ex03() {
@@ -100,13 +117,22 @@ public class Sample07 {
 		 * 동작 시킬 프로그램은 1 ~ 100,000 까지의 누적합을 구하는 코드로
 		 * 해당 반복이 얼만큼의 시간이 걸리는지 기록을 출력한다.
 		 */
+		Date start = new Date();	// 프로그램 시작전에 시간 측정
+		long tot = 0;
+		for(long i = 1; i <= 10000000000L; i++) {
+			tot += i;
+		}
+		Date end = new Date();	// 프로그램 종료 후 시간 측정
+		
+		long timer = end.getTime() - start.getTime();
+		System.out.println("걸린 시간 : " + timer / 1000.0 + " 초");
 	}
 
 	public static void main(String[] args) {
 		Sample07 sample = new Sample07();
 		// sample.ex01();
-		sample.ex02();
-		// sample.ex03();
+		// sample.ex02();
+		sample.ex03();
 	}
 
 }
