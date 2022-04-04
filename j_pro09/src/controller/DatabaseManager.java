@@ -24,7 +24,11 @@ public class DatabaseManager implements ImplDatabaseManager {
 	
 	@Override
 	public Grade[] search(String name) {
-		return null;
+		int idx = _findIndex(name);
+		if(idx == -1) {
+			return null;
+		}
+		return datas[idx].getGrades();
 	}
 
 	@Override
@@ -41,5 +45,22 @@ public class DatabaseManager implements ImplDatabaseManager {
 	public boolean remove(String name) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public boolean existed(String name) {
+		return _findIndex(name) == -1 ? false : true;
+	}
+	
+	private int _findIndex(String name) {
+		int idx = -1;
+		
+		for(int i = 0; i < datas.length; i++) {
+			if(name.equals(datas[i].getName())) {
+				idx = i;
+				return idx;
+			}
+		}
+		
+		return idx;
 	}
 }
