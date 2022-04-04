@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Arrays;
+
 import model.vo.Grade;
 import model.vo.Student;
 
@@ -33,22 +35,55 @@ public class DatabaseManager implements ImplDatabaseManager {
 
 	@Override
 	public boolean add(String name) {
-		return false;
+		if(_isExisted(name)) {
+			return false;
+		}
+		
+		datas = Arrays.copyOf(datas, datas.length + 1);
+		datas[datas.length - 1] = new Student(name);
+		datas[datas.length - 1].setGrades(_initGrade());
+		
+		return true;
+	}
+
+	private Grade[] _initGrade() {
+		Grade[] gArr = new Grade[] {
+				new Grade("국어"), new Grade("영어"), new Grade("수학"), new Grade("과학")
+		};
+		return gArr;
 	}
 
 	@Override
 	public Student modify(String name, String subject, int score) {
+		int idx = _findIndex(name);
+		Grade[] grades = datas[idx].getGrades();
+		for(int i = 0; i < grades.length; i++) {
+			if(subject.equals(grades[i].getName())) {
+				grades[i].setScore(score);
+				return datas[idx];
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public boolean remove(String name) {
-		// TODO Auto-generated method stub
-		return false;
+		int idx = _findIndex(name);
+		
+		if(idx == -1) {
+			return false;
+		}
+		
+		Student[] temp = new Student[datas.length - 1];
+		System.arraycopy(datas, 0, temp, 0, idx);
+		System.arraycopy(datas, idx + 1, temp, idx, datas.length - (idx + 1));
+		datas = temp;
+		
+		return true;
 	}
 	
-	public boolean existed(String name) {
-		return _findIndex(name) == -1 ? false : true;
+	private boolean _isExisted(String name) {
+		return _findIndex(name) != -1 ? true : false;
 	}
 	
 	private int _findIndex(String name) {

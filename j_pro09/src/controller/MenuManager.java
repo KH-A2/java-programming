@@ -3,6 +3,7 @@ package controller;
 import java.util.Scanner;
 
 import model.vo.Grade;
+import model.vo.Student;
 
 public class MenuManager {
 	// 학생 성적 관리의 메뉴를 관리하기 위한 매니저 클래스
@@ -82,22 +83,54 @@ public class MenuManager {
 			System.out.print("학생 이름 입력 : ");
 			name = sc.nextLine();
 			
-			if(!db.existed(name)) {
-				System.out.println("해당 학생은 이미 존재하는 정보 입니다.");
-			} else {
+			if(db.add(name)) {
+				System.out.printf("%s 학생의 정보가 추가되었습니다.\n", name);
+				System.out.print("[[엔터키를 입력하세요]]");	sc.nextLine();
 				break;
+			} else {
+				System.out.println("해당 학생은 이미 존재하는 정보 입니다.");
 			}
 		}
-		db.add(name);
-		System.out.printf("%s 학생의 정보가 추가되었습니다.", name);
 	}
 	
 	public void subjectModifyMenu() {
-		System.out.println("성적 정보 수정 메뉴 실행!");
+		String name = "";
+		while(true) {
+			System.out.print("학생 이름 입력 : ");
+			name = sc.nextLine();
+			
+			System.out.print("과목 이름 입력 : ");
+			String subject = sc.nextLine();
+			
+			System.out.println("점수 입력 : ");
+			int score = Integer.parseInt(sc.nextLine());
+			
+			Student std = db.modify(name, subject, score);
+			
+			if(std == null) {
+				System.out.println("학생 이름과 과목 이름을 다시 확인해보세요.");
+			} else {
+				System.out.printf("%s 학생의 점수가 수정 되었습니다.\n", std.getName());
+				System.out.print("[[엔터키를 입력하세요]]");	sc.nextLine();
+				break;
+			}
+		}
 	}
 	
 	public void studentDeleteMenu() {
-		System.out.println("학생 정보 삭제 메뉴 실행!");
+		String name = "";
+		while(true) {
+			System.out.print("학생 이름 입력 : ");
+			name = sc.nextLine();
+			
+			if(db.remove(name)) {
+				System.out.println("학생 정보를 삭제하였습니다.");
+				System.out.print("[[엔터키를 입력하세요]]");	sc.nextLine();
+				break;
+			} else {
+				System.out.println("해당 학생은 존재하지 않습니다. 다시 입력하세요.");
+			}
+		}
 	}
 	
 	private String _printGrades(String name, Grade[] datas) {
