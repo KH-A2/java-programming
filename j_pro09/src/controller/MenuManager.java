@@ -102,7 +102,7 @@ public class MenuManager {
 			System.out.print("과목 이름 입력 : ");
 			String subject = sc.nextLine();
 			
-			System.out.println("점수 입력 : ");
+			System.out.print("점수 입력 : ");
 			int score = Integer.parseInt(sc.nextLine());
 			
 			Student std = db.modify(name, subject, score);
