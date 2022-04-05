@@ -115,26 +115,29 @@ public class MenuManager {
 			System.out.println(result);
 			System.out.print("[[엔터키를 입력하세요]]");	sc.nextLine();
 			
-			System.out.println("출력 된 과목 순으로 점수를 입력하세요.");
+			System.out.println("출력 된 과목 순으로 점수를 입력하세요.(공백을 구분자로 사용하여 입력)");
+			System.out.println("예) 78 89 99 ...");
 			System.out.print(": ");
 			
 			String[] scoreArr = sc.nextLine().split(" ");
 			int[] score = new int[0];
-			if(scoreArr.length > 0) {
+			
+			if(scoreArr.length == datas.length) {
 				score = new int[scoreArr.length];
 				for(int i = 0; i < scoreArr.length; i++) {
 					score[i] = Integer.parseInt(scoreArr[i]);
 				}
+				
+				Student std;
+				for(int i = 0; i < datas.length; i++) {
+					std = db.modify(name, datas[i].getName(), score[i]);
+					System.out.printf("%s 학생의 %s 과목 점수가 수정 되었습니다.\n", std.getName(), datas[i].getName());
+				}
+				System.out.print("[[엔터키를 입력하세요]]");	sc.nextLine();
+				break;
+			} else {
+				System.out.println("점수 입력 수량이 잘못되었습니다. " + datas.length + "개 과목 수만큼 입력하세요.");
 			}
-			
-			Student std;
-			for(int i = 0; i < datas.length; i++) {
-				std = db.modify(name, datas[i].getName(), score[i]);
-				System.out.printf("%s 학생의 %s 과목 점수가 수정 되었습니다.\n", std.getName(), datas[i].getName());
-			}
-			
-			System.out.print("[[엔터키를 입력하세요]]");	sc.nextLine();
-			break;
 		}
 	}
 	
