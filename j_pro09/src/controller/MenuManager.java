@@ -77,6 +77,7 @@ public class MenuManager {
 		System.out.print("[[엔터키를 입력하세요]]");	sc.nextLine();
 	}
 	
+	
 	public void studentAddMenu() {
 		String name = "";
 		while(true) {
@@ -96,24 +97,44 @@ public class MenuManager {
 	public void subjectModifyMenu() {
 		String name = "";
 		while(true) {
-			System.out.print("학생 이름 입력 : ");
-			name = sc.nextLine();
+			Grade[] datas = null;
 			
-			System.out.print("과목 이름 입력 : ");
-			String subject = sc.nextLine();
-			
-			System.out.print("점수 입력 : ");
-			int score = Integer.parseInt(sc.nextLine());
-			
-			Student std = db.modify(name, subject, score);
-			
-			if(std == null) {
-				System.out.println("학생 이름과 과목 이름을 다시 확인해보세요.");
-			} else {
-				System.out.printf("%s 학생의 점수가 수정 되었습니다.\n", std.getName());
-				System.out.print("[[엔터키를 입력하세요]]");	sc.nextLine();
-				break;
+			while(true) {
+				System.out.print("학생 이름 입력 : ");
+				name = sc.nextLine();
+				datas = db.search(name);
+				
+				if(datas == null) {
+					System.out.println("해당 학생은 존재하지 않습니다. 다시 입력하세요.");
+				} else {
+					break;				
+				}
 			}
+			
+			String result = _printGrades(name, datas);
+			System.out.println(result);
+			System.out.print("[[엔터키를 입력하세요]]");	sc.nextLine();
+			
+			System.out.println("출력 된 과목 순으로 점수를 입력하세요.");
+			System.out.print(": ");
+			
+			String[] scoreArr = sc.nextLine().split(" ");
+			int[] score = new int[0];
+			if(scoreArr.length > 0) {
+				score = new int[scoreArr.length];
+				for(int i = 0; i < scoreArr.length; i++) {
+					score[i] = Integer.parseInt(scoreArr[i]);
+				}
+			}
+			
+			Student std;
+			for(int i = 0; i < datas.length; i++) {
+				std = db.modify(name, datas[i].getName(), score[i]);
+				System.out.printf("%s 학생의 %s 과목 점수가 수정 되었습니다.\n", std.getName(), datas[i].getName());
+			}
+			
+			System.out.print("[[엔터키를 입력하세요]]");	sc.nextLine();
+			break;
 		}
 	}
 	
