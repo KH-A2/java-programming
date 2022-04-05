@@ -8,9 +8,11 @@ public class Student {
 	 */
 	private String name;
 	private Grade[] grades;
+	private String password;
 	
 	public Student(String name) {
 		this.name = name;
+		this.password = "1111";
 	}
 
 	public String getName() {
@@ -27,6 +29,14 @@ public class Student {
 
 	public void setGrades(Grade[] grades) {
 		this.grades = grades;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 }

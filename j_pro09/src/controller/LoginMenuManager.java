@@ -4,11 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
+import model.vo.Student;
 import model.vo.Teacher;
 
 public class LoginMenuManager {
 	private Scanner sc = new Scanner(System.in);
 	private TeacherDatabaseManager tDB = new TeacherDatabaseManager();
+	private DatabaseManager sDB = new DatabaseManager();
 	private SimpleDateFormat sFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
 	
 	public void main() {
@@ -86,7 +88,30 @@ public class LoginMenuManager {
 	}
 	
 	private void studentLogin() {
-		System.out.println("학생용 로그인 입니다.");
+		System.out.print("학생명 : ");
+		String username = sc.nextLine();
+		
+		Student loginAccount = null;
+		
+		// 비밀번호 3회 입력 제한.
+		for(int i = 0; i < 3; i++) {
+			System.out.print("비밀번호 : ");
+			String password = sc.nextLine();
+			loginAccount = sDB.login(username, password);
+			if(loginAccount != null) {
+				break;
+			}
+		}
+		
+		if(loginAccount == null) {
+			System.out.println("로그인에 실패하였습니다. 다시 시도하세요.");
+		} else {
+			Date now = new Date();
+			System.out.println("현재 접속 시간은 " + sFormat.format(now) + " 입니다.");
+
+			StudentMenuManager sMenu = new StudentMenuManager(loginAccount);
+			sMenu.main();
+		}
 	}
 	
 }
