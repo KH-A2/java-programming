@@ -1,15 +1,22 @@
 package controller;
 
+import java.util.Date;
 import java.util.Scanner;
 
 import model.vo.Grade;
 import model.vo.Student;
+import model.vo.Teacher;
 
 public class MenuManager {
 	// 학생 성적 관리의 메뉴를 관리하기 위한 매니저 클래스
 
 	private Scanner sc = new Scanner(System.in);
 	private DatabaseManager db = new DatabaseManager();
+	private Teacher loginAccount;
+	
+	public MenuManager(Teacher loginAccount) {
+		this.loginAccount = loginAccount;
+	}
 	
 	public void main() {
 		StringBuilder menu = new StringBuilder();
@@ -17,7 +24,7 @@ public class MenuManager {
 		menu.append("2. 학생 정보 추가\n");	// studentAddMenu()
 		menu.append("3. 성적 정보 수정\n");	// subjectModifyMenu()
 		menu.append("4. 학생 정보 삭제\n");	// studentDeleteMenu()
-		menu.append("9. 프로그램 종료\n");	// System.exit(0);
+		menu.append("9. 로그아웃\n");	// System.exit(0);
 		menu.append(">>> ");
 		while(true) {
 			System.out.print(menu);
@@ -34,12 +41,18 @@ public class MenuManager {
 			} else if(input.equals("4")) {
 				studentDeleteMenu();
 			} else if(input.equals("9")) {
-				System.exit(0);
+				logout();
+				return;
 			}
 			_clear();
 		}
 	}
 	
+	private void logout() {
+		loginAccount.setLoginDate(new Date());
+		System.out.println(loginAccount.getName() + "님이 로그아웃 하였습니다.");
+	}
+
 	private void _clear() {
 		for(int i = 0; i < 20; i++) {
 			System.out.print("\n");

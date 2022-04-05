@@ -61,7 +61,7 @@ public class LoginMenuManager {
 				System.out.println("현재 로그인 시간은 " + sFormat.format(now) + " 입니다.");
 				loginAccount.setLoginDate(now);
 			}
-			MenuManager tMenu = new MenuManager();
+			MenuManager tMenu = new MenuManager(loginAccount);
 			tMenu.main();
 		}
 		
