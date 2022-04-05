@@ -3,6 +3,7 @@ package controller;
 import java.util.Date;
 import java.util.Scanner;
 
+import model.vo.Account;
 import model.vo.Grade;
 import model.vo.Student;
 import model.vo.Teacher;
@@ -12,18 +13,21 @@ public class MenuManager {
 
 	private Scanner sc = new Scanner(System.in);
 	private DatabaseManager db = new DatabaseManager();
-	private Teacher loginAccount;
+	private Account loginAccount;
 	
-	public MenuManager(Teacher loginAccount) {
+	public MenuManager(Account loginAccount) {
 		this.loginAccount = loginAccount;
 	}
 	
 	public void main() {
 		StringBuilder menu = new StringBuilder();
 		menu.append("1. 성적 조회\n");		// searchMenu()
-		menu.append("2. 학생 정보 추가\n");	// studentAddMenu()
-		menu.append("3. 성적 정보 수정\n");	// subjectModifyMenu()
-		menu.append("4. 학생 정보 삭제\n");	// studentDeleteMenu()
+		if(loginAccount instanceof Teacher) {
+			menu.append("2. 학생 정보 추가\n");	// studentAddMenu()
+			menu.append("3. 성적 정보 수정\n");	// subjectModifyMenu()
+			menu.append("4. 학생 정보 삭제\n");	// studentDeleteMenu()
+		}
+		menu.append("5. 패스워드 변경\n");
 		menu.append("9. 로그아웃\n");	// System.exit(0);
 		menu.append(">>> ");
 		while(true) {
