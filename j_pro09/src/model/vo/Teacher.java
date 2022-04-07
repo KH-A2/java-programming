@@ -30,12 +30,6 @@ public class Teacher extends Account {
 	}
 
 	@Override
-	public boolean changePassword(String curPass, String changePass) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public String resetPassword() {
 		// TODO Auto-generated method stub
 		return null;
