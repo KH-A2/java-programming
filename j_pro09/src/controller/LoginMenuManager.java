@@ -17,7 +17,8 @@ public class LoginMenuManager {
 		StringBuilder menu = new StringBuilder();
 		menu.append("1. 교사용 로그인\n");
 		menu.append("2. 학생용 로그인\n");
-		menu.append("3. 종료\n");
+		menu.append("3. 패스워드 초기화\n");
+		menu.append("4. 종료\n");
 		menu.append(">>> ");
 		
 		while(true) {
@@ -30,10 +31,46 @@ public class LoginMenuManager {
 			} else if(input.equals("2")) {
 				studentLogin();
 			} else if(input.equals("3")) {
+				resetPassword();
+			} else if(input.equals("4")) {
 				System.out.println("프로그램을 종료 합니다.");
 				System.exit(0);
 			}
 		}
+	}
+	
+	private void resetPassword() {
+		System.out.print("1. 교사용 계정\n");
+		System.out.print("2. 학생용 계정\n");
+		System.out.print(">>> ");
+		String type = sc.nextLine();
+		
+		System.out.print("이름 : ");
+		String name = sc.nextLine();
+		
+		switch(type.charAt(0)) {
+			case '1':
+				if(tDB.isExisted(name)) {
+					teacherResetPassword(name);
+				}
+				break;
+			case '2':
+				if(sDB.isExisted(name)) {
+					studentResetPassword(name);
+				}
+		}
+	}
+	
+	private void teacherResetPassword(String name) {
+		Teacher t = tDB.getTeacher(name);
+		String password = t.resetPassword();
+		System.out.println(password + " 로  초기화 되었습니다. 초기화 패스워드로 로그인 후 다시 패스워드를 변경하세요.");
+	}
+	
+	private void studentResetPassword(String name) {
+		Student s = sDB.getStudent(name);
+		String password = s.resetPassword();
+		System.out.println(password + " 로  초기화 되었습니다. 초기화 패스워드로 로그인 후 다시 패스워드를 변경하세요.");
 	}
 	
 	private void teacherLogin() {

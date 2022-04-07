@@ -2,6 +2,7 @@ package model.vo;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 public class Teacher extends Account {
 	private Date loginDate;	// 로그인 시간
@@ -31,8 +32,10 @@ public class Teacher extends Account {
 
 	@Override
 	public String resetPassword() {
-		// TODO Auto-generated method stub
-		return null;
+		String prefix = "TCH_";
+		String newPass = super.resetPassword();
+		setPassword(prefix + newPass);
+		return newPass;
 	}
 	
 }

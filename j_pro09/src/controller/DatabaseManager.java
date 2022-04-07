@@ -83,6 +83,14 @@ public class DatabaseManager implements ImplDatabaseManager {
 		return true;
 	}
 	
+	public Student getStudent(String name) {
+		return datas[_findIndex(name)];
+	}
+	
+	public boolean isExisted(String name) {
+		return _isExisted(name);
+	}
+	
 	private boolean _isExisted(String name) {
 		return _findIndex(name) != -1 ? true : false;
 	}

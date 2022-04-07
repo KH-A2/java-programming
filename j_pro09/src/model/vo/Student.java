@@ -1,5 +1,7 @@
 package model.vo;
 
+import java.util.Random;
+
 // 학생 정보를 가지는 클래스
 public class Student extends Account {
 	private Grade[] grades;
@@ -19,8 +21,10 @@ public class Student extends Account {
 
 	@Override
 	public String resetPassword() {
-		// TODO Auto-generated method stub
-		return null;
+		String prefix = "STD_";
+		String newPass = super.resetPassword();
+		setPassword(prefix + newPass);
+		return newPass;
 	}
 	
 }
