@@ -20,13 +20,19 @@ public class MenuManager {
 	}
 	
 	public void main() {
+		if(loginAccount instanceof Teacher) {
+			teacherMenu();
+		} else {
+			studentMenu();
+		}
+	}
+	
+	public void teacherMenu() {
 		StringBuilder menu = new StringBuilder();
 		menu.append("1. 성적 조회\n");		// searchMenu()
-		if(loginAccount instanceof Teacher) {
-			menu.append("2. 학생 정보 추가\n");	// studentAddMenu()
-			menu.append("3. 성적 정보 수정\n");	// subjectModifyMenu()
-			menu.append("4. 학생 정보 삭제\n");	// studentDeleteMenu()
-		}
+		menu.append("2. 학생 정보 추가\n");	// studentAddMenu()
+		menu.append("3. 성적 정보 수정\n");	// subjectModifyMenu()
+		menu.append("4. 학생 정보 삭제\n");	// studentDeleteMenu()
 		menu.append("5. 패스워드 변경\n");
 		menu.append("9. 로그아웃\n");	// System.exit(0);
 		menu.append(">>> ");
@@ -52,8 +58,30 @@ public class MenuManager {
 		}
 	}
 	
+	public void studentMenu() {
+		StringBuilder menu = new StringBuilder();
+		menu.append("1. 성적 조회\n");
+		menu.append("2. 패스워드 변경\n");
+		menu.append("9. 로그아웃\n");
+		menu.append(">>> ");
+		while(true) {
+			System.out.print(menu);
+			
+			String input = sc.nextLine();
+			
+			if(input.equals("1")) {
+				searchMenu();
+			} else if(input.equals("9")) {
+				logout();
+				return;
+			}
+		}
+	}
+	
 	private void logout() {
-		loginAccount.setLoginDate(new Date());
+		if(loginAccount instanceof Teacher) {
+			((Teacher)loginAccount).setLoginDate(new Date());
+		}
 		System.out.println(loginAccount.getName() + "님이 로그아웃 하였습니다.");
 	}
 
