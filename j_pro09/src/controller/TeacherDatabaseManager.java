@@ -16,10 +16,6 @@ public class TeacherDatabaseManager {
 	}
 	
 	public Teacher login(String name, String password) {
-		// Teacher 배열에 존재하는 객체들 중 동일한
-		// 이름, 패스워드를 사용하는 객체가 있는지 검사 후
-		// 동일한 객체가 있으면 해당하는 Teacher 객체를 반환
-		// 동일한 객체가 없으면 null 반환.
 		for(int i = 0; i < datas.length; i++) {
 			if(name.equals(datas[i].getName()) && password.equals(datas[i].getPassword())) {
 				return datas[i];

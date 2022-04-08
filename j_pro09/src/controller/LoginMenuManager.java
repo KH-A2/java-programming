@@ -22,19 +22,24 @@ public class LoginMenuManager {
 		menu.append(">>> ");
 		
 		while(true) {
-			System.out.print(menu);
+			int input = 0;
+			while(true) {
+				System.out.print(menu);
+				
+				if(sc.hasNextInt()) {
+					input = sc.nextInt(); sc.nextLine();
+					break;
+				}
+				sc.nextLine();
+			}
 			
-			String input = sc.nextLine();
-			
-			if(input.equals("1")) {
-				teacherLogin();
-			} else if(input.equals("2")) {
-				studentLogin();
-			} else if(input.equals("3")) {
-				resetPassword();
-			} else if(input.equals("4")) {
-				System.out.println("프로그램을 종료 합니다.");
-				System.exit(0);
+			switch(input) {
+				case 1: teacherLogin(); break;
+				case 2: studentLogin(); break;
+				case 3: resetPassword(); break;
+				case 4:
+					System.out.println("프로그램을 종료 합니다.");
+					System.exit(0);
 			}
 		}
 	}
@@ -103,25 +108,6 @@ public class LoginMenuManager {
 			MenuManager tMenu = new MenuManager(loginAccount);
 			tMenu.main();
 		}
-		
-		/*
-		 * 로그인 검사 후 로그인이 성공하면
-		 * 최근 로그인 시간과 현재 로그인 시간을 출력하고
-		 * Teacher 객체에는 현재 로그인 시간을 loginDate 에
-		 * 저장 후 MenuManager 를 실행한다.
-		 * 
-		 * 고명환 선생님이 접속하였습니다.
-		 * 최근 접속 시간은 2022년 04월 04일 18시 30분 34초 입니다.
-		 * 현재 로그인 시간은 2022년 04월 05일 09시 30분 30초 입니다.
-		 * 
-		 * 1. 성적 조회
-		 * 2. 학생 정보 추가
-		 * ...
-		 * ...
-		 * 
-		 * MenuManager 의 프로그램 종료 메뉴는 로그아웃으로 바꾼다.
-		 * (출력만 바꾼다.)
-		 */
 	}
 	
 	private void studentLogin() {
