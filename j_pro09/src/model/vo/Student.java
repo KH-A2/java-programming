@@ -8,7 +8,7 @@ public class Student extends Account {
 	
 	public Student(String name) {
 		setName(name);
-		setPassword("1111");
+		setPassword("a1111");
 	}
 
 	public Grade[] getGrades() {
