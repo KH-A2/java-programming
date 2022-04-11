@@ -6,6 +6,7 @@ import game.card.Gawi;
 import game.card.Hand;
 import game.player.ComPlayer;
 import game.player.UserPlayer;
+import game.record.Record;
 
 public class Main {
 	
@@ -14,6 +15,8 @@ public class Main {
 		UserPlayer uPlay = new UserPlayer();
 		ComPlayer cPlay = new ComPlayer();
 		Hand userHand, comHand;
+		Record uRecord = new Record();
+		Record cRecord = new Record();
 		
 		System.out.println("가위 바위 보 게임 입니다.");
 		System.out.println("계속 진행하려면 Enter 키를 입력하세요.");
@@ -43,20 +46,32 @@ public class Main {
 			
 			switch(uPlay.versus(userHand, comHand)) {
 				case -1:
-					System.out.println("플레이어 패!"); break;
+					System.out.println("플레이어 패!");
+					uRecord.addLose();
+					break;
 				case 0:
-					System.out.println("무승부"); break;
+					System.out.println("무승부");
+					uRecord.addDraw();
+					break;
 				case 1:
-					System.out.println("플레이어 승!"); break;
+					System.out.println("플레이어 승!");
+					uRecord.addWin();
+					break;
 			}
 			
 			switch(cPlay.versus(comHand, userHand)) {
 				case -1:
-					System.out.println("컴퓨터 패!"); break;
+					System.out.println("컴퓨터 패!");
+					cRecord.addLose();
+					break;
 				case 0:
-					System.out.println("무승부"); break;
+					System.out.println("무승부");
+					cRecord.addDraw();
+					break;
 				case 1:
-					System.out.println("컴퓨터 승!"); break;
+					System.out.println("컴퓨터 승!");
+					cRecord.addWin();
+					break;
 			}
 			
 		}
