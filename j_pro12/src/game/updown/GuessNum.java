@@ -24,20 +24,20 @@ public class GuessNum {
 	}
 	
 	public Result guessing(int number) {
-		this.guessLimit--;
 		Result res = new Fail();
-		
-		if(this.guessLimit >= 0) {
+		System.out.println(guess);
+		this.guessLimit--;
+		if(remainCount()) {
 			if(number > this.guess) {
 				res = new DOWN();
 			} else if(number < this.guess) {
 				res = new UP();
 			} else if(number == this.guess) {
-				if(guessLimit < 0) {
-					res = new Fail();
-				} else {
-					res = new Correct();
-				}
+				res = new Correct();
+			}
+		} else if(this.guessLimit == 0) {
+			if(number == this.guess) {
+				res = new Correct();
 			}
 		}
 		return res;
