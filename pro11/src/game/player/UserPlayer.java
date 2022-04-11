@@ -6,29 +6,67 @@ import game.card.Bawi;
 import game.card.Bo;
 import game.card.Gawi;
 import game.card.Hand;
+import game.record.Record;
 
 public class UserPlayer implements Player {
 	
-	Random rd = new Random(12345);
+	Random rd = new Random();
+	private String name;
+	private Hand hand;
+	private Record record = new Record();
+	
+	public UserPlayer(String name) {
+		this.name = name;
+	}
+	
+	public void setCardHand(String name) {
+		if(name.equals("가위")) {
+			hand = new Gawi();
+		} else if(name.equals("바위")) {
+			hand = new Bawi();
+		} else if(name.equals("보")) {
+			hand = new Bo();
+		} else {
+			this.randomCardHand();
+		}
+	}
 	
 	@Override
-	public Hand randomCardHand() {
-		Hand card = null;
+	public void randomCardHand() {
 		int rand = rd.nextInt(3);
 		switch(rand) {
 			case 0:
-				card = new Gawi(); break;
+				hand = new Gawi(); break;
 			case 1:
-				card = new Bawi(); break;
+				hand = new Bawi(); break;
 			case 2:
-				card = new Bo(); break;
+				hand = new Bo(); break;
 		}
-		return card;
 	}
-
+	
 	@Override
-	public int versus(Hand h1, Hand h2) {
-		return h1.compare(h2);
+	public String versus(Hand h) {
+		String result = "";
+		switch(hand.compare(h)) {
+			case -1:
+				record.addLose();
+				result = "패"; break;
+			case 0:
+				record.addDraw();
+				result = "무"; break;
+			case 1:
+				record.addWin();
+				result = "승"; break;
+		}
+		return result;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public Hand getHand() {
+		return this.hand;
 	}
 
 }
