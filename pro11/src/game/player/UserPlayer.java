@@ -68,5 +68,12 @@ public class UserPlayer implements Player {
 	public Hand getHand() {
 		return this.hand;
 	}
+	
+	public String getRecord() {
+		String result = "";
+		result = String.format("%d 승 %d 패 %d 무",
+				record.getWin(), record.getLose(), record.getDraw());
+		return result;
+	}
 
 }

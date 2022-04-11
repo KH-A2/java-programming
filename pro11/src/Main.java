@@ -14,8 +14,6 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		UserPlayer uPlay;
 		ComPlayer cPlay = new ComPlayer();
-		Record uRecord = new Record();
-		Record cRecord = new Record();
 		
 		System.out.println("가위 바위 보 게임 입니다.");
 		System.out.println("플레이어 이름을 입력하세요.");
@@ -37,11 +35,12 @@ public class Main {
 			uPlay.setCardHand(pInput);
 			cPlay.randomCardHand();
 			
-			String res = uPlay.versus(cPlay.getHand());
-			System.out.printf("%s 님의 승부 결과 %s 했습니다.\n", uPlay.getName(), res);
-			
+			String res = uPlay.versus(cPlay.getHand());			
 			cPlay.versus(uPlay.getHand());
 			
+			System.out.printf("%s 님의 승부 결과 %s 했습니다.\n", uPlay.getName(), res);
+			System.out.println("승, 패, 무 결과");
+			System.out.println(uPlay.getRecord());
 		}
 	}
 
