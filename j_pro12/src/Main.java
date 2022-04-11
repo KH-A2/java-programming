@@ -4,7 +4,6 @@ import game.updown.Correct;
 import game.updown.Fail;
 import game.updown.GuessNum;
 import game.updown.Result;
-import game.updown.UP;
 
 public class Main {
 
