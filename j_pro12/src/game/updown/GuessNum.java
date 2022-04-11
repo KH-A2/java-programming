@@ -25,7 +25,6 @@ public class GuessNum {
 	
 	public Result guessing(int number) {
 		Result res = new Fail();
-		System.out.println(guess);
 		this.guessLimit--;
 		if(remainCount()) {
 			if(number > this.guess) {
