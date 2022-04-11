@@ -19,7 +19,7 @@ public class GuessNum {
 	}
 	
 	public GuessNum(int rangeMin, int rangeMax, int limit) {
-		this.guess = rand.nextInt(rangeMax - rangeMax) + rangeMin;
+		this.guess = rand.nextInt(rangeMax - rangeMin) + rangeMin;
 		this.guessLimit = limit;
 	}
 	
