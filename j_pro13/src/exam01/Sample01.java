@@ -3,6 +3,7 @@ package exam01;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 public class Sample01 {
@@ -51,6 +52,8 @@ public class Sample01 {
 		System.out.printf("상위 폴더명 : %s\n", f.getParent());
 		System.out.printf("전체 경로명 : %s\n", f.getPath());
 		
+		System.out.printf("실제 파일/폴더 존재 유무 : %s\n", f.exists());
+		
 		File f2 = new File("C:/Users/user1/eclipse/jee-2021-12/eclipse/my_file.wav");
 		try {
 			f2.createNewFile();
@@ -64,6 +67,20 @@ public class Sample01 {
 		
 		File f4 = new File("C:/Users/user1/eclipse/jee-2021-12/eclipse/my_file.txt");
 		f4.delete();
+		
+		File f5 = new File("C:/Users/user1/eclipse/jee-2021-12/eclipse/");
+		String[] fileList1 = f5.list();
+		System.out.println(Arrays.toString(fileList1));
+		
+		File[] fileList2 = f5.listFiles();
+		System.out.println(Arrays.toString(fileList2));
+		
+		for(int i = 0; i < fileList2.length; i++) {
+			String name = fileList2[i].getName();
+			if(name.startsWith("my_")) {
+				fileList2[i].delete();
+			}
+		}
 	}
 
 }
