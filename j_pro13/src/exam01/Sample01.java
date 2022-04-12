@@ -1,5 +1,10 @@
 package exam01;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Sample01 {
 
 	public static void main(String[] args) {
@@ -20,6 +25,45 @@ public class Sample01 {
 		 *     - 바이트기반스트림의 경우 일반 텍스트 문서를 제외한 모든 파일을 전송하기 위해 사용한다.
 		 *       (영상, 음향, 이미지, 실행파일 등)
 		 */
+		
+		/*
+		 * File 클래스
+		 *     - 파일의 크기, 이름, 정보 등을 알아내기 위한 클래스로 사용
+		 *     - 파일 생성, 삭제 및 폴더 생성, 삭제 기능을 제공
+		 */
+		File f = new File("C:/Users/user1/eclipse/jee-2021-12/eclipse/eclipse.ini");
+		System.out.printf("파일 크기 : %d Byte\n", f.length());
+		System.out.printf("파일 크기 : %.2f KByte\n", f.length() / 1024.0);
+		
+		SimpleDateFormat sFormat = new SimpleDateFormat("yyyy년 MM월 dd일 a hh시 mm분 ss초");
+		String modifiedDate = sFormat.format(new Date(f.lastModified()));
+		System.out.printf("수정 날짜 : %s\n", modifiedDate);
+		
+		System.out.printf("실행 파일 : %s\n", f.canExecute());
+		System.out.printf("읽기 가능 : %s\n", f.canRead());
+		System.out.printf("쓰기 가능 : %s\n", f.canWrite());
+		
+		System.out.printf("파일 : %s\n", f.isFile());
+		System.out.printf("폴더 : %s\n", f.isDirectory());
+		System.out.printf("숨김 : %s\n", f.isHidden());
+		
+		System.out.printf("파일/폴더명 : %s\n", f.getName());
+		System.out.printf("상위 폴더명 : %s\n", f.getParent());
+		System.out.printf("전체 경로명 : %s\n", f.getPath());
+		
+		File f2 = new File("C:/Users/user1/eclipse/jee-2021-12/eclipse/my_file.wav");
+		try {
+			f2.createNewFile();
+		} catch (IOException e) {
+			System.out.println("f2.createNewFile() 로 파일 생성중 에러 발생!");
+			e.printStackTrace();
+		}
+		
+		File f3 = new File("C:/Users/user1/eclipse/jee-2021-12/eclipse/my_folder");
+		f3.mkdir();
+		
+		File f4 = new File("C:/Users/user1/eclipse/jee-2021-12/eclipse/my_file.txt");
+		f4.delete();
 	}
 
 }
