@@ -4,6 +4,7 @@ import game.card.Bawi;
 import game.card.Bo;
 import game.card.Gawi;
 import game.card.Hand;
+import game.db.Database;
 import game.player.ComPlayer;
 import game.player.UserPlayer;
 import game.record.Record;
@@ -14,12 +15,17 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		UserPlayer uPlay;
 		ComPlayer cPlay = new ComPlayer();
+		Database db = new Database();
+		
+		int[] record = db.load();
 		
 		System.out.println("가위 바위 보 게임 입니다.");
 		System.out.println("플레이어 이름을 입력하세요.");
 		System.out.print(">>> ");
 		String name = sc.nextLine();
 		uPlay = new UserPlayer(name);
+		
+		uPlay.setRecordArray(record); // 만들어야 함.
 		
 		System.out.println("계속 진행하려면 Enter 키를 입력하세요.");
 		sc.nextLine();
@@ -31,6 +37,13 @@ public class Main {
 			System.out.print("종료를 원하는 경우 \"종료\"라고 입력하세요.\n");
 			System.out.print(">>> ");
 			String pInput = sc.nextLine();
+			
+			if(pInput.equals("종료")) {
+				System.out.println("게임을 종료 합니다.");
+				System.out.println("현재 까지 진행 사항을 저장합니다.");
+				db.save(uPlay.getRecordArray());
+				break;
+			}
 			
 			uPlay.setCardHand(pInput);
 			cPlay.randomCardHand();
