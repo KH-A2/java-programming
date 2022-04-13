@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+import game.menu.SettingMenu;
 import game.updown.Correct;
 import game.updown.Fail;
 import game.updown.GuessNum;
@@ -7,7 +8,7 @@ import game.updown.Result;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		/*
 		 * 업앤다운
 		 *     1. 임의의 숫자가 하나 정해진다.
@@ -34,22 +35,60 @@ public class Main {
 		// Fail 클래스 : 클래스로만 생성하여 쓰도록 한다.
 		Scanner sc = new Scanner(System.in);
 		
-		while(true) {
-			GuessNum game = new GuessNum();
+		String mainMenu = "";
+		mainMenu += "<<<<< UP! & DOWN! >>>>>\n";
+		mainMenu += "┌─────────────────────┐\n";
+		mainMenu += "│ 1. Game Start!      │\n";
+		mainMenu += "│ 2. Penalty Setting  │\n";
+		mainMenu += "│ 3. Exit             │\n";
+		mainMenu += "└─────────────────────┘\n";
+		mainMenu += ": ";
+		
+		while(true) {	
+			System.out.print(mainMenu);
+			String input = sc.nextLine();
 			
-			while(game.remainCount()) {
-				System.out.print("임의의 숫자 입력 : ");
-				int num = sc.nextInt();
-				
-				Result res = game.guessing(num);
-				System.out.println(res);
-				
-				if(res instanceof Correct || res instanceof Fail) {
-					System.out.println("게임을 다시 시작합니다.");
+			switch(input.charAt(0)) {
+				case '1':
+					System.out.println("게임을 진행을 위한 정보 로딩중...");
+					Thread.sleep(1500);
 					break;
-				}
+				case '2':
+					System.out.println("벌칙을 설정하기 위한 메뉴로 이동중...");
+					Thread.sleep(1500);
+					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+					SettingMenu sm = new SettingMenu();
+					sm.show();
+					break;
+				case '3':
+					System.out.println("게임을 종료합니다.");
+					System.exit(0);
+				default:
+					System.out.println("잘못된 번호를 입력하였습니다. 다시 입력하세요.");
+					System.out.println("Enter 키를 입력하면 다시 메뉴 화면이 나옵니다.");
+					sc.nextLine();
 			}
+			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		}
+		
+		
+		
+//		while(true) {
+//			GuessNum game = new GuessNum();
+//			
+//			while(game.remainCount()) {
+//				System.out.print("임의의 숫자 입력 : ");
+//				int num = sc.nextInt();
+//				
+//				Result res = game.guessing(num);
+//				System.out.println(res);
+//				
+//				if(res instanceof Correct || res instanceof Fail) {
+//					System.out.println("게임을 다시 시작합니다.");
+//					break;
+//				}
+//			}
+//		}
 	}
 
 }
