@@ -75,5 +75,13 @@ public class UserPlayer implements Player {
 				record.getWin(), record.getLose(), record.getDraw());
 		return result;
 	}
+	
+	public void setRecordArray(int[] record) {
+		this.record.setScore(record);
+	}
+	
+	public int[] getRecordArray() {
+		return record.getScore();
+	}
 
 }

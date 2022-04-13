@@ -44,6 +44,10 @@ public class Record {
 		return score.clone();
 	}
 	
+	public void setScore(int[] score) {
+		this.score = score;
+	}
+	
 	public int getRecordCount() {
 		// 전체 승,패,무 횟수를 반환한다.
 		return score[0] + score[1] + score[2];
