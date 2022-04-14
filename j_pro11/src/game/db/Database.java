@@ -1,7 +1,15 @@
 package game.db;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,36 +32,11 @@ public class Database {
 		int[] nArr = new int[3];
 		
 		if(file.exists()) {
-		
-			StringBuilder sb = new StringBuilder();
-			try (FileReader fr = new FileReader(file)) {
-				char[] buffer = new char[4];
-				char[] readChars = new char[0];
-				
-				while(true) {
-					int i = fr.read(buffer);
-					
-					if(i == -1) {
-						break;
-					}
-					
-					int endIndex = readChars.length;
-					readChars = Arrays.copyOf(readChars, readChars.length + i);
-					System.arraycopy(buffer, 0, readChars, endIndex, i);
-				}
-				
-				sb.append(new String(readChars));
-				
-				StringTokenizer st = new StringTokenizer(sb.toString(), " ");
-				nArr = new int[st.countTokens()];
+			try (DataInputStream dis = new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
 				int i = 0;
-				while(st.hasMoreTokens()) {
-					String s = st.nextToken();
-					nArr[i++] = Integer.parseInt(s);
+				while(dis.available() > 0) {
+					nArr[i++] = dis.readInt();
 				}
-				
-				System.out.println(Arrays.toString(nArr));
-				
 			} catch (FileNotFoundException e) {
 				System.out.println("FileReader 클래스로 읽을 파일을 찾지 못했습니다.");
 				e.printStackTrace();
@@ -67,13 +50,13 @@ public class Database {
 	}
 	
 	public void save(int[] record) {
-		try (FileWriter fw = new FileWriter(file)) {
+		try (DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
 			
 			for(int i = 0; i < record.length; i++) {
-				fw.write(Integer.valueOf(record[i]).toString() + " ");
+				dos.writeInt(record[i]);
 			}
 			
-			fw.flush();
+			dos.flush();
 		} catch (FileNotFoundException e) {
 			System.out.println("쓰기 작업을 위한 파일을 찾을 수 없습니다.");
 			e.printStackTrace();
