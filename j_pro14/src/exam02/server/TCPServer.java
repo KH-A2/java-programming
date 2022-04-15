@@ -1,6 +1,10 @@
 package exam02.server;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -31,8 +35,22 @@ public class TCPServer {
 			int clientPort = cSock.getPort();
 			int connectionPort = cSock.getLocalPort();
 			
-			System.out.printf("%s:%d <----> %s:%d", serverIP.getHostAddress(), connectionPort,
+			System.out.printf("%s:%d <----> %s:%d\n", serverIP.getHostAddress(), connectionPort,
 					clientIP.getHostAddress(), clientPort);
+			
+			/*
+			 * 3. 통신용 입출력 스트림 생성
+			 */
+			BufferedReader sockIn = new BufferedReader(new InputStreamReader(cSock.getInputStream()));
+			BufferedWriter sockOut = new BufferedWriter(new OutputStreamWriter(cSock.getOutputStream()));
+			
+			while(true) {
+				// 클라이언트로 부터 수신한 메시지가 있으면 반복 진행.
+				while(sockIn.ready()) {
+					String line = sockIn.readLine();
+					System.out.println(line);
+				}
+			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();

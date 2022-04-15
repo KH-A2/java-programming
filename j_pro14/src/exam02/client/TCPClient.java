@@ -42,6 +42,7 @@ public class TCPClient {
 				System.out.print("Client : ");
 				String msg = sc.nextLine();
 				sockOut.write(msg);
+				sockOut.newLine();
 				sockOut.flush();
 			}
 			
