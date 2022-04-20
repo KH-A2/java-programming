@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
 class Person implements Comparable<Person> {
 	private String name;
@@ -54,7 +56,9 @@ public class Sample01 {
 		/*
 		 * List 계열 컬렉션 - ArrayList
 		 */
-		List<Integer> aList = new ArrayList<Integer>();
+		// List<Integer> aList = new ArrayList<Integer>();
+		// List<Integer> aList = new Vector<Integer>();
+		List<Integer> aList = new LinkedList<Integer>();
 		aList.add(100); aList.add(200); aList.add(300);
 		System.out.println(aList);
 		
