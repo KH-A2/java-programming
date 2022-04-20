@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-class Person {
+class Person implements Comparable<Person> {
 	private String name;
 	private int age;
 	
@@ -29,6 +29,22 @@ class Person {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+
+	@Override
+	public int compareTo(Person o) {
+		if(this.getName().compareTo(o.getName()) > 0) {
+			return 1;
+		} else if(this.getName().compareTo(o.getName()) < 0) {
+			return -1;
+		} else {
+			if(this.getAge() > o.getAge()) {
+				return -1;
+			} else if(this.getAge() < o.getAge()) {
+				return 1;
+			}
+		}
+		return 0;
 	}
 }
 
@@ -151,6 +167,13 @@ public class Sample01 {
 			
 		});
 		
+		for(Person p: pList) {
+			System.out.println(p.getName() + " | " + p.getAge());
+		}
+		
+		
+		System.out.println("----------------------------");
+		Collections.sort(pList);
 		for(Person p: pList) {
 			System.out.println(p.getName() + " | " + p.getAge());
 		}
