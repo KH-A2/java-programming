@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 
 public class Sample01 {
@@ -71,6 +72,12 @@ public class Sample01 {
 		// Set 을 List 로 변경
 		List<Integer> aList = new ArrayList<Integer>(aSet);
 		System.out.println(aList);
+		
+		ListIterator<Integer> iter1 = aList.listIterator(aList.size() - 1);
+		while(iter1.hasPrevious()) {
+			Integer data = iter1.previous();
+			System.out.println("Previous : " + data);
+		}
 		
 		// List 를 Set 으로 변경
 		Set<Integer> cSet = new HashSet<Integer>(aList);
