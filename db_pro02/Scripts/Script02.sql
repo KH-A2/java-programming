@@ -37,4 +37,37 @@ SELECT * FROM USER_CONSTRAINTS WHERE TABLE_NAME LIKE '지출내역%';
 
 
 
+INSERT INTO 지출내역구분_T VALUES(1, '은행예금');
+INSERT INTO 지출내역구분_T VALUES(2, '은행적금');
+INSERT INTO 지출내역구분_T(구분ID, 구분명) VALUES(3, '교통비');
+INSERT INTO 지출내역구분_T(구분명, 구분ID) VALUES('통신비', 4);
+
+
+CREATE TABLE 지출내역구분_COPY (
+       구분ID NUMBER CONSTRAINT PK_지출내역구분_COPY_구분ID PRIMARY KEY
+     , 구분명 VARCHAR2(100)
+);
+
+INSERT INTO 지출내역구분_COPY (
+       SELECT 구분ID, 구분명
+         FROM 지출내역구분_T
+);
+
+SELECT * FROM 지출내역구분_COPY;
+DELETE FROM 지출내역구분_COPY;
+
+CREATE TABLE 지출내역구분_COPY2
+    AS SELECT 구분명 FROM 지출내역구분_T
+        WHERE 1 = 0;
+
+INSERT ALL
+  INTO 지출내역구분_COPY VALUES(idx, name)
+  INTO 지출내역구분_COPY2 VALUES(name)
+SELECT 구분ID AS idx, 구분명 AS name
+  FROM 지출내역구분_T;
+
+SELECT * FROM 지출내역구분_COPY;
+SELECT * FROM 지출내역구분_COPY2;
+DELETE FROM 지출내역구분_COPY;
+DELETE FROM 지출내역구분_COPY2;
 
