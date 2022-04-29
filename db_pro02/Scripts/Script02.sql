@@ -71,3 +71,16 @@ SELECT * FROM 지출내역구분_COPY2;
 DELETE FROM 지출내역구분_COPY;
 DELETE FROM 지출내역구분_COPY2;
 
+
+/*
+ * COMMISSION_PCT 유무에 따라
+ *     커미션이 있는 경우 EMP_COMMISSION 테이블에 사번, 이름, 급여, 커미션PCT 정보를 저장하고
+ *     커미션이 없는 경우 EMP_NO_COMMISSION 테이블에 사번, 이름, 급여 정보를 저장한다.
+ */
+SELECT * FROM EMPLOYEES;
+
+
+
+
+
+
