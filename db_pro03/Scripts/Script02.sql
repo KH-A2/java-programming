@@ -182,8 +182,6 @@ BEGIN
 END;
 
 
-
-
 DECLARE
     TYPE EMP_RECORD_TYPE IS RECORD (
          ID          EMPLOYEES.EMPLOYEE_ID%TYPE
@@ -199,19 +197,24 @@ DECLARE
     EMP_TABLE   EMP_TABLE_TYPE;
     IDX BINARY_INTEGER := 0;
 BEGIN
-    FOR D IN (SELECT E.EMPLOYEE_ID
-                   , E.FIRST_NAME
-                   , E.LAST_NAME
-                   , E.SALARY
-                   , D.DEPARTMENT_ID
-                   , D.DEPARTMENT_NAME
-                FROM EMPLOYEES E JOIN DEPARTMENTS D
-                  ON E.DEPARTMENT_ID = D.DEPARTMENT_ID) LOOP
-        IDX := IDX + 1;
-        EMP_TABLE(IDX) := D;
-    END LOOP;
-    
+    SELECT E.EMPLOYEE_ID
+         , E.FIRST_NAME
+         , E.LAST_NAME
+         , E.SALARY
+         , D.DEPARTMENT_ID
+         , D.DEPARTMENT_NAME
+      INTO BULK COLLECT EMP_TABLE
+      FROM EMPLOYEES E JOIN DEPARTMENTS D
+        ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+
     FOR REC IN 1..EMP_TABLE.COUNT LOOP
     	DBMS_OUTPUT.PUT_LINE(EMP_TABLE(REC).ID);
     END LOOP;
 END;
+
+
+
+
+
+
+
