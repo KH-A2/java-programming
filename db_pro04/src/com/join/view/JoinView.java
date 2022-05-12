@@ -3,6 +3,7 @@ package com.join.view;
 import java.util.Scanner;
 
 import com.join.controller.JoinController;
+import com.join.menu.Menu;
 import com.join.vo.JoinVO;
 
 /*
@@ -12,16 +13,12 @@ import com.join.vo.JoinVO;
 public class JoinView {
 	private Scanner sc = new Scanner(System.in);
 	private JoinController jc = new JoinController();
+	private Menu menu = new Menu();
 	
 	public void show() {
-		System.out.println("    회원가입 프로그램    ");
-		System.out.println("┌───────────────────────┐");
-		System.out.println("│ 1. 회원 가입          │");
-		System.out.println("│ 2. 로그인             │");
-		System.out.println("└───────────────────────┘");
-		
 		// 회원 가입 및 로그인 요청에 맞추어 적절한 메서드를 호출한다.
 		while(true) {
+			System.out.print(menu.getMain());
 			System.out.print(">>> ");
 			String input = sc.nextLine();
 
@@ -30,6 +27,8 @@ public class JoinView {
 					this.joinMenu();	break;
 				case "2":
 					this.loginMenu();	break;
+				case "3":
+					System.exit(0);
 				default:
 					System.out.println("잘못된 메뉴 번호 입니다. 다시 입력하세요.");
 			}
@@ -71,8 +70,71 @@ public class JoinView {
 		
 		if(account != null) {
 			System.out.printf("%s 님이 로그인을 하였습니다.\n", account.getUserid());
+			afterLoginMenu(account);
 		} else {
 			System.out.println("로그인에 실패하였습니다.");
+		}
+	}
+	
+	public void afterLoginMenu(JoinVO account) {
+		while(true) {
+			System.out.print(menu.getAfterLogin(account.getUserid()));
+			System.out.print(">>> ");
+			String input = sc.nextLine();
+			
+			switch(input) {
+				case "1":
+					// 아이디는 수정 못하게 할 것임.
+					System.out.println("아무것도 입력을 하지 않으면 이전 값을 유지 합니다.");
+					System.out.println("변경 할 패스워드를 입력하세요.");
+					System.out.print(">>> ");
+					input = sc.nextLine();
+					input = input.isEmpty() ? account.getUserpw() : input;
+					account.setUserpw(input);
+					
+					System.out.println("변경 할 이름을 입력하세요.");
+					System.out.print(">>> ");
+					input = sc.nextLine();
+					input = input.isEmpty() ? account.getUsername() : input;
+					account.setUsername(input);
+					
+					System.out.println("변경 할 성별(남/여)을 입력하세요.");
+					System.out.print(">>> ");
+					input = sc.nextLine();
+					input = input.isEmpty() ? Character.toString(account.getGender()) : input;
+					account.setGender(input);
+					
+					System.out.println("변경 할 나이를 입력하세요.");
+					System.out.print(">>> ");
+					input = sc.nextLine();
+					input = input.isEmpty() ? Integer.toString(account.getAge()) : input;
+					account.setAge(input);
+					
+					boolean result = jc.update(account);
+					
+					if(result) {
+						System.out.println("수정이 완료되었습니다.");
+					} else {
+						System.out.println("수정에 실패하였습니다.");
+					}
+					
+					break;
+				case "2":
+					if(jc.remove(account)) {
+						System.out.println("탈퇴 처리가 완료 되었습니다.");
+						return;
+					} else {
+						System.out.println("탈퇴 처리를 수행할 수 없습니다.");
+					}
+					break;
+				case "3":
+					System.out.println("로그아웃 중 입니다.");
+					account = null;
+					System.out.println("로그아웃 작업이 완료되었습니다.");
+					return;
+				default:
+					System.out.println("잘못된 메뉴 번호 입니다. 다시 입력하세요.");
+			}
 		}
 	}
 

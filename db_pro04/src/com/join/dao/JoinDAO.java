@@ -1,5 +1,6 @@
 package com.join.dao;
 
+import java.io.File;
 import java.sql.ResultSet;
 
 import com.conn.db.DBConn;
@@ -14,8 +15,7 @@ public class JoinDAO {
 	
 	public JoinDAO() {
 		try {
-			db = new DBConn("db202204211241_medium", "C:\\Users\\user1\\eclipse\\oracle\\Wallet_DB202204211241"
-					, "puser1", "Database1234");
+			db = new DBConn(new File(System.getProperty("user.home") + "/oracle_db.conf"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -46,10 +46,18 @@ public class JoinDAO {
 	
 	// 회원 정보 수정을 담당
 	public boolean update(JoinVO data) {
-		String query = "";
+		String query = "UPDATE accounts"
+				+ "        SET USERPW = '" + data.getUserpw() + "'"
+				+ "          , USERNAME = '" + data.getUsername() + "'"
+				+ "          , GENDER = '" + data.getGender() + "'"
+				+ "          , AGE = " + data.getAge()
+				+ "      WHERE USERID = '" + data.getUserid() + "'";
 		try {
 			int rs = db.sendUpdateQuery(query);
-			db.commit();
+			if(rs == 1) {
+				db.commit();
+				return true;
+			}
 			db.rollback();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -59,10 +67,13 @@ public class JoinDAO {
 	
 	// 회원 정보 삭제를 담당
 	public boolean remove(JoinVO data) {
-		String query = "";
+		String query = "DELETE FROM accounts WHERE USERID = '" + data.getUserid() + "'";
 		try {
 			int rs = db.sendDeleteQuery(query);
-			db.commit();
+			if(rs == 1) {
+				db.commit();
+				return true;
+			}
 			db.rollback();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -34,20 +34,12 @@ public class JoinController {
 		return result;
 	}
 	
-	public void update() {
-		/* 
-		 * 회원 정보 수정
-		 * 반환 타입과 매개변수는 회원 정보 수정에
-		 * 필요한 타입으로 만들어 본다.
-		 */ 
+	public boolean update(JoinVO data) {
+		return dao.update(data);
 	}
 	
-	public void remove() {
-		/* 
-		 * 회원 탈퇴
-		 * 반환 타입과 매개변수는 회원 탈퇴에
-		 * 필요한 타입으로 만들어 본다.
-		 */ 
+	public boolean remove(JoinVO data) {
+		return dao.remove(data);
 	}
 
 	public JoinVO login(String userid, String userpw) {
