@@ -2,11 +2,10 @@ package com.conn.db;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashMap;
@@ -20,6 +19,7 @@ public class DBConn {
 	private String url_address;
 	private Connection conn;
 	private Statement stat;
+	private PreparedStatement pstat;
 	
 	public DBConn(File config) throws Exception {
 		Map<String, String> map = new HashMap<String, String>();
@@ -57,27 +57,32 @@ public class DBConn {
 		conn = DriverManager.getConnection(BASE_URL + url_address, username, password);
 		conn.setAutoCommit(false);
 		
-		// 3. Statement 생성
-		stat = conn.createStatement();
+		// 3. Statement 생성 -> PreparedStatement 로 변경함.
+		// stat = conn.createStatement();
 	}
 	
-	public ResultSet sendSelectQuery(String sql) throws Exception {
-		ResultSet rs = this.stat.executeQuery(sql);
+	public PreparedStatement getPstat(String sql) throws Exception {
+		pstat = conn.prepareStatement(sql);
+		return pstat;
+	}
+	
+	public ResultSet sendSelectQuery() throws Exception {
+		ResultSet rs = this.pstat.executeQuery();
 		return rs;
 	}
 	
-	public int sendUpdateQuery(String sql) throws Exception {
-		int rs = this.stat.executeUpdate(sql);
+	public int sendUpdateQuery() throws Exception {
+		int rs = this.pstat.executeUpdate();
 		return rs;
 	}
 	
-	public int sendInsertQuery(String sql) throws Exception {
-		int rs = this.stat.executeUpdate(sql);
+	public int sendInsertQuery() throws Exception {
+		int rs = this.pstat.executeUpdate();
 		return rs;
 	}
 	
-	public int sendDeleteQuery(String sql) throws Exception {
-		int rs = this.stat.executeUpdate(sql);
+	public int sendDeleteQuery() throws Exception {
+		int rs = this.pstat.executeUpdate();
 		return rs;
 	}
 	
@@ -91,7 +96,8 @@ public class DBConn {
 	
 	public void close() throws Exception {
 		// 5. 연결 해제
-		this.stat.close();
+		// this.stat.close();
+		this.pstat.close();
 		this.conn.close();
 	}
 
