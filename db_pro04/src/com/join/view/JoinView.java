@@ -1,5 +1,6 @@
 package com.join.view;
 
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 import com.join.controller.JoinController;
@@ -84,6 +85,30 @@ public class JoinView {
 			
 			switch(input) {
 				case "1":
+					System.out.println(account.getUserid());
+					System.out.println(account.getUsername());
+					System.out.println(account.getGender());
+					System.out.println(account.getAge());
+					
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+					
+					java.util.Date createDate = new java.util.Date(account.getCreateDate().getTime());
+					
+					String sDate = dateFormat.format(createDate);
+					
+					System.out.println(sDate);
+					
+					java.util.Date now = new java.util.Date();
+					
+					// 주의: java.sql.Date 는 날짜만 다루는 객체. 시간까지 다루기 위해서는 java.sql.Timestamp 를 사용해야 함.
+					java.sql.Date sqlDate = new java.sql.Date(now.getTime());
+					sqlDate = java.sql.Date.valueOf("2022-05-13");
+					
+					java.sql.Timestamp sqlDateTime = java.sql.Timestamp.valueOf("2022-05-13 10:19:30.12345");
+					System.out.println(sqlDateTime);
+					
+					break;
+				case "2":
 					// 아이디는 수정 못하게 할 것임.
 					System.out.println("아무것도 입력을 하지 않으면 이전 값을 유지 합니다.");
 					System.out.println("변경 할 패스워드를 입력하세요.");
@@ -119,7 +144,7 @@ public class JoinView {
 					}
 					
 					break;
-				case "2":
+				case "3":
 					if(jc.remove(account)) {
 						System.out.println("탈퇴 처리가 완료 되었습니다.");
 						return;
@@ -127,7 +152,7 @@ public class JoinView {
 						System.out.println("탈퇴 처리를 수행할 수 없습니다.");
 					}
 					break;
-				case "3":
+				case "4":
 					System.out.println("로그아웃 중 입니다.");
 					account = null;
 					System.out.println("로그아웃 작업이 완료되었습니다.");
