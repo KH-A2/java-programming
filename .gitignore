@@ -32,3 +32,4 @@ hs_err_pid*
 
 # Web Project Ignore Folder/File
 **/build/
+**/.settings/
