@@ -29,28 +29,50 @@ public class TCPServer {
 			InetSocketAddress serverIpPort = new InetSocketAddress(serverIP, serverPort);
 			sSock.bind(serverIpPort);
 			
+			/*
+			 * 3. 클라이언트 연결 요청을 대기 후 요청이 오면 accept 해서 클라이언트 소켓 생성
+			 */
 			Socket cSock = sSock.accept();
 			
-			InetAddress clientIP = cSock.getInetAddress();
-			int clientPort = cSock.getPort();
-			int connectionPort = cSock.getLocalPort();
+			InetAddress clientIP = cSock.getInetAddress();	// 클라이언트 주소 정보
+			int clientPort = cSock.getPort();	// 클라이언트 포트 정보
+			int connectionPort = cSock.getLocalPort();	// 서버 포트 정보
 			
 			System.out.printf("%s:%d <----> %s:%d\n", serverIP.getHostAddress(), connectionPort,
 					clientIP.getHostAddress(), clientPort);
 			
 			/*
-			 * 3. 통신용 입출력 스트림 생성
+			 * 4. 통신용 입출력 스트림 생성
 			 */
 			BufferedReader sockIn = new BufferedReader(new InputStreamReader(cSock.getInputStream()));
 			BufferedWriter sockOut = new BufferedWriter(new OutputStreamWriter(cSock.getOutputStream()));
 			
+			/*
+			 * 5. 지속적인 통신을 위한 반복문
+			 */
+			boolean disconnect = false;
 			while(true) {
 				// 클라이언트로 부터 수신한 메시지가 있으면 반복 진행.
 				while(sockIn.ready()) {
 					String line = sockIn.readLine();
+					if(line.contains("exit")) {
+						disconnect = true;
+						break;
+					}
 					System.out.println(line);
 				}
+				if(disconnect) {
+					break;
+				}
 			}
+			
+			/*
+			 * 6. 통신 종료 후에는 모든 자원 반납.
+			 */
+			sockIn.close();
+			sockOut.close();
+			cSock.close();
+			sSock.close();
 			
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -27,5 +27,8 @@ hs_err_pid*
 .project
 **/settings/
 
-# DBeaver Ignore Foler/File
+# DBeaver Ignore Folder/File
 .dbeaver
+
+# Web Project Ignore Folder/File
+**/build/
