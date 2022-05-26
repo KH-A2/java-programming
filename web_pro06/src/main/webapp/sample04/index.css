@@ -73,3 +73,47 @@
 .clear {
 	clear: both;
 }
+.test6 {
+	/* column-width: 250px; */
+	column-count: 3;
+	column-gap: 60px;
+	column-rule: 1px solid red;
+}
+.test7 {
+	column-count: 3;
+	column-rule: 1px solid red;
+}
+.test7 > h3 {
+	column-span: all;
+}
+
+.test8 table,td,th {
+	border: 1px solid black;
+	/* border-collapse: collapse; */
+	border-spacing: 8px 16px;
+}
+.test8 table {
+	width: 100%;
+	caption-side: bottom;
+	table-layout: fixed;
+	word-break: break-all;
+}
+.test8 table > caption {
+	text-align: right;
+}
+.test8 td,th {
+	text-align: left;
+	vertical-align: top;
+	padding: 6px 12px;
+	empty-cells: hide;
+	height: auto;
+}
+col.w-60 {
+	width: 60px;
+}
+col.w-120 {
+	width: 120px;
+}
+col.w-240 {
+	width: 240px;
+}
