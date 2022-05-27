@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+* {
+	box-sizing: border-box;
+}
+
+.flex-menu .menu {
+	display: flex;
+	/* flex-wrap: wrap; */
+}
+
+.flex-menu .menu-item {
+	/* flex-basis: 245px; */
+	flex-grow: 1;
+}
+
+
+@media screen and (max-width: 500px) {
+	.flex-menu .menu {
+		flex-wrap: wrap;
+	}
+	
+	.flex-menu .menu-item {
+		flex-basis: 480px;
+	}
+}
+
+
+ul.menu {
+	list-style-type: none;
+	padding: 0;
+}
+
+.menu .menu-item {
+	/* 이미 플렉스 영역의 요소라 필요 없음 */
+	/* display: inline-block; */
+	text-align: center;
+	width: 120px;
+}
+
+.menu-link {
+	display: inline-block;
+	text-decoration: none;
+	padding: 1rem 2rem;
+	width: 100%;
+}
+
+.bg-red {
+	background-color: red;
+}
+
+.bg-red :hover {
+	background-color: darkred;
+}
+
+.fg-white * {
+	color: white;
+}
+
+.fg-white :hover {
+	color: white;
+	font-weight: bold;
+}
