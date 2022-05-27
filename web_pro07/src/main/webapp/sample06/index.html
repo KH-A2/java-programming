@@ -4,9 +4,24 @@
 	<meta charset="UTF-8">
 	<title>flex로 이미지 갤러리 구성</title>
 	<link rel="stylesheet" type="text/css" href="./index.css">
+	<script type="text/javascript">
+		window.addEventListener("resize", imageWidth);
+
+		function imageWidth() {
+			gallery = document.getElementById("img_gallery");
+			images = gallery.getElementsByTagName("img");
+			total_height = 0;
+			for(img of images) {
+				total_height += img.height;
+			}
+			rate = window.innerWidth / images[0].width;
+			gallery.style.height = total_height / (rate - 1) + "px";
+			console.log(total_height / rate);
+		}
+	</script>
 </head>
-<body>
-	<div class="flex-img-gallery">
+<body onload="imageWidth();">
+	<div id="img_gallery" class="flex-img-gallery">
 		<img src="./img/4.jpg">
 		<img src="./img/5.jpg">
 		<img src="./img/1.jpg">
@@ -39,7 +54,6 @@
 		<img src="./img/11.jpg">
 		<img src="./img/3.jpg">
 		<img src="./img/4.jpg">
-		<img src="./img/5.jpg">
 	</div>
 </body>
 </html>
