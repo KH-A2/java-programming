@@ -11,12 +11,20 @@
 			gallery = document.getElementById("img_gallery");
 			images = gallery.getElementsByTagName("img");
 			total_height = 0;
+			max_height = 0;
 			for(img of images) {
 				total_height += img.height;
+				if(img.height > max_height) {
+					max_height = img.height;
+				}
 			}
-			rate = window.innerWidth / images[0].width;
-			gallery.style.height = total_height / (rate - 1) + "px";
-			console.log(total_height / rate);
+			// 컬럼 수
+			col = parseInt(window.innerWidth / images[0].width);
+			// 평균 높이.
+			avg_height = total_height / images.length;
+			// 하나의 컬럼에 배치될 평균 이미지 수
+			avg_count = parseInt(images.length / col);
+			gallery.style.height = avg_height * (avg_count + 1) + "px";
 		}
 	</script>
 </head>
@@ -54,6 +62,8 @@
 		<img src="./img/11.jpg">
 		<img src="./img/3.jpg">
 		<img src="./img/4.jpg">
+		<img src="./img/6.jpg">
+		<img src="./img/10.webp">
 	</div>
 </body>
 </html>
