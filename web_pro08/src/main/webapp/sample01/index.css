@@ -99,6 +99,7 @@ header {
 .form-input-icon span {
 	padding: 0.6rem;
 	display: inline-block;
+	color: rgb(128, 128, 128);
 }
 
 .form-control-inline > * {
@@ -131,9 +132,21 @@ option {
 	border-width: 0;
 }
 
+.btn:active {
+	position: relative;
+	left: 1px; top: 1px;
+}
+
 .btn-green {
 	background-color: rgb(0, 200, 80);
 	color: white;
+	cursor: pointer;
+}
+
+.btn-green:hover {
+	background-color: rgb(0, 216, 96);
+	color: white;
+	transition-duration: 1s;
 }
 
 .btn-block {
