@@ -93,10 +93,11 @@ header {
 .form-input-icon .form-input {
 	flex-grow: 10;
 	border-style: none;
+	border-width: 0;
 }
 
 .form-input-icon span {
-	padding: 0.8rem;
+	padding: 0.6rem;
 	display: inline-block;
 }
 
@@ -114,7 +115,7 @@ header {
 }
 
 select {
-	border-width: 2px;
+	/* border-width: 2px; */
 	appearance: none; /* 선택 박스의 v 아이콘 제거 */
 }
 
@@ -127,6 +128,7 @@ option {
 	font-weight: bold;
 	padding: 1rem;
 	border-style: none;
+	border-width: 0;
 }
 
 .btn-green {
