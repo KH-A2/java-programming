@@ -88,6 +88,52 @@
 	padding: 0.6rem;
 }
 
+.paging-list {
+	list-style-type: none;
+	font-size: 12px;
+}
+
+.paging-list .paging-item {
+	display: inline-block;
+	padding: 0.2em 0.5em;
+}
+
+.paging-list a {
+	text-decoration: none;
+	color: black;
+}
+
+.paging-list a:hover {
+	text-decoration: underline;
+}
+
+.paging-list .active {
+	border: 1px solid black;
+}
+
+.paging-list .active a {
+	color: rgb(0, 216, 80);
+}
+
+.paging-list .next-item::after {
+	position: relative;
+	top: 1px;
+	right: 4px;
+	font-family: "Material Symbols Outlined";
+	font-size: 1em;
+	content: "\e5e1";
+}
+
+.paging-list .prev-item::after {
+	font-family: "Material Symbols Outlined";
+	font-size: 1rem;
+	content: "\e5e0";
+}
+
+.align-center {
+	text-align: center;
+}
+
 .align-right {
 	text-align: right;
 }
