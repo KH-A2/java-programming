@@ -15,9 +15,10 @@ arr1[1] = 20;
 arr1[2] = 30;
 res1.innerHTML += arr1 + "<br>";
 
-res1.innerHTML += "arr1.indexOf(10) -> " + arr1.indexOf(10) + "<br>";
-res1.innerHTML += "arr1.indexOf(20) -> " + arr1.indexOf(20) + "<br>";
-res1.innerHTML += "arr1.indexOf(30) -> " + arr1.indexOf(30) + "<br>";
+var res2 = document.getElementById("res2");
+res2.innerHTML += "arr1.indexOf(10) -> " + arr1.indexOf(10) + "<br>";
+res2.innerHTML += "arr1.indexOf(20) -> " + arr1.indexOf(20) + "<br>";
+res2.innerHTML += "arr1.indexOf(30) -> " + arr1.indexOf(30) + "<br>";
 
 res1.innerHTML += "arr1.push(40)" + "<br>";
 arr1.push(40);
