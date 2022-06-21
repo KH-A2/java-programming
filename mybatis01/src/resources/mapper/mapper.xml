@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="testMapper">
+	<select id="test" resultType="map">
+		select 1 as n1, 2 as n2, 3 as n3, 4 as n4 from dual
+		union all
+		select 5 as n1, 6 as n2, 7 as n4, 8 as n4 from dual 
+	</select>
+	<!-- <select id="employee" parameterType="_int" resultType="empVo">
+		SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME FROM EMPLOYEES WHERE EMPLOYEE_ID = #{id}
+	</select> -->
+	<select id="employee" parameterType="map" resultType="empVo">
+		SELECT EMPLOYEE_ID AS empid
+		     , FIRST_NAME AS fname
+		     , LAST_NAME AS lname
+		  FROM EMPLOYEES WHERE EMPLOYEE_ID BETWEEN #{id1} AND #{id2}
+	</select>
+</mapper>
