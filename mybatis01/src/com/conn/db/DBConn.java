@@ -33,16 +33,21 @@ public class DBConn {
 	
 	public static void main(String[] args) {
 		SqlSession session = DBConn.getSqlSession();
-		// List<Object> result = session.selectList("testMapper.test");
-		// List<EmpVO> result = session.selectList("testMapper.employee");
-		Map<String, Integer> data = new HashMap<String, Integer>();
-		data.put("id1", 100);
-		data.put("id2", 110);
-		List<EmpVO> result = session.selectList("testMapper.employee", data);
-		System.out.println(result);
 		
-		for(EmpVO d: result) {
-			System.out.println(d.getEmpId() + ", " + d.getfName());
+		int res1 = session.selectOne("testMapper.test1");
+		System.out.println(res1);
+		
+		String res2 = session.selectOne("testMapper.test2");
+		System.out.println(res2);
+		
+		List<Map<String, Object>> res3 = session.selectList("testMapper.test3");
+		for(Map<String, Object> data: res3) {
+			System.out.println(data.get("EMPLOYEE_ID") + ", " + data.get("FIRST_NAME"));
+		}
+		
+		List<EmpVO> res4 = session.selectList("testMapper.test4");
+		for(EmpVO data: res4) {
+			System.out.println(data.getEmpId() + ", " + data.getfName());
 		}
 	}
 
