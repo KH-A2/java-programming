@@ -1,16 +1,23 @@
 package com.data.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 public class EmpSelectVO {
 	private int salary;
 	private Date startDate;
 	private Date endDate;
 	private int deptId;
+	private List<Integer> deptIdList;
 	private String strStartDate;
 	private String strEndDate;
 	
-	
+	public List<Integer> getDeptIdList() {
+		return deptIdList;
+	}
+	public void setDeptIdList(List<Integer> deptIdList) {
+		this.deptIdList = deptIdList;
+	}
 	public String getStrStartDate() {
 		return strStartDate;
 	}

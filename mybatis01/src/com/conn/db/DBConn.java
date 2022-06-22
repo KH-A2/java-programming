@@ -126,7 +126,7 @@ public class DBConn {
 		Date edDate = null;
 		try {
 			stDate = sdf.parse("1990/01/01");
-			edDate = sdf.parse("1995/12/31");
+			edDate = sdf.parse("2000/12/31");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -138,6 +138,11 @@ public class DBConn {
 		// dynamicData.setDeptId(80);
 //		dynamicData.setStrStartDate("1990/01/01");
 //		dynamicData.setStrEndDate("2000/12/31");
+		
+		List<Integer> deptList = new ArrayList<Integer>();
+		deptList.add(80); deptList.add(90); deptList.add(100);
+		dynamicData.setDeptIdList(deptList);
+		
 		List<EmpVO> res15 = session.selectList("testMapper.test16", dynamicData);
 		System.out.println(res15.size() + "개 행 데이터가 조회되었습니다.");
 	}
