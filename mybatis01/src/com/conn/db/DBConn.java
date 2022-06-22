@@ -77,6 +77,11 @@ public class DBConn {
 		for(EmpVO data: res9) {
 			System.out.println(data.getEmpId() + ", " + data.getfName());
 		}
+		
+		EmpVO empData = new EmpVO();
+		empData.setEmpId(200);
+		EmpVO res10 = session.selectOne("testMapper.test10", empData);
+		System.out.println(res10.getEmpId() + ", " + res10.getfName());
 	}
 
 }

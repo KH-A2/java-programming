@@ -67,6 +67,14 @@
 		  FROM EMPLOYEES
 		 WHERE EMPLOYEE_ID BETWEEN #{start} AND #{end}
 	</select>
+	
+	<select id="test10" parameterType="empVo" resultMap="empVoMap">
+		SELECT EMPLOYEE_ID
+		     , FIRST_NAME
+		     , LAST_NAME
+		  FROM EMPLOYEES
+		 WHERE EMPLOYEE_ID = #{empId}
+	</select>
 
 	<!-- <select id="employee" parameterType="_int" resultType="empVo">
 		SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME FROM EMPLOYEES WHERE EMPLOYEE_ID = #{id}
