@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="testMapper">
+	<resultMap type="empVo" id="empVoMap">
+		<result column="employee_id" property="empId" />
+		<result column="first_name" property="fName" />
+		<result column="last_name" property="lName" />
+	</resultMap>
+
 	<select id="test1" resultType="_int">
 		SELECT 1234 FROM DUAL
 	</select>
@@ -21,6 +27,45 @@
 		     , FIRST_NAME AS fname
 		     , LAST_NAME AS lname
 		  FROM EMPLOYEES
+	</select>
+	
+	<select id="test5" resultMap="empVoMap">
+		SELECT EMPLOYEE_ID
+		     , FIRST_NAME
+		     , LAST_NAME
+		  FROM EMPLOYEES
+	</select>
+	
+	<select id="test6" resultMap="empVoMap">
+		SELECT EMPLOYEE_ID
+		     , FIRST_NAME
+		     , LAST_NAME
+		  FROM EMPLOYEES
+		 WHERE EMPLOYEE_ID = #{id}
+	</select>
+	
+	<select id="test7" parameterType="string" resultMap="empVoMap">
+		SELECT EMPLOYEE_ID
+		     , FIRST_NAME
+		     , LAST_NAME
+		  FROM EMPLOYEES
+		 WHERE FIRST_NAME = #{id}
+	</select>
+	
+	<select id="test8" parameterType="string" resultMap="empVoMap">
+		SELECT EMPLOYEE_ID
+		     , FIRST_NAME
+		     , LAST_NAME
+		  FROM EMPLOYEES
+		 WHERE FIRST_NAME LIKE '%' || #{id} || '%'
+	</select>
+	
+	<select id="test9" parameterType="map" resultMap="empVoMap">
+		SELECT EMPLOYEE_ID
+		     , FIRST_NAME
+		     , LAST_NAME
+		  FROM EMPLOYEES
+		 WHERE EMPLOYEE_ID BETWEEN #{start} AND #{end}
 	</select>
 
 	<!-- <select id="employee" parameterType="_int" resultType="empVo">

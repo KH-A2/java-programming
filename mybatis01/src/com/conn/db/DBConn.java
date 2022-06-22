@@ -49,6 +49,34 @@ public class DBConn {
 		for(EmpVO data: res4) {
 			System.out.println(data.getEmpId() + ", " + data.getfName());
 		}
+		
+		List<EmpVO> res5 = session.selectList("testMapper.test5");
+		for(EmpVO data: res5) {
+			System.out.println(data.getEmpId() + ", " + data.getfName());
+		}
+		
+		for(int idx = 100; idx < 110; idx++) {
+			EmpVO res6 = session.selectOne("testMapper.test6", idx);
+			System.out.println(res6.getEmpId() + ", " + res6.getfName());
+		}
+		
+		List<EmpVO> res7 = session.selectList("testMapper.test7", "Steven");
+		for(EmpVO data: res7) {
+			System.out.println(data.getEmpId() + ", " + data.getfName());
+		}
+		
+		List<EmpVO> res8 = session.selectList("testMapper.test8", "on");
+		for(EmpVO data: res8) {
+			System.out.println(data.getEmpId() + ", " + data.getfName());
+		}
+		
+		Map<String, Integer> mapData = new HashMap<String, Integer>();
+		mapData.put("start", 100);
+		mapData.put("end", 109);
+		List<EmpVO> res9 = session.selectList("testMapper.test9", mapData);
+		for(EmpVO data: res9) {
+			System.out.println(data.getEmpId() + ", " + data.getfName());
+		}
 	}
 
 }
