@@ -6,9 +6,10 @@
 	<properties resource="resources/oracle_db.conf">
 		<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
 	</properties>
-	<!-- settings>
+	<settings>
 		<setting name="jdbcTypeForNull" value="NULL"/>
-	</settings -->
+		<setting name="logImpl" value="LOG4J2" />
+	</settings>
 	<typeAliases>
 		<typeAlias type="com.data.vo.EmpVO" alias="empVo"/>
 		<typeAlias type="com.data.vo.TestVO" alias="testVo"/>
@@ -29,5 +30,6 @@
 	</environments>
 	<mappers>
 		<mapper resource="resources/mapper/mapper.xml"/>
+		<mapper resource="resources/mapper/example.xml"/>
 	</mappers>
 </configuration>

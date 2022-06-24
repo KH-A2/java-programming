@@ -140,4 +140,13 @@
 			</choose>
 		</trim>
 	</select>
+	<select id="trimTest" parameterType="map" resultType="_int">
+		SELECT COUNT(*) FROM EMPLOYEES
+		<trim prefix="WHERE" prefixOverrides="AND">
+		    <if test="empId != 0">
+		        AND EMPLOYEE_ID = #{empId}
+		    </if>
+		</trim>
+		AND 1 = 1
+	</select>
 </mapper>
