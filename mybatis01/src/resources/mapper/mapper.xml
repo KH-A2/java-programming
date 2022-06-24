@@ -7,6 +7,24 @@
 		<result column="first_name" property="fName" />
 		<result column="last_name" property="lName" />
 	</resultMap>
+	
+	<resultMap type="empComplexVo" id="empComplexVoMap">
+		<result column="EMPLOYEE_ID"    property="empId"     javaType="_int" />
+		<result column="EMPLOYEE_NAME"  property="empName"   javaType="string" />
+		<result column="PHONE_NUMBER"   property="empPhone"  javaType="string" />
+		<result column="COMMISSION_PCT" property="empComPct" javaType="_double" />
+		<result column="SALARY"         property="empSalary" javaType="_int" />
+		<association property="dept" javaType="deptVo">
+			<result column="DEPARTMENT_ID"   property="deptId"   javaType="_int" />
+			<result column="DEPARTMENT_NAME" property="deptName" javaType="string" />
+		</association>
+		<association property="job" javaType="jobVo">
+			<result column="JOB_ID"     property="jobCode"      javaType="string" />
+			<result column="JOB_TITLE"  property="jobTitle"     javaType="string" />
+			<result column="MIN_SALARY" property="jobMinSalary" javaType="_int" />
+			<result column="MAX_SALARY" property="jobMaxSalary" javaType="_int" />
+		</association>
+	</resultMap>
 
 	<select id="test1" resultType="_int">
 		SELECT 1234 FROM DUAL
@@ -148,5 +166,28 @@
 		    </if>
 		</trim>
 		AND 1 = 1
+	</select>
+	<insert id="seqGetInsert" parameterType="testVo" useGeneratedKeys="true"
+		keyProperty="id" keyColumn="ID">
+		INSERT INTO T_MYBATIS VALUES (SEQ_MYBATIS.NEXTVAL, #{name}, #{today})
+	</insert>
+	<select id="empComplexSelect" resultMap="empComplexVoMap">
+		SELECT E.EMPLOYEE_ID
+		     , E.FIRST_NAME || ' ' || E.LAST_NAME AS EMPLOYEE_NAME
+		     , E.PHONE_NUMBER
+		     , E.COMMISSION_PCT 
+		     , E.SALARY
+		     , D.DEPARTMENT_ID
+		     , D.DEPARTMENT_NAME
+		     , J.JOB_ID
+		     , J.JOB_TITLE
+		     , J.MIN_SALARY
+		     , J.MAX_SALARY
+		  FROM EMPLOYEES E
+		  JOIN DEPARTMENTS D
+		    ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+		  JOIN JOBS J
+		    ON E.JOB_ID = J.JOB_ID
+		 WHERE E.EMPLOYEE_ID = #{empId}
 	</select>
 </mapper>

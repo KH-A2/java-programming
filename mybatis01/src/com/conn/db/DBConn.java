@@ -15,6 +15,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import com.data.vo.EmpComplexVO;
 import com.data.vo.EmpSelectVO;
 import com.data.vo.EmpVO;
 import com.data.vo.TestVO;
@@ -158,7 +159,8 @@ public class DBConn {
 		// mapParam.put("stDeptId", 80);
 		// mapParam.put("edDeptId", 100);
 		
-		List<Map<String, Object>> res16 = session.selectList("exampleMapper.empOfDeptCount", mapParam);
+		List<Map<String, Object>> res16 = session.selectList(
+				"exampleMapper.empOfDeptCount", mapParam);
 		
 		if(res16.size() != 0) {
 			for(Map<String, Object> record: res16) {
@@ -169,6 +171,17 @@ public class DBConn {
 		} else {
 			System.out.println("해당 부서는 존재하지 않습니다.");
 		}
+		
+		TestVO insertData2 = new TestVO();
+		insertData2.setName("getSeq"); insertData2.setToday(new java.sql.Date(new Date().getTime()));
+		
+		int res17 = session.insert("testMapper.seqGetInsert", insertData2);
+		session.commit();
+		System.out.println(res17 + " 개의 행이 추가 되었습니다. 자동 생성된 ID 는 " + insertData2.getId() + "입니다.");
+		
+		
+		EmpComplexVO res18 = session.selectOne("testMapper.empComplexSelect", 100);
+		System.out.println(res18);
 	}
 
 }
