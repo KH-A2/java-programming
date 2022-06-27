@@ -61,7 +61,14 @@
 	<hr>
 	<h2>getParameterNames()</h2>
 	<p>
-		
+		request.getParameterNames() :
+		<%
+			Iterator<String> iter = request.getParameterNames().asIterator();
+			while(iter.hasNext()) {
+		%>
+				<%=iter.next() %>
+		<% } %>
+		<br>
 		input 태그 등에 사용하는 name 속성의 값을 반환한다.
 	</p>
 	<form action="./jsp_request" method="get">
