@@ -16,7 +16,6 @@ public class DeptDAO {
 	
 	public List<DeptDTO> searchAll() {
 		List<DeptDTO> datas = session.selectList("deptMapper.deptSelectAll");
-		System.out.println("DeptDAO.searchAll : " + datas);
 		return datas;
 	}
 }

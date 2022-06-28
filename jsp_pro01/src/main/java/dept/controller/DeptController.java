@@ -19,6 +19,11 @@ public class DeptController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DeptService service = new DeptService();
 		List<DeptDTO> deptDatas = service.getAll();
+		
+		request.setAttribute("deptDatas", deptDatas);
+		
+		String view = "/WEB-INF/jsp/dept/index.jsp";
+		request.getRequestDispatcher(view).forward(request, response);
 	}
 
 }
