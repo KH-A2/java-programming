@@ -15,9 +15,10 @@ import dept.service.DeptService;
 @WebServlet("/depts")
 public class DeptController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private DeptService service = new DeptService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DeptService service = new DeptService();
 		List<DeptDTO> deptDatas = service.getAll();
 		
 		request.setAttribute("deptDatas", deptDatas);
