@@ -5,10 +5,10 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>JSP - request 객체</title>
+	<title>JSP/Servlet - request 객체</title>
 </head>
 <body>
-	<h1>JSP - request 객체</h1>
+	<h1>JSP/Servlet - request 객체</h1>
 	<h2>getMethod()</h2>
 	<p>
 		request.getMethod() : <%=request.getMethod() %>
@@ -80,5 +80,27 @@
 			<button type="submit">전송</button>
 		</div>
 	</form>
+	<hr>
+	<h2>setCharacterEncoding()</h2>
+	<p>
+		<%=request.getParameter("username") %><br>
+		request.setCharacterEncoding : 클라이언트에서 서버로 전송한 한글 데이터에 문제가 발생했을 때 servlet 의 가장<br>
+		첫번째 줄에 적용을 하거나 Filter 를 만들어 적용할 것. -> request.setCharacterEncoding("UTF-8")
+	</p>
+	<form action="./jsp_request" method="post">
+		<div>
+			<input type="text" name="username">
+		</div>
+		<div>
+			<button type="submit">전송</button>
+		</div>
+	</form>
+	<hr>
+	<h2>getSession()</h2>
+	<p>
+		세션객체 : <%=request.getSession() %><br>
+		세션ID : <%=request.getSession().getId() %><br>
+		로그인 세션 정보와 같은 기능을 수행하기 위해 사용하는 객체
+	</p>
 </body>
 </html>
