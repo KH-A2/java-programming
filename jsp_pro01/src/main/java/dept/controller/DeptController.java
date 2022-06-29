@@ -26,10 +26,14 @@ public class DeptController extends HttpServlet {
 		if(search == null) {
 			deptDatas = service.getAll();
 		} else {
-			deptDatas = new ArrayList<DeptDTO>();
-			
-			DeptDTO data = service.getId(search);
-			deptDatas.add(data);
+			boolean isNumber = search.matches("\\d+");
+			if(isNumber) {
+				DeptDTO data = service.getId(search);
+				if(data != null) {
+					deptDatas = new ArrayList<DeptDTO>();			
+					deptDatas.add(data);
+				}
+			}
 		}
 		
 		request.setAttribute("deptDatas", deptDatas);

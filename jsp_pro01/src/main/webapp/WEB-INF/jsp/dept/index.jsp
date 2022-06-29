@@ -7,6 +7,20 @@
 	<meta charset="UTF-8">
 	<title>부서 조회 결과</title>
 </head>
+<script type="text/javascript">
+window.onload = function() {
+	var form = document.forms[0];
+	form.addEventListener("submit", formCheck);
+}
+
+function formCheck(e) {
+	if(this.search.value === "") {
+		e.preventDefault();
+	} else {
+		this.submit();
+	}
+}
+</script>
 <body>
 	<h1>부서 조회 결과</h1>
 	<div>
@@ -25,16 +39,18 @@
 			<th>LocId</th>
 		</tr>
 	<%
-		List<DeptDTO> datas = (List<DeptDTO>) request.getAttribute("deptDatas");
-		for(DeptDTO data: datas) {
+		if(request.getAttribute("deptDatas") != null) {
+			List<DeptDTO> datas = (List<DeptDTO>) request.getAttribute("deptDatas");
+			for(DeptDTO data: datas) {
 	%>
-		<tr>
-			<td><%=data.getDeptId() %></td>
-			<td><%=data.getDeptName() %></td>
-			<td><%=data.getMngId() %></td>
-			<td><%=data.getLocId() %></td>
-		</tr>
+				<tr>
+					<td><%=data.getDeptId() %></td>
+					<td><%=data.getDeptName() %></td>
+					<td><%=data.getMngId() %></td>
+					<td><%=data.getLocId() %></td>
+				</tr>
 	<%
+			}
 		}
 	%>
 	</table>
