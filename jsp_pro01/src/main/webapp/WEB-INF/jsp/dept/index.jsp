@@ -9,6 +9,14 @@
 </head>
 <body>
 	<h1>부서 조회 결과</h1>
+	<div>
+		<form action="./depts" method="get">
+			<div>
+				<input type="text" name="search">
+				<button type="submit">조회</button>
+			</div>
+		</form>
+	</div>
 	<table>
 		<tr>
 			<th>DeptId</th>

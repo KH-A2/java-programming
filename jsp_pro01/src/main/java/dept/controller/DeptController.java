@@ -1,6 +1,7 @@
 package dept.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -19,7 +20,17 @@ public class DeptController extends HttpServlet {
 	private DeptService service = new DeptService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<DeptDTO> deptDatas = service.getAll();
+		String search = request.getParameter("search");
+		
+		List<DeptDTO> deptDatas = null;
+		if(search == null) {
+			deptDatas = service.getAll();
+		} else {
+			deptDatas = new ArrayList<DeptDTO>();
+			
+			DeptDTO data = service.getId(search);
+			deptDatas.add(data);
+		}
 		
 		request.setAttribute("deptDatas", deptDatas);
 		
