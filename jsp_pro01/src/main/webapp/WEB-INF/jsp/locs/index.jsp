@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, dept.model.DeptDTO" %>
+<%@ page import="java.util.*, locs.model.LocsDTO" %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>부서 조회 결과</title>
+	<title>지역 조회 결과</title>
 	<style type="text/css">
 		.required-box {
 			margin: 0; padding: 0.3rem 0.6rem;
@@ -81,32 +81,36 @@ function requiredBox(element, message) {
 }
 </script>
 <body>
-	<h1>부서 조회 결과</h1>
+	<h1>지역 조회 결과</h1>
 	<div>
-		<form action="./depts" method="get">
+		<form action="./locs" method="get">
 			<div>
-				<input type="text" name="search" data-required="부서코드를 입력하세요.">
+				<input type="text" name="search" data-required="지역코드를 입력하세요.">
 				<button type="submit">조회</button>
 			</div>
 		</form>
 	</div>
 	<table>
 		<tr>
-			<th>DeptId</th>
-			<th>DeptName</th>
-			<th>MngId</th>
 			<th>LocId</th>
+			<th>StAddr</th>
+			<th>Postal</th>
+			<th>City</th>
+			<th>State</th>
+			<th>CtyId</th>
 		</tr>
 	<%
-		if(request.getAttribute("deptDatas") != null) {
-			List<DeptDTO> datas = (List<DeptDTO>) request.getAttribute("deptDatas");
-			for(DeptDTO data: datas) {
+		if(request.getAttribute("locsDatas") != null) {
+			List<LocsDTO> datas = (List<LocsDTO>) request.getAttribute("locsDatas");
+			for(LocsDTO data: datas) {
 	%>
 				<tr>
-					<td><%=data.getDeptId() %></td>
-					<td><%=data.getDeptName() %></td>
-					<td><%=data.getMngId() %></td>
 					<td><%=data.getLocId() %></td>
+					<td><%=data.getStAddr() %></td>
+					<td><%=data.getPostal() %></td>
+					<td><%=data.getCity() %></td>
+					<td><%=data.getState() %></td>
+					<td><%=data.getCtyId() %></td>
 				</tr>
 	<%
 			}
