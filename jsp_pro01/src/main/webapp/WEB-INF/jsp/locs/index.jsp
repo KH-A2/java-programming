@@ -18,32 +18,33 @@
 			color: white;
 			box-shadow: 2px 2px 2px gray;
 			opacity: 0;
-			transition: opacity 0.5s;
 		}
 		.required-box.show {
 			opacity: 1;
-			transition: opacity 0.5s;
-		}
-		.required-box:after {
-			content: '';
-			position: absolute;
-			top: 0; left: 15%;
-			width: 0; height: 0;
-			border: 6px solid transparent;
-			/* border-bottom-color: white; */
-			border-top: 0;
-			margin-left: -6px; margin-top: -6px;
+			transition: opacity 1s;
 		}
 		.required-box:before {
 			content: '';
 			position: absolute;
 			top: 0; left: 15%;
 			width: 0; height: 0;
-			border: 7px solid transparent;
+			border: 6px solid transparent;
 			border-bottom-color: black;
 			border-top: 0;
-			margin-left: -7px; margin-top: -7px;
+			margin-left: -6px; margin-top: -6px;
 		}
+		/*
+		.required-box:after {
+			content: '';
+			position: absolute;
+			top: 0; left: 50%;
+			width: 0; height: 0;
+			border: 4px solid transparent;
+			border-bottom-color: white;
+			border-top: 0;
+			margin-left: -4px; margin-top: -4px;
+		}
+		*/
 	</style>
 </head>
 <script type="text/javascript">
