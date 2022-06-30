@@ -42,6 +42,8 @@ public class DeptModController extends HttpServlet {
 		int result = service.modifyDept(data);
 		
 		String view = "/WEB-INF/jsp/dept/mod.jsp";
+		request.setAttribute("data", data);
+		
 		switch(result) {
 			case 1:
 				response.sendRedirect("/jsp01/depts?search=" + data.getDeptId());
