@@ -34,4 +34,36 @@ public class DeptService {
 		DeptDTO data = dao.searchId(id);
 		return data;
 	}
+
+	public DeptDTO addDept(String deptId, String deptName, String mngId, String locId) {
+		DeptDTO deptDto = null;
+		if(deptId.matches("\\d+") && mngId.matches("\\d+") && locId.matches("\\d+")) {
+			deptDto = new DeptDTO();
+			deptDto.setDeptId(Integer.parseInt(deptId));
+			deptDto.setDeptName(deptName);
+			deptDto.setMngId(Integer.parseInt(mngId));
+			deptDto.setLocId(Integer.parseInt(locId));
+			
+			if(dao.searchId(deptDto.getDeptId()) != null) {
+				deptDto.setDeptId(-1);
+				return deptDto;
+			}
+			
+			if(!dao.existManager(deptDto.getMngId())) {
+				deptDto.setMngId(-1);
+				return deptDto;
+			}
+			
+			if(!dao.existLocation(deptDto.getLocId())) {
+				deptDto.setLocId(-1);
+				return deptDto;
+			}
+			
+			boolean isSaved = dao.insertDept(deptDto);
+			if(!isSaved) {
+				return null;
+			}
+		}
+		return deptDto;
+	}
 }

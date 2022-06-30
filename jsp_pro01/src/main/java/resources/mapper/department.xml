@@ -15,4 +15,7 @@
 		SELECT * FROM DEPARTMENTS
 		 WHERE DEPARTMENT_ID = #{id}
 	</select>
+	<insert id="deptInsert" parameterType="deptDto">
+		INSERT INTO DEPARTMENTS VALUES (#{deptId}, #{deptName}, #{mngId}, #{locId})
+	</insert>
 </mapper>
