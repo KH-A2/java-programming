@@ -59,10 +59,6 @@ public class DeptDAO {
 		session.rollback();
 		return false;
 	}
-	
-	public void close() {
-		session.close();
-	}
 
 	public boolean deleteDept(int id) {
 		int result = session.delete("deptMapper.deptDelete", id);
@@ -71,5 +67,9 @@ public class DeptDAO {
 			return true;
 		}
 		return false;
+	}
+	
+	public void close() {
+		session.close();
 	}
 }
