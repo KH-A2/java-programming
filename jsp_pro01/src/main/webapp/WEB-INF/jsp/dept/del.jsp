@@ -17,8 +17,11 @@
 	</ul>
 	<p>삭제할 데이터가 맞습니까?</p>
 	<div>
-		<button type="button">삭제</button>
+		<button type="submit" form="deleteForm">삭제</button>
 		<button type="button" onclick="history.back();">취소</button>
 	</div>
+	<form id="deleteForm" action="./del" method="post">
+		<input type="hidden" name="deptId" value="<%=data.getDeptId() %>">
+	</form>
 </body>
 </html>

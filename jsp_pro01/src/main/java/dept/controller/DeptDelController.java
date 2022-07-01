@@ -31,19 +31,25 @@ public class DeptDelController extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("id");
-		int result = service.deleteDept(id);
+		String deptId = request.getParameter("deptId");
+		int result = service.deleteDept(deptId);
+		
+		String view = "/WEB-INF/jsp/dept/del_error.jsp";
+		
 		switch(result) {
 			case 1:
 				response.sendRedirect("/jsp01/depts");
 				return;
 			case 0:
-				System.out.println("삭제 처리 중 문제 발생");
-				return;
+				request.setAttribute("error", true);
+				request.setAttribute("errorMsg", "삭제 처리 중 문제 발생");
+				break;
 			case -1:
-				System.out.println("삭제할 데이터가 존재하지 않습니다.");
-				return;
+				request.setAttribute("error", true);
+				request.setAttribute("errorMsg", "삭제할 데이터가 존재하지 않습니다.");
+				break;
 		}
+		request.getRequestDispatcher(view).forward(request, response);
 	}
 
 }
