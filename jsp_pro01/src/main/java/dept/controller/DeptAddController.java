@@ -45,7 +45,7 @@ public class DeptAddController extends HttpServlet {
 				request.getRequestDispatcher(view).forward(request, response);
 			} else {
 				// 저장 성공 후 리다이렉트를 사용하여 페이지를 이동하게 함
-				response.sendRedirect("/jsp01/depts?search=" + data.getDeptId());
+				response.sendRedirect(request.getContextPath() + "/depts?search=" + data.getDeptId());
 			}
 		} else {
 			// 저장 실패 후 기존 페이지를 유지하면서 사용자가 입력했던 데이터도 최대한 보존
