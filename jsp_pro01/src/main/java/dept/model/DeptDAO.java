@@ -1,6 +1,7 @@
 package dept.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -17,6 +18,16 @@ public class DeptDAO {
 	public List<DeptDTO> searchAll() {
 		List<DeptDTO> datas = session.selectList("deptMapper.deptSelectAll");
 		return datas;
+	}
+	
+	public List<DeptDTO> searchPage(Map<String, Integer> page) {
+		List<DeptDTO> datas = session.selectList("deptMapper.deptSelectPage", page);
+		return datas;
+	}
+	
+	public int totalRow() {
+		int rowCount = session.selectOne("deptMapper.deptTotalRow");
+		return rowCount;
 	}
 	
 	public DeptDTO searchId(int id) {
