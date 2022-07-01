@@ -1,8 +1,12 @@
 package dept.model;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.cursor.Cursor;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import conn.db.DBConn;
@@ -22,6 +26,19 @@ public class DeptDAO {
 	
 	public List<DeptDTO> searchPage(Map<String, Integer> page) {
 		List<DeptDTO> datas = session.selectList("deptMapper.deptSelectPage", page);
+		return datas;
+	}
+	
+	public List<DeptDTO> searchPage(int start, int end) {
+		RowBounds rb = new RowBounds(start, end);
+		Cursor<DeptDTO> cursor = session.selectCursor("deptMapper.deptSelectAll", null, rb);
+		
+		List<DeptDTO> datas = new ArrayList<DeptDTO>();
+		Iterator<DeptDTO> iter = cursor.iterator();
+		while(iter.hasNext()) {
+			datas.add(iter.next());
+		}
+		
 		return datas;
 	}
 	

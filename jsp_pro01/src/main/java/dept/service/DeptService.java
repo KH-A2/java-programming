@@ -22,6 +22,17 @@ public class DeptService {
 	}
 	
 	public List<DeptDTO> getPage(int pageNumber) {
+		int start, end;
+		start = (pageNumber - 1) * 10;
+		end = 10;
+		dao = new DeptDAO();
+		List<DeptDTO> datas = dao.searchPage(start, end);
+		dao.close();
+		return datas;
+	}
+	
+	/*
+	public List<DeptDTO> getPage(int pageNumber) {
 		Map<String, Integer> page = new HashMap<String, Integer>();
 		page.put("start", (pageNumber - 1) * 10 + 1);
 		page.put("end", (pageNumber - 1) * 10 + 10);
@@ -32,6 +43,7 @@ public class DeptService {
 		
 		return datas;
 	}
+	*/
 	
 	public List<Integer> getPageList() {
 		dao = new DeptDAO();
