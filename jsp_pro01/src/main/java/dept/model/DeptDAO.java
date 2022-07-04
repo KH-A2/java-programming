@@ -55,10 +55,8 @@ public class DeptDAO {
 	public boolean insertDept(DeptDTO deptDto) {
 		int result = session.insert("deptMapper.deptInsert", deptDto);
 		if(result == 1) {
-			session.commit();
 			return true;
 		}
-		session.rollback();
 		return false;
 	}
 
@@ -81,20 +79,25 @@ public class DeptDAO {
 	public boolean updateDept(DeptDTO deptDto) {
 		int result = session.update("deptMapper.deptUpdate", deptDto);
 		if(result == 1) {
-			session.commit();
 			return true;
 		}
-		session.rollback();
 		return false;
 	}
 
 	public boolean deleteDept(int id) {
 		int result = session.delete("deptMapper.deptDelete", id);
 		if(result == 1) {
-			session.commit();
 			return true;
 		}
 		return false;
+	}
+	
+	public void commit() {
+		session.commit();
+	}
+	
+	public void rollback() {
+		session.rollback();
 	}
 	
 	public void close() {
