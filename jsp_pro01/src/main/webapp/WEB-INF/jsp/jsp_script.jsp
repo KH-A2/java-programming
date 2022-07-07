@@ -10,9 +10,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>JSP - Script</title>
+	<title>JSP - Script</title>
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/static/css/default.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/static/css/navigation.css">
 </head>
 <body>
+	<%@ include file="./module/navigation.jsp" %>
 	<!-- HTML 주석 -->
 	<h1>JSP - Script</h1>
 	<%-- 주석 --%>

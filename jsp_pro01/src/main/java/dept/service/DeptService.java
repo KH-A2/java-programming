@@ -21,7 +21,8 @@ public class DeptService {
 		return datas;
 	}
 	
-	public List<DeptDTO> getPage(int pageNumber) {
+	public List<DeptDTO> getPage(String page) {
+		int pageNumber = Integer.parseInt(page);
 		int start, end;
 		start = (pageNumber - 1) * 10;
 		end = 10;
@@ -84,6 +85,7 @@ public class DeptService {
 		
 		DeptDTO deptDto = null;
 		if(deptId.matches("\\d+") && mngId.matches("\\d+") && locId.matches("\\d+")) {
+			boolean isValid = true;
 			deptDto = new DeptDTO();
 			deptDto.setDeptId(Integer.parseInt(deptId));
 			deptDto.setDeptName(deptName);
@@ -92,35 +94,33 @@ public class DeptService {
 			
 			if(dao.searchId(deptDto.getDeptId()) != null) {
 				deptDto.setDeptId(-1);
-				dao.rollback();
-				dao.close();
-				return deptDto;
+				isValid = false;
 			}
 			
 			if(!dao.existManager(deptDto.getMngId())) {
 				deptDto.setMngId(-1);
-				dao.rollback();
-				dao.close();
-				return deptDto;
+				isValid = false;
 			}
 			
 			if(!dao.existLocation(deptDto.getLocId())) {
 				deptDto.setLocId(-1);
-				dao.rollback();
-				dao.close();
-				return deptDto;
+				isValid = false;
 			}
 			
-			boolean isSaved = dao.insertDept(deptDto);
-			
-			if(!isSaved) {
-				dao.rollback();
-				dao.close();
-				return null;
+			if(isValid) {
+				boolean isSaved = dao.insertDept(deptDto);
+				if(isSaved) {
+					dao.commit();
+					dao.close();
+					return deptDto;
+				} else {
+					dao.rollback();
+					dao.close();
+					return null;
+				}
 			}
 		}
-		
-		dao.commit();
+		dao.rollback();
 		dao.close();
 		return deptDto;
 	}

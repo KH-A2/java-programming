@@ -5,8 +5,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title>JSP/Servlet - Model2</title>
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/static/css/default.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/static/css/navigation.css">
 </head>
 <body>
+	<%@ include file="./module/navigation.jsp" %>
 	<h1>JSP/Servlet - Model2</h1>
 	<h2>Model 1</h2>
 	<p>
