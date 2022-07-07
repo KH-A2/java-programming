@@ -9,11 +9,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>부서 추가</title>
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/static/css/default.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/static/css/required.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/static/css/form.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/static/css/navigation.css">
-	<script type="text/javascript" src="<%=request.getContextPath() %>/static/js/required.js"></script>
+	<%@ include file="../module/head.jsp" %>
 </head>
 <body>
 	<%@ include file="../module/navigation.jsp" %>
