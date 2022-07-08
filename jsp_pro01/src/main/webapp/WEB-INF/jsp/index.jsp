@@ -15,39 +15,37 @@
 <body>
 	<%@ include file="./module/navigation.jsp" %>
 	<h1>Welcome JSP/Servlet</h1>
-	<c:choose>
-		<c:when test="${param.x == 'a'}">
-			파라미터 x의 값이 a 면 실행
-		</c:when>
-		<c:when test="${param.x == 'b'}">
-			파라미터 x의 값이 b 면 실행
-		</c:when>
-		<c:when test="${param.x == 'c'}">
-			파라미터 x의 값이 c 면 실행
-		</c:when>
-		<c:otherwise>
-			모든 when 조건에 해당하지 않으면 실행됨
-		</c:otherwise>
-	</c:choose>
+	<fmt:formatNumber value="1000" /><br>
+	<fmt:formatNumber value="0.1" type="percent" /><br>
+	<fmt:formatNumber value="1000" type="currency" /><br>
+	<fmt:formatNumber value="1000" type="currency" currencySymbol="$" /><br>
+	
+	<hr>
+	<%
+		Date date = new Date();
+		request.setAttribute("date", date);
+	%>
+	<fmt:formatDate value="${date}" type="date" /><br>
+	<fmt:formatDate value="${date}" type="date" dateStyle="full" /><br>
+	<fmt:formatDate value="${date}" type="date" dateStyle="long" /><br>
+	<fmt:formatDate value="${date}" type="date" dateStyle="medium" /><br>
+	<fmt:formatDate value="${date}" type="date" dateStyle="short" /><br>
+	<fmt:formatDate value="${date}" type="date" pattern="YYYY-MM-dd E EEEE" /><br>
 	
 	<hr>
 	
-	<%
-		List<String> lst = new ArrayList<String>();
-		lst.add("a"); lst.add("b"); lst.add("c"); lst.add("d");
-		request.setAttribute("lst", lst);
-	%>
-	<ul>
-		<c:forEach begin="1" end="5" var="v">
-			<li>${v}</li>
-		</c:forEach>
-	</ul>
-	<br>
-	<ul>
-		<c:forEach items="${lst}" var="v">
-			<li>${v}</li>
-		</c:forEach>
-	</ul>
+	<fmt:formatDate value="${date}" type="time" /><br>
+	<fmt:formatDate value="${date}" type="time" timeStyle="full" /><br>
+	<fmt:formatDate value="${date}" type="time" timeStyle="long" /><br>
+	<fmt:formatDate value="${date}" type="time" timeStyle="medium" /><br>
+	<fmt:formatDate value="${date}" type="time" timeStyle="short" /><br>
+	<fmt:formatDate value="${date}" type="time" pattern="a hh:mm:ss.SSS" /><br>
+	<fmt:formatDate value="${date}" type="time" pattern="HH:mm:ss Z z zzzz" /><br>
+	
+	<hr>
+	
+	<fmt:formatDate value="${date}" type="both" /><br>
+	<fmt:formatDate value="${date}" type="both" dateStyle="full" timeStyle="short" /><br>
 </body>
 </html>
 

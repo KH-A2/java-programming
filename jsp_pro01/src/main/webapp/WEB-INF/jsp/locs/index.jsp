@@ -1,21 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, locs.model.LocsDTO" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>지역 조회 결과</title>
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/static/css/default.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/static/css/navigation.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/static/css/required.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/static/css/form.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/static/css/table.css">
-	<script type="text/javascript" src="<%=request.getContextPath() %>/static/js/required.js"></script>
+	<%@ include file="../module/head.jsp" %>
 </head>
 <body>
 	<%@ include file="../module/navigation.jsp" %>
-	<h1>지역 조회 결과</h1>
 	<section class="container">
 		<div>
 			<form action="./locs" method="get">
@@ -50,31 +46,32 @@
 				</tr>
 			</thead>
 			<tbody>
-				<%
-					if(request.getAttribute("locsDatas") != null) {
-						List<LocsDTO> datas = (List<LocsDTO>) request.getAttribute("locsDatas");
-						for(LocsDTO data: datas) {
-				%>
-							<tr>
-								<td><%=data.getLocId() %></td>
-								<td><%=data.getStAddr() %></td>
-								<td><%=data.getPostal() %></td>
-								<td><%=data.getCity() %></td>
-								<td><%=data.getState() %></td>
-								<td><%=data.getCtyId() %></td>
-								<td class="border-hidden-right">
-									<button type="button" class="btn btn-icon" onclick="location.href='./locs/mod?id=<%=data.getLocId() %>'">
-										<span class="material-symbols-outlined">edit</span>
-									</button>
-									<button type="button" class="btn btn-icon" onclick="location.href='./locs/del?id=<%=data.getLocId() %>'">
-										<span class="material-symbols-outlined">delete</span>
-									</button>
-								</td>
-							</tr>
-				<%
-						}
-					}
-				%>
+				<c:if test="${not empty locsDatas}">
+					<c:forEach items="${locsDatas}" var="data">
+						<tr>
+							<td>${data.locId}</td>
+							<td>${data.stAddr}</td>
+							<td>${data.postal}</td>
+							<td>${data.city}</td>
+							<td>${data.state}</td>
+							<td>${data.ctyId}</td>
+							<td class="border-hidden-right">
+								<c:url var="modUrl" value="./locs/mod">
+									<c:param name="id" value="${data.locId}" />
+								</c:url>
+								<button type="button" class="btn btn-icon" onclick="location.href='${modUrl}'">
+									<span class="material-symbols-outlined">edit</span>
+								</button>
+								<c:url var="delUrl" value="./locs/del">
+									<c:param name="id" value="${data.locId}" />
+								</c:url>
+								<button type="button" class="btn btn-icon" onclick="location.href='${delUrl}'">
+									<span class="material-symbols-outlined">delete</span>
+								</button>
+							</td>
+						</tr>
+					</c:forEach>
+				</c:if>
 			</tbody>
 		</table>
 	</section>
