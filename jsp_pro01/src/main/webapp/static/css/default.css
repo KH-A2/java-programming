@@ -24,3 +24,7 @@
 .container {
 	margin: 1rem 5rem;
 }
+
+.clear {
+	clear: both;
+}

@@ -21,11 +21,11 @@ public class DeptService {
 		return datas;
 	}
 	
-	public List<DeptDTO> getPage(String page) {
-		int pageNumber = Integer.parseInt(page);
+	public List<DeptDTO> getPage(int page, int pageCount) {
+		int pageNumber = page;
 		int start, end;
-		start = (pageNumber - 1) * 10;
-		end = 10;
+		start = (pageNumber - 1) * pageCount;
+		end = pageCount;
 		dao = new DeptDAO();
 		List<DeptDTO> datas = dao.searchPage(start, end);
 		dao.close();
@@ -46,13 +46,13 @@ public class DeptService {
 	}
 	*/
 	
-	public List<Integer> getPageList() {
+	public List<Integer> getPageList(int pageCount) {
 		dao = new DeptDAO();
 		
 		List<Integer> pageList = new ArrayList<Integer>();
 		int total = dao.totalRow();
 		
-		for(int num = 0; num <= (total - 1) / 10; num++) {
+		for(int num = 0; num <= (total - 1) / pageCount; num++) {
 			pageList.add(num + 1);
 		}
 		
