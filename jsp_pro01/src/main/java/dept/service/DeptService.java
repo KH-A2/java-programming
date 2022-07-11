@@ -55,7 +55,7 @@ public class DeptService {
 		for(int num = 0; num <= (total - 1) / pageCount; num++) {
 			pageList.add(num + 1);
 		}
-		
+		dao.close();
 		return pageList;
 	}
 	

@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import common.util.Parameter;
 import dept.model.DeptDTO;
@@ -27,6 +28,31 @@ public class DeptController extends HttpServlet {
 		int page = param.defaultIntValue(request, "page", "1");
 		int pageCount = 0;
 		
+		HttpSession session = request.getSession();
+		boolean pageCountCookieExist = false;
+		
+		if(session.getAttribute("pageCount") != null) {
+			pageCount = Integer.parseInt(session.getAttribute("pageCount").toString());
+			pageCountCookieExist = true;
+		}
+		
+		if(request.getParameter("pgc") != null || !pageCountCookieExist) {
+			pageCount = param.defaultIntValue(request, "pgc", "10");
+		}
+		
+		session.setAttribute("pageCount", pageCount);
+		request.setAttribute("page", page);
+		
+		/*
+		session.removeAttribute("pageCount"); // 세션에 설정한 pageCount 속성 제거
+		session.setMaxInactiveInterval(60*60*24);
+		session.invalidate(); // 세션을 만료 시켜 새로운 세션을 만들 수 있게 한다.
+		request.getSession(true);	// 유효한 세션이 없는 경우 새로 만들고 유효한 세션이 있는 경우 해당 세션 정보를 가져온다.
+		request.getSession(false);  // 유효한 세션이 없는 경우 null 반환, 유효한 세션이 있는 경우 해당 세션 정보를 가져온다.
+		*/
+		
+		
+		/*
 		boolean pageCountCookieExist = false;
 		Cookie[] cookies = request.getCookies();
 		for(Cookie c: cookies) {
@@ -44,7 +70,12 @@ public class DeptController extends HttpServlet {
 		request.setAttribute("pageCount", pageCount);
 		
 		Cookie cookie = new Cookie("pageCount", String.valueOf(pageCount));
+		// 시간은 초단위 설정
+		// -1 로 설정하면 무한:session, 0 으로 설정하면 즉시 만료
+		cookie.setMaxAge(60*60*24*30*12);
+		cookie.setPath("/depts"); // 쿠키 사용 경로 설정(하위 경로 포함)
 		response.addCookie(cookie);
+		*/
 		
 		List<DeptDTO> deptDatas = null;
 		if(search == null) {
