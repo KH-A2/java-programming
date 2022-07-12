@@ -20,23 +20,23 @@
 			</div>
 			<div class="input-form inline">
 				<div class="input-form">
-					<label class="input-label w-80">ID</label>
+					<label class="input-label w-100">ID</label>
 					<input class="input-text w-auto" type="text" name="empId" value="${sessionScope.loginData.empId}" readonly>
 				</div>
 				<div class="input-form">
-					<label class="input-label w-80">이름</label>
+					<label class="input-label w-100">이름</label>
 					<input class="input-text w-auto" type="text" name="empName" value="${sessionScope.loginData.empName}">
 				</div>
 			</div>
 			<div class="input-form inline">
 				<div class="input-form">
-					<label class="input-label w-80">직급</label>
+					<label class="input-label w-100">직급</label>
 					<select class="select-form w-auto" name="jobId">
 						<option></option>
 					</select>
 				</div>
 				<div class="input-form">
-					<label class="input-label w-80">부서</label>
+					<label class="input-label w-100">부서</label>
 					<select class="select-form w-auto" name="deptId">
 						<option></option>
 					</select>
@@ -44,27 +44,27 @@
 			</div>
 			<div class="input-form inline">
 				<div class="input-form">
-					<label class="input-label w-80">이메일</label>
+					<label class="input-label w-100">이메일</label>
 					<input class="input-text w-auto" type="text" name="email" value="${sessionScope.loginData.email}">
 				</div>
 			</div>
 			<div class="input-form inline">
 				<div class="input-form">
-					<label class="input-label w-80">입사일</label>
+					<label class="input-label w-100">입사일</label>
 					<input class="input-text w-auto" type="text" name="hireDate" value="">
 				</div>
 				<div class="input-form">
-					<label class="input-label w-80">전화번호</label>
+					<label class="input-label w-100">전화번호</label>
 					<input class="input-text w-auto" type="text" name="phone" value="">
 				</div>
 			</div>
 			<div class="input-form inline">
 				<div class="input-form">
-					<label class="input-label w-80">급여액</label>
+					<label class="input-label w-100">급여액</label>
 					<input class="input-text w-auto" type="text" name="salery" value="">
 				</div>
 				<div class="input-form">
-					<label class="input-label w-80">커미션</label>
+					<label class="input-label w-100">커미션</label>
 					<input class="input-text w-auto" type="text" name="commission" value="">
 				</div>
 			</div>
