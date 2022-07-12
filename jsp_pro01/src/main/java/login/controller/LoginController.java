@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dept.model.DeptDTO;
 import dept.service.DeptService;
@@ -17,9 +18,21 @@ import login.service.LoginService;
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private DeptService deptService = new DeptService();
+	private String view = "/WEB-INF/jsp/index.jsp";
 	
+	private DeptService deptService = new DeptService();
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		RequestDispatcher rd = null;
+		if(session.getAttribute("loginData") == null) {
+			List<DeptDTO> deptList = deptService.getAll();
+			request.setAttribute("deptList", deptList);
+			rd = request.getRequestDispatcher(view);
+		} else {
+			rd = request.getRequestDispatcher("/WEB-INF/jsp/index2.jsp");
+		}
+		rd.forward(request, response);
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

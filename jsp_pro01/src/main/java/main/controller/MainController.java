@@ -22,7 +22,6 @@ public class MainController extends HttpServlet {
 	DeptService deptService = new DeptService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		HttpSession session = request.getSession();
 		RequestDispatcher rd = null;
 		if(session.getAttribute("loginData") == null) {
