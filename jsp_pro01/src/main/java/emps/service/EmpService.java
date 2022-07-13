@@ -44,4 +44,26 @@ public class EmpService {
 		return data;
 	}
 
+	public boolean setEmployee(EmpDTO updateEmpData, EmpDetailDTO updateEmpDetailData) {
+		EmpDAO dao = new EmpDAO();
+		
+		String email = updateEmpData.getEmail();
+		if(email.contains("@emp.com")) {
+			email = email.replace("@emp.com", "");
+			updateEmpData.setEmail(email);
+		}
+		
+		boolean res1 = dao.updateEmployee(updateEmpData);
+		boolean res2 = dao.updateEmployeeDetail(updateEmpDetailData);
+		
+		if(res1 && res2) {
+			dao.commit();
+			dao.close();
+			return true;
+		}
+		dao.rollback();
+		dao.close();
+		return false;
+	}
+
 }

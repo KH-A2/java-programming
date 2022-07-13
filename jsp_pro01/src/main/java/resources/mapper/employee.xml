@@ -11,6 +11,16 @@
 		<result property="deptName" column="DEPARTMENT_NAME" />
 		<result property="deptId" column="DEPARTMENT_ID" />
 	</resultMap>
+	<update id="updateEmployee" parameterType="empDto">
+		UPDATE EMPLOYEES
+		   SET EMAIL = #{email}
+		 WHERE EMPLOYEE_ID = #{empId}
+	</update>
+	<update id="updateEmployeeDetail" parameterType="empDetailDto">
+		UPDATE EMPLOYEES
+		   SET PHONE_NUMBER = #{phone}
+		 WHERE EMPLOYEE_ID = #{empId}
+	</update>
 	<select id="selectDetail" parameterType="_int" resultType="empDetailDto">
 		SELECT EMPLOYEE_ID AS empId
 		     , PHONE_NUMBER AS phone

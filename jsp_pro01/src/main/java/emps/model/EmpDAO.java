@@ -47,5 +47,17 @@ public class EmpDAO extends AbstractDAO {
 		EmpDetailDTO data = session.selectOne(mapId, empId);
 		return data;
 	}
+	
+	public boolean updateEmployee(EmpDTO updateEmpData) {
+		String mapId = String.format(mapper, "updateEmployee");
+		int result = session.update(mapId, updateEmpData);
+		return result == 1 ? true : false;
+	}
+	
+	public boolean updateEmployeeDetail(EmpDetailDTO updateEmpDetailData) {
+		String mapId = String.format(mapper, "updateEmployeeDetail");
+		int result = session.update(mapId, updateEmpDetailData);
+		return result == 1 ? true : false;
+	}
 
 }

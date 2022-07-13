@@ -24,11 +24,12 @@ public class DeptController extends HttpServlet {
 	private Parameter param = new Parameter();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		
 		String search = request.getParameter("search");
 		int page = param.defaultIntValue(request, "page", "1");
 		int pageCount = 0;
 		
-		HttpSession session = request.getSession();
 		boolean pageCountCookieExist = false;
 		
 		if(session.getAttribute("pageCount") != null) {
