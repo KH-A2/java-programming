@@ -42,4 +42,10 @@ public class EmpDAO extends AbstractDAO {
 		return rowCount;
 	}
 
+	public EmpDetailDTO selectDetail(int empId) {
+		String mapId = String.format(mapper, "selectDetail");
+		EmpDetailDTO data = session.selectOne(mapId, empId);
+		return data;
+	}
+
 }

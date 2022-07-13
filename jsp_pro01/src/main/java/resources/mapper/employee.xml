@@ -11,6 +11,16 @@
 		<result property="deptName" column="DEPARTMENT_NAME" />
 		<result property="deptId" column="DEPARTMENT_ID" />
 	</resultMap>
+	<select id="selectDetail" parameterType="_int" resultType="empDetailDto">
+		SELECT EMPLOYEE_ID AS empId
+		     , PHONE_NUMBER AS phone
+		     , HIRE_DATE AS hireDate
+		     , SALARY AS salary
+		     , COMMISSION_PCT AS commission
+		     , MANAGER_ID AS mngId
+		  FROM EMPLOYEES
+		 WHERE EMPLOYEE_ID = #{id}
+	</select>
 	<select id="selectAll" resultMap="empDtoMap">
 		SELECT E.EMPLOYEE_ID
 		     , CONCAT(E.FIRST_NAME, ' ' || E.LAST_NAME) AS EMPLOYEE_NAME

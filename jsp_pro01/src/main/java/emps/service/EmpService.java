@@ -38,7 +38,10 @@ public class EmpService {
 	}
 
 	public EmpDetailDTO getDetail(int empId) {
-		return null;
+		EmpDAO dao = new EmpDAO();
+		EmpDetailDTO data = dao.selectDetail(empId);
+		dao.close();
+		return data;
 	}
 
 }
