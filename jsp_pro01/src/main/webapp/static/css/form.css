@@ -49,8 +49,15 @@
 .input-form.inline .input-form {
 	display: flex;
 	justify-content: flex-start;
+	flex-direction: row;
+	align-items: stretch;
 	margin-left: 1rem;
 	flex: 1 1 auto;
+}
+
+.input-form.inline .input-form .input-text,
+.input-form.inline .input-form .select-form {
+	flex: 1;
 }
 
 .input-form.inline .input-label,
