@@ -15,6 +15,39 @@
 		var form = document.forms[0];
 		form.email.addEventListener("input", enableSaveButton);
 		form.phone.addEventListener("input", enableSaveButton);
+		
+		prevImage.addEventListener("click", function(e) {
+			btnImage.click();
+		});
+		
+		btnImage.addEventListener("change", ajaxUploadImage);
+	}
+	
+	function ajaxUploadImage(e) {
+		var file = e.target.files[0];
+		var fData = new FormData();
+		fData.append("uploadImage", file, file.name);
+		console.log(fData);
+		$.ajax({
+			type: "post",
+			url: "/ajax/imageUpload",
+			enctype: "multipart/form-data",
+			data: fData,
+			processData: false,
+			contentType: false,
+			success: function(data, status) {
+				prevImage.src = data.loc;
+			},
+			error: function(data, status) {
+				prevImage.src = data.loc;
+			}
+		});
+	}
+	
+	function showPreview(e) {
+		var file = e.target.files[0];
+		var imgUrl = URL.createObjectURL(file);
+		prevImage.src = imgUrl;
 	}
 	
 	function enableSaveButton(e) {
@@ -27,10 +60,12 @@
 	<%@ include file="../module/navigation.jsp" %>
 	<section class="container">
 		<c:url var="updateUrl" value="/myinfo" />
-		<form class="large-form" action="${updateUrl}" method="post">
+		<form class="large-form" action="${updateUrl}" method="post" enctype="multipart/form-data">
 			<div class="img-form left">
-				<c:url var="imgUrl" value="/static/img/emp/${sessionScope.loginData.empId}.png" />
-				<img class="img-360" alt="여기에는 증명 사진이 배치됩니다." src="/static/img/emp/default.png">
+				<c:url var="imgUrl" value="${imagePath}" />
+				<img id="prevImage" class="img-360" alt="여기에는 증명 사진이 배치됩니다." src="${imgUrl}">
+				<br>
+				<input type="file" id="btnImage" name="uploadImage">
 			</div>
 			<div class="input-form inline">
 				<div class="input-form">

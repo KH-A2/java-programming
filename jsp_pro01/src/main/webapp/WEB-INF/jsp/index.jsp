@@ -68,7 +68,12 @@
 				<select class="select-form" name="deptId" data-required="부서명을 선택하세요.">
 					<c:forEach items="${deptList}" var="deptDto">
 						<c:choose>
-							<c:when test="${deptDto.deptId == param.deptId}">
+							<c:when test="${empty error and cookie.deptRe.value == deptDto.deptId}">
+								<option value="${deptDto.deptId}" selected>
+									[${deptDto.deptId}] ${deptDto.deptName}
+								</option>
+							</c:when>
+							<c:when test="${not empty error and param.deptId == deptDto.deptId}">
 								<option value="${deptDto.deptId}" selected>
 									[${deptDto.deptId}] ${deptDto.deptName}
 								</option>
@@ -87,6 +92,7 @@
 				<input type="text" class="input-text" name="empName" value="${param.empName}" data-required="이름을 입력하세요.">
 			</div>
 			<div class="input-form wide form-right">
+				부서기억하기<input type="checkbox" name="deptRe">
 				<button class="btn btn-outline btn-ok" type="submit">로그인</button>
 			</div>
 		</form>
