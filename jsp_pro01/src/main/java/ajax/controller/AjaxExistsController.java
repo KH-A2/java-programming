@@ -25,7 +25,7 @@ public class AjaxExistsController extends HttpServlet {
 		
 		String errCode = "\"code\": \"%s\"";
 		String errMsg = "\"message\": \"%s\"";
-		if(name.equals("mngId")) {
+		if(name.equals("mngId") && !value.isEmpty()) {
 			boolean isExists = deptService.existsManager(value);
 			if(!isExists) {
 				errCode = String.format(errCode, "error");
@@ -34,7 +34,7 @@ public class AjaxExistsController extends HttpServlet {
 				errCode = String.format(errCode, "success");
 				errMsg = String.format(errMsg, "사용 가능한 관리자 ID 입니다.");
 			}
-		} else if(name.equals("locId")) {
+		} else if(name.equals("locId") && !value.isEmpty()) {
 			boolean isExists = deptService.existsLocation(value);
 			if(!isExists) {
 				errCode = String.format(errCode, "error");

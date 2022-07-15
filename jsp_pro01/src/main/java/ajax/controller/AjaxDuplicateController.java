@@ -25,7 +25,7 @@ public class AjaxDuplicateController extends HttpServlet {
 		
 		String errCode = "\"code\": \"%s\"";
 		String errMsg = "\"message\": \"%s\"";
-		if(name.equals("deptId")) {
+		if(name.equals("deptId") && !value.isEmpty()) {
 			DeptDTO data = deptService.getId(value);
 			if(data != null) {
 				errCode = String.format(errCode, "error");

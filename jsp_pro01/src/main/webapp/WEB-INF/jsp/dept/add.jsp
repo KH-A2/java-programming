@@ -14,31 +14,29 @@
 <c:url var="ajaxDuplicateUrl" value="/ajax/duplicate" />
 <c:url var="ajaxExistsUrl" value="/ajax/exists" />
 <script type="text/javascript">
-function duplicateCheck(element) {
+function sendElementDataValid(element, url) {
 	$.ajax({
 		type: "get",
-		url: "${ajaxDuplicateUrl}",
+		url: url,
 		data: {
 			name: element.name,
 			value: element.value
 		},
 		success: function(data, status) {
 			setLabelState(element.nextElementSibling, data.code, data.message);
+		},
+		complete: function() {
+			if(element.value === "" || element.value === undefined) {
+				element.nextElementSibling.innerText = "";
+			}
 		}
 	});
 }
+function duplicateCheck(element) {
+	sendElementDataValid(element, "${ajaxDuplicateUrl}")
+}
 function existsCheck(element) {
-	$.ajax({
-		type: "get",
-		url: "${ajaxExistsUrl}",
-		data: {
-			name: element.name,
-			value: element.value
-		},
-		success: function(data, status) {
-			setLabelState(element.nextElementSibling, data.code, data.message);
-		}
-	});
+	sendElementDataValid(element, "${ajaxExistsUrl}")
 }
 function setLabelState(element, code, message) {
 	if(code === "success") {
