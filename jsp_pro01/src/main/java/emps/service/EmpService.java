@@ -1,10 +1,13 @@
 package emps.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 
 import emps.model.EmpDAO;
 import emps.model.EmpDTO;
@@ -99,7 +102,7 @@ public class EmpService {
 		if(file.exists()) {
 			return imagePath + data.getEmpId() + ".png";
 		} else {
-			return imagePath + "/default.png";
+			return imagePath + "default.png";
 		}
 	}
 	
@@ -107,6 +110,24 @@ public class EmpService {
 		EmpDTO data = new EmpDTO();
 		data.setEmpId(id);
 		return getProfileImage(request, imagePath, data);
+	}
+	
+	public String setProfileImage(HttpServletRequest request, String param, String imagePath, EmpDTO data) throws IOException, ServletException {
+		Part part = request.getPart(param);
+		
+		if(!part.getSubmittedFileName().isEmpty()) {
+			String realPath = request.getServletContext().getRealPath(imagePath);
+			part.write(realPath + data.getEmpId() + ".png");
+			return imagePath + data.getEmpId() + ".png";
+		} else {
+			return imagePath + "default.png";
+		}
+	}
+	
+	public String setProfileImage(HttpServletRequest request, String param, String imagePath, int id) throws IOException, ServletException {
+		EmpDTO data = new EmpDTO();
+		data.setEmpId(id);
+		return setProfileImage(request, param, imagePath, data);
 	}
 
 }

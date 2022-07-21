@@ -80,15 +80,8 @@ public class EmpsAddController extends HttpServlet {
 		
 		if(result) {
 			// 추가 작업 성공
-			Part part = request.getPart("uploadImage");
-			
-			if(!part.getSubmittedFileName().isEmpty()) {
-				String realPath = request.getServletContext().getRealPath("/static/img/emp/");
-				part.write(realPath + empData.getEmpId() + ".png");
-			}
-			
-			response.sendRedirect(request.getContextPath() + "/emps");
-			// response.sendRedirect(request.getContextPath() + "/emps/detail?id=" + empData.getEmpId());
+			String imagePath = empService.setProfileImage(request, "uploadImage", "/static/img/emp/", empData);
+			response.sendRedirect(request.getContextPath() + "/emps/detail?id=" + empData.getEmpId());
 		} else {
 			doGet(request, response);
 		}
