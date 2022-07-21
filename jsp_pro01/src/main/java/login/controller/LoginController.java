@@ -49,8 +49,12 @@ public class LoginController extends HttpServlet {
 		if(result) {
 			// 로그인 성공
 			if(deptRe != null) {
-				Cookie cookie = new Cookie("deptRe", deptId);
+				Cookie cookie = new Cookie("deptRe", String.valueOf(deptId));
 				cookie.setMaxAge(60 * 60 * 24 * 5);
+				response.addCookie(cookie);
+			} else {
+				Cookie cookie = new Cookie("deptRe", "");
+				cookie.setMaxAge(0);
 				response.addCookie(cookie);
 			}
 			response.sendRedirect(request.getContextPath() + "/");

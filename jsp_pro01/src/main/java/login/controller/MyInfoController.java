@@ -26,42 +26,32 @@ import job.service.JobService;
 @MultipartConfig
 public class MyInfoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String view = "/WEB-INF/jsp/login/myinfo.jsp";
 	
 	private EmpService empService = new EmpService();
 	private DeptService deptService = new DeptService();
 	private JobService jobService = new JobService();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String view = (String)request.getAttribute("view");
 		HttpSession session = request.getSession();
 		
-		if(session.getAttribute("loginData") == null) {
-			response.sendRedirect(request.getContextPath() + "/login");
-		} else {
-			EmpDTO empData = (EmpDTO)session.getAttribute("loginData");
-			
-			EmpDetailDTO empDetail = empService.getDetail(empData.getEmpId());
-			List<DeptDTO> deptDatas = deptService.getAll();
-			List<JobDTO> jobDatas = jobService.getAll();
-			
-			request.setAttribute("empDetail", empDetail);
-			request.setAttribute("deptDatas", deptDatas);
-			request.setAttribute("jobDatas", jobDatas);
-			
-			// 로그인을 한 사원의 이미지 /static/img/emp/사원ID.png 가 있는지 확인 후
-			// 없으면 default.png 를 사용하는 것으로 하고 있으면 사원ID.png 를 사용하는 것으로 만든다.
-			String realPath = request.getServletContext().getRealPath("/static/img/emp/");
-			File file = new File(realPath + empData.getEmpId() + ".png");
-			
-			if(file.exists()) {
-				request.setAttribute("imagePath", "/static/img/emp/" + empData.getEmpId() + ".png");
-			} else {
-				request.setAttribute("imagePath", "/static/img/emp/default.png");
-			}
-			
-			RequestDispatcher rd = request.getRequestDispatcher(view);
-			rd.forward(request, response);
-		}
+		EmpDTO empData = (EmpDTO)session.getAttribute("loginData");
+		
+		EmpDetailDTO empDetail = empService.getDetail(empData.getEmpId());
+		List<DeptDTO> deptDatas = deptService.getAll();
+		List<JobDTO> jobDatas = jobService.getAll();
+		
+		request.setAttribute("empDetail", empDetail);
+		request.setAttribute("deptDatas", deptDatas);
+		request.setAttribute("jobDatas", jobDatas);
+		
+		// 로그인을 한 사원의 이미지 /static/img/emp/사원ID.png 가 있는지 확인 후
+		// 없으면 default.png 를 사용하는 것으로 하고 있으면 사원ID.png 를 사용하는 것으로 만든다.
+		String imagePath = empService.getProfileImage(request, "/static/img/emp/", empData);
+		request.setAttribute("imagePath", imagePath);
+		
+		RequestDispatcher rd = request.getRequestDispatcher(view + "login/myinfo.jsp");
+		rd.forward(request, response);
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

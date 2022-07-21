@@ -18,17 +18,12 @@ import emps.service.EmpService;
 @WebServlet("/emps")
 public class EmpsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String view = "";
 	private EmpService service = new EmpService();
 	private Parameter param = new Parameter();
 	
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		super.init(config);
-		this.view = "/WEB-INF/jsp/emps/index.jsp";
-	}
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String view = (String)request.getAttribute("view");
+		
 		int page = param.defaultIntValue(request, "page", "1");
 		int pageCount = param.defaultSessionIntValue(request, "pageCount", "10");
 		
@@ -39,7 +34,7 @@ public class EmpsController extends HttpServlet {
 		request.setAttribute("page", page);
 		request.setAttribute("pageList", pageList);
 		
-		RequestDispatcher rd = request.getRequestDispatcher(view);
+		RequestDispatcher rd = request.getRequestDispatcher(view + "emps/index.jsp");
 		rd.forward(request, response);
 	}
 

@@ -9,11 +9,9 @@ import dept.model.DeptDAO;
 import dept.model.DeptDTO;
 
 public class DeptService {
-	
-	private DeptDAO dao;
 
 	public List<DeptDTO> getAll() {
-		dao = new DeptDAO();
+		DeptDAO dao = new DeptDAO();
 		
 		List<DeptDTO> datas = dao.searchAll();
 		
@@ -26,7 +24,7 @@ public class DeptService {
 		int start, end;
 		start = (pageNumber - 1) * pageCount;
 		end = pageCount;
-		dao = new DeptDAO();
+		DeptDAO dao = new DeptDAO();
 		List<DeptDTO> datas = dao.searchPage(start, end);
 		dao.close();
 		return datas;
@@ -47,7 +45,7 @@ public class DeptService {
 	*/
 	
 	public List<Integer> getPageList(int pageCount) {
-		dao = new DeptDAO();
+		DeptDAO dao = new DeptDAO();
 		
 		List<Integer> pageList = new ArrayList<Integer>();
 		int total = dao.totalRow();
@@ -72,7 +70,7 @@ public class DeptService {
 	}
 	
 	private DeptDTO _getId(int id) {
-		dao = new DeptDAO();
+		DeptDAO dao = new DeptDAO();
 		
 		DeptDTO data = dao.searchId(id);
 		
@@ -81,7 +79,7 @@ public class DeptService {
 	}
 
 	public DeptDTO addDept(String deptId, String deptName, String mngId, String locId) {
-		dao = new DeptDAO();
+		DeptDAO dao = new DeptDAO();
 		
 		DeptDTO deptDto = null;
 		if(deptId.matches("\\d+") && mngId.matches("\\d+") && locId.matches("\\d+")) {
@@ -126,7 +124,7 @@ public class DeptService {
 	}
 
 	public int modifyDept(DeptDTO data) {
-		dao = new DeptDAO();
+		DeptDAO dao = new DeptDAO();
 		
 		if(!dao.existManager(data.getMngId())) {
 			dao.rollback();
@@ -154,7 +152,7 @@ public class DeptService {
 	}
 
 	public int deleteDept(String id) {
-		dao = new DeptDAO();
+		DeptDAO dao = new DeptDAO();
 		
 		if(dao.searchId(Integer.parseInt(id)) == null) {
 			dao.rollback();
@@ -174,14 +172,14 @@ public class DeptService {
 	}
 
 	public boolean existsManager(String value) {
-		dao = new DeptDAO();
+		DeptDAO dao = new DeptDAO();
 		boolean result = dao.selectManager(Integer.parseInt(value));
 		dao.close();
 		return result;
 	}
 
 	public boolean existsLocation(String value) {
-		dao = new DeptDAO();
+		DeptDAO dao = new DeptDAO();
 		boolean result = dao.selectLocation(Integer.parseInt(value));
 		dao.close();
 		return result;

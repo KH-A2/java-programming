@@ -83,7 +83,7 @@
 					<select class="select-form w-auto" name="jobId" disabled>
 						<c:forEach items="${jobDatas}" var="job">
 							<c:choose>
-								<c:when test="${job.jobId == session.Scope.loginData.jobId}">
+								<c:when test="${job.jobId == sessionScope.loginData.jobId}">
 									<option value="${job.jobId}" selected>${job.jobName}</option>
 								</c:when>
 								<c:otherwise>
@@ -98,7 +98,7 @@
 					<select class="select-form w-auto" name="deptId" disabled>
 						<c:forEach items="${deptDatas}" var="dept">
 							<c:choose>
-								<c:when test="${dept.deptId == session.Scope.loginData.deptId}">
+								<c:when test="${dept.deptId == sessionScope.loginData.deptId}">
 									<option value="${dept.deptId}" selected>${dept.deptName}</option>
 								</c:when>
 								<c:otherwise>
@@ -130,7 +130,7 @@
 				<div class="input-form">
 					<fmt:formatNumber var="fmtSalary" value="${empDetail.salary}" />
 					<label class="input-label w-100">급여액</label>
-					<input class="input-text w-auto" type="text" name="salery" value="${fmtSalary}" disabled>
+					<input class="input-text w-auto" type="text" name="salary" value="${fmtSalary}" disabled>
 				</div>
 				<div class="input-form">
 					<fmt:formatNumber var="fmtcommission" value="${empDetail.commission}" type="percent" />

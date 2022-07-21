@@ -1,13 +1,39 @@
 package emps.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import emps.model.EmpDAO;
 import emps.model.EmpDTO;
 import emps.model.EmpDetailDTO;
 
 public class EmpService {
+	
+	public boolean add(EmpDTO empData, EmpDetailDTO empDetailData) {
+		EmpDAO dao = new EmpDAO();
+		boolean res1 = dao.insertEmployee(empData);
+		boolean res2 = dao.updateEmployeeDetail(empDetailData);
+		
+		if(res1 && res2) {
+			dao.commit();
+			dao.close();
+			return true;
+		} else {
+			dao.rollback();
+			dao.close();
+			return false;
+		}
+	}
+	
+	public EmpDTO getId(String empId) {
+		EmpDAO dao = new EmpDAO();
+		EmpDTO data = dao.selectId(Integer.parseInt(empId));
+		dao.close();
+		return data;
+	}
 
 	public List<EmpDTO> getEmpAll() {
 		EmpDAO dao = new EmpDAO();
@@ -64,6 +90,23 @@ public class EmpService {
 		dao.rollback();
 		dao.close();
 		return false;
+	}
+	
+	public String getProfileImage(HttpServletRequest request, String imagePath, EmpDTO data) {
+		String realPath = request.getServletContext().getRealPath(imagePath);
+		File file = new File(realPath + data.getEmpId() + ".png");
+		
+		if(file.exists()) {
+			return imagePath + data.getEmpId() + ".png";
+		} else {
+			return imagePath + "/default.png";
+		}
+	}
+	
+	public String getProfileImage(HttpServletRequest request, String imagePath, int id) {
+		EmpDTO data = new EmpDTO();
+		data.setEmpId(id);
+		return getProfileImage(request, imagePath, data);
 	}
 
 }

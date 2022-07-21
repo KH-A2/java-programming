@@ -2,6 +2,11 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
   <display-name>jsp_pro01</display-name>
   
+  <context-param>
+  	<param-name>view</param-name>
+  	<param-value>/WEB-INF/jsp/</param-value>
+  </context-param>
+  
   <servlet>
   	<servlet-name>MController</servlet-name>
   	<servlet-class>main.controller.MainController</servlet-class>
@@ -18,6 +23,10 @@
   <filter-mapping>
   	<filter-name>EncodingFilter</filter-name>
   	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+  	<filter-name>NextURLFilter</filter-name>
+  	<url-pattern />
   </filter-mapping>
   
   <!-- error-page>

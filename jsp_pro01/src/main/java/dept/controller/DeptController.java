@@ -1,9 +1,11 @@
 package dept.controller;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -24,6 +26,7 @@ public class DeptController extends HttpServlet {
 	private Parameter param = new Parameter();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String view = (String)request.getAttribute("view");
 		HttpSession session = request.getSession();
 		
 		String search = request.getParameter("search");
@@ -95,8 +98,8 @@ public class DeptController extends HttpServlet {
 		
 		request.setAttribute("deptDatas", deptDatas);
 		
-		String view = "/WEB-INF/jsp/dept/index.jsp";
-		request.getRequestDispatcher(view).forward(request, response);
+		RequestDispatcher rd = request.getRequestDispatcher(view + "dept/index.jsp");
+		rd.forward(request, response);
 	}
 
 }

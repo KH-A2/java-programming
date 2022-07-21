@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 @WebFilter(
 		urlPatterns = {
+				"/myinfo",
 				"/depts", "/locs", "/emps",
 				"/depts/*", "/locs/*", "/emps/*"
 		}
