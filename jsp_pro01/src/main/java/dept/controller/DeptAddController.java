@@ -10,9 +10,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dept.model.DeptDTO;
 import dept.service.DeptService;
+import login.model.PermDTO;
 
 @WebServlet("/depts/add")
 public class DeptAddController extends HttpServlet {
@@ -20,12 +22,14 @@ public class DeptAddController extends HttpServlet {
 	
 	private DeptService service = new DeptService();
 	
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String view = (String)request.getAttribute("view");
 		RequestDispatcher rd = request.getRequestDispatcher(view + "dept/add.jsp");
 		rd.forward(request, response);
 	}
 	
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String view = (String)request.getAttribute("view");
 		

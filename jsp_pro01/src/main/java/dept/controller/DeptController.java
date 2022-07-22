@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import common.util.Parameter;
 import dept.model.DeptDTO;
 import dept.service.DeptService;
+import login.model.PermDTO;
 
 @WebServlet("/depts")
 public class DeptController extends HttpServlet {
@@ -24,7 +26,7 @@ public class DeptController extends HttpServlet {
 	
 	private DeptService service = new DeptService();
 	private Parameter param = new Parameter();
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String view = (String)request.getAttribute("view");
 		HttpSession session = request.getSession();

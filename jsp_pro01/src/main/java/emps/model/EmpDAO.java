@@ -27,11 +27,11 @@ public class EmpDAO extends AbstractDAO {
 		return datas;
 	}
 
-	public List<EmpDTO> selectPage(int offset, int count) {
+	public List<EmpDTO> selectPage(EmpDTO data, int offset, int count) {
 		String mapId = String.format(mapper, "selectAll");
 		RowBounds rb = new RowBounds(offset, count);
 		
-		Cursor<EmpDTO> cursor = session.selectCursor(mapId, null, rb);
+		Cursor<EmpDTO> cursor = session.selectCursor(mapId, data, rb);
 		
 		List<EmpDTO> datas = new ArrayList<EmpDTO>();
 		Iterator<EmpDTO> iter = cursor.iterator();
@@ -42,9 +42,9 @@ public class EmpDAO extends AbstractDAO {
 		return datas;
 	}
 
-	public int totalRow() {
+	public int totalRow(EmpDTO data) {
 		String mapId = String.format(mapper, "totalRow");
-		int rowCount = session.selectOne(mapId);
+		int rowCount = session.selectOne(mapId, data);
 		return rowCount;
 	}
 

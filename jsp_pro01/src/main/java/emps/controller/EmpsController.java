@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import common.util.Parameter;
 import emps.model.EmpDTO;
@@ -22,13 +23,14 @@ public class EmpsController extends HttpServlet {
 	private Parameter param = new Parameter();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		String view = (String)request.getAttribute("view");
 		
 		int page = param.defaultIntValue(request, "page", "1");
 		int pageCount = param.defaultSessionIntValue(request, "pageCount", "10");
 		
-		List<EmpDTO> datas = service.getEmpPage(page, pageCount);
-		List<Integer> pageList = service.getPageList(pageCount);
+		List<EmpDTO> datas = service.getEmpPage(session, page, pageCount);
+		List<Integer> pageList = service.getPageList(session, pageCount);
 		
 		request.setAttribute("datas", datas);
 		request.setAttribute("page", page);

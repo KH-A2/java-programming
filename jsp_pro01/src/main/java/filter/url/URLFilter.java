@@ -16,6 +16,7 @@ public class URLFilter extends HttpFilter implements Filter {
 	
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		String url = ((HttpServletRequest)request).getRequestURI();
+		
 		request.setAttribute("url", url);
 		chain.doFilter(request, response);
 	}
