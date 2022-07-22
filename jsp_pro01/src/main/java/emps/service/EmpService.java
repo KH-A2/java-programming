@@ -130,4 +130,18 @@ public class EmpService {
 		return setProfileImage(request, param, imagePath, data);
 	}
 
+	public boolean removeId(String id) {
+		EmpDAO dao = new EmpDAO();
+		boolean result = dao.deleteId(Integer.parseInt(id));
+		
+		if(result) {
+			dao.commit();
+		} else {
+			dao.rollback();
+		}
+		
+		dao.close();
+		return result;
+	}
+
 }
