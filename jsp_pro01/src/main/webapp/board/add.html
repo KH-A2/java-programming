@@ -6,6 +6,19 @@
 	<link rel="stylesheet" type="text/css" href="/static/bs5/css/bootstrap.min.css">
 	<script type="text/javascript" src="/static/bs5/js/bootstrap.min.js"></script>
 </head>
+<script type="text/javascript">
+	function formCheck(form) {
+		if(form.title.value === undefined || form.title.value.trim() === "") {
+			// 모달 활성
+			var modal = new bootstrap.Modal(document.getElementById("errorModal"), {
+				keyboard: false
+			})
+			modal.show();
+			return;
+		}
+		form.submit();
+	}
+</script>
 <body>
 	<header></header>
 	<section class="container">
@@ -19,7 +32,7 @@
 						rows="5" placeholder="내용을 입력하세요.">저장 버튼을 누르면 모달이 나옴니다.</textarea>
 				</div>
 				<div class="text-end">
-					<button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#errorModal">저장</button>
+					<button class="btn btn-primary" type="button" onclick="formCheck(this.form);">저장</button>
 				</div>
 			</form>
 		</div>
