@@ -2,6 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="empBoardsMapper">
+	<resultMap type="empBoardDto" id="empBoardMap">
+		<constructor>
+			<idArg column="ID" javaType="_int" />
+		</constructor>
+		<id column="ID" property="id" />
+		<result column="TITLE" property="title" />
+		<result column="EMPID" property="empId" />
+		<result column="CREATEDATE" property="createDate" />
+		<result column="VIEW" property="viewCnt" />
+		<result column="LIKE" property="like" />
+		<association property="empObj" javaType="empDto">
+			<id column="EMPID" property="empId" />
+			<result column="EMPNAME" property="empName" />
+		</association>
+	</resultMap>
+	
 	<select id="getNextSeq" resultType="_int">
 		SELECT EMP_BOARDS_SEQ.NEXTVAL FROM DUAL
 	</select>
@@ -28,7 +44,7 @@
 	</update>
 	<update id="updateLike" parameterType="empBoardDto">
 		UPDATE EMP_BOARDS
-		   SET "LIKE" = #{like} + 1
+		   SET "LIKE" = #{like}
 		 WHERE ID = #{id}
 	</update>
 	<select id="selectStatis" resultType="empBoardStatisDto" parameterType="empBoardDto">
@@ -39,12 +55,12 @@
 		     , LATEST_DATE2 AS latestLike
 		  FROM EMP_BOARDS_STATISTICS
 		 WHERE EMPID = #{empId}
-		   AND BID = #{id}
+		   AND BID = #{bId}
 	</select>
-	<insert id="insertStatis" parameterType="empBoardDto">
+	<insert id="insertStatis" parameterType="empBoardStatisDto">
 		INSERT INTO EMP_BOARDS_STATISTICS
 		     VALUES(EMP_BOARDS_STATISTICS_SEQ.NEXTVAL
-		          , #{empId}, #{id}, 'Y', SYSDATE, 'N', NULL)
+		          , #{empId}, #{bId}, 'Y', SYSDATE, 'N', NULL)
 	</insert>
 	<update id="updateStatis" parameterType="empBoardStatisDto">
 		UPDATE EMP_BOARDS_STATISTICS
@@ -52,4 +68,32 @@
 		 WHERE EMPID = #{empId}
 		   AND BID = #{bId}
 	</update>
+	<update id="updateLikeStatis" parameterType="empBoardStatisDto">
+		UPDATE EMP_BOARDS_STATISTICS
+		   SET LATEST_DATE2 = SYSDATE
+		   <choose>
+			   <when test="like">
+			     , ISLIKE = 'Y'
+			   </when>
+			   <otherwise>
+			   	 , ISLIKE = 'N'
+			   </otherwise>
+		   </choose>
+		 WHERE EMPID = #{empId}
+		   AND BID = #{bId}
+	</update>
+	<select id="getTotalRows" resultType="_int">
+		SELECT COUNT(*) FROM EMP_BOARDS
+	</select>
+	<select id="selectPage" resultMap="empBoardMap">
+		SELECT B.ID, B.TITLE
+		     , B.EMPID
+		     , E.FIRST_NAME || ' ' || E.LAST_NAME AS EMPNAME
+		     , B.CREATEDATE
+		     , B.VIEW_CNT AS viewCnt, B."LIKE"
+		  FROM EMP_BOARDS B
+		  JOIN EMPLOYEES E
+		    ON B.EMPID = E.EMPLOYEE_ID
+		 ORDER BY ID DESC
+	</select>
 </mapper>

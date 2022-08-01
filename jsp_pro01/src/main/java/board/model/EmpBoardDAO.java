@@ -2,8 +2,11 @@ package board.model;
 
 import java.util.*;
 
+import org.apache.ibatis.cursor.Cursor;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import common.util.Paging;
 import conn.db.DBConn;
 
 public class EmpBoardDAO {
@@ -44,12 +47,12 @@ public class EmpBoardDAO {
 		return result == 1 ? true : false;
 	}
 	
-	public EmpBoardStatisDTO selectStatis(EmpBoardDTO data) {
+	public EmpBoardStatisDTO selectStatis(EmpBoardStatisDTO data) {
 		EmpBoardStatisDTO result = session.selectOne("empBoardsMapper.selectStatis", data);
 		return result;
 	}
 	
-	public boolean insertStatis(EmpBoardDTO data) {
+	public boolean insertStatis(EmpBoardStatisDTO data) {
 		int result = session.insert("empBoardsMapper.insertStatis", data);
 		return result == 1 ? true : false;
 	}
@@ -57,6 +60,26 @@ public class EmpBoardDAO {
 	public boolean updateStatis(EmpBoardStatisDTO data) {
 		int result = session.update("empBoardsMapper.updateStatis", data);
 		return result == 1 ? true : false;
+	}
+	
+	public boolean updateStatis(EmpBoardStatisDTO data, String type) {
+		if(type.equals("like")) {
+			int result = session.update("empBoardsMapper.updateLikeStatis", data);
+			return result == 1 ? true : false;
+		} else {
+			return updateStatis(data);
+		}
+	}
+	
+	public int getTotalRows() {
+		int result = session.selectOne("empBoardsMapper.getTotalRows");
+		return result;
+	}
+	
+	public void selectPage(Paging paging) {
+		RowBounds rb = new RowBounds(paging.getOffset(), paging.getLimit());
+		Cursor<Object> cursor = session.selectCursor("empBoardsMapper.selectPage", null, rb);
+		paging.setPageDatas(cursor.iterator());
 	}
 	
 	public void commit() {

@@ -36,7 +36,11 @@
 				</div>
 			</div>
 			<div class="mb-1 text-end">
-				<button class="btn btn-primary" type="button">수정</button>
+				<button class="btn btn-primary" type="button">목록</button>
+				<c:if test="${data.empId eq sessionScope.loginData.empId}">
+					<button class="btn btn-primary" type="button">수정</button>
+					<button class="btn btn-primary" type="button">삭제</button>
+				</c:if>
 			</div>
 		</div>
 	</section>
@@ -51,7 +55,7 @@
 				},
 				success: function(data) {
 					if(data.code === "success") {
-						element.innerText = parseInt(element.innerText) + 1;						
+						element.innerText = data.likeCnt;
 					}
 				}
 			});

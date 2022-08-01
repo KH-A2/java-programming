@@ -33,7 +33,7 @@ public class EmpBoardDetailController extends HttpServlet {
 		EmpBoardDTO data = service.getData(Integer.parseInt(id));
 		
 		if(data != null) {		
-			service.incViewCnt(data);
+			service.incViewCnt(request.getSession(), data);
 			EmpService empService = new EmpService();
 			EmpDTO empData = empService.getId("" + data.getEmpId());
 			
@@ -59,8 +59,9 @@ public class EmpBoardDetailController extends HttpServlet {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{");
 		if(data != null) {
-			service.incLike(data);
-			sb.append(String.format("\"%s\": \"%s\"", "code", "success"));
+			service.incLike(request.getSession(), data);
+			sb.append(String.format("\"%s\": \"%s\",", "code", "success"));
+			sb.append(String.format("\"%s\": %d", "likeCnt", data.getLike()));
 		}
 		sb.append("}");
 		

@@ -39,6 +39,7 @@
   	<url-pattern>/depts</url-pattern>
   	<url-pattern>/depts/*</url-pattern>
   	<url-pattern>/board/add</url-pattern>
+  	<url-pattern>/board/detail</url-pattern>
   </filter-mapping>
   
   <filter>

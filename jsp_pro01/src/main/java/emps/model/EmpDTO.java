@@ -9,6 +9,13 @@ public class EmpDTO {
 	private String deptName;
 	private int deptId;
 	
+	public EmpDTO() {}
+	
+	public EmpDTO(int empId, String empName) {
+		this.empId = empId;
+		this.empName = empName;
+	}
+	
 	public int getEmpId() {
 		return empId;
 	}
