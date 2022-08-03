@@ -31,6 +31,10 @@ public class EmpBoardController extends HttpServlet {
 		
 		Paging pageData = service.getPage(page, limit);
 		
+		if(pageData.getPageDatas().size() <= 0) {
+			pageData = service.getPage("1", limit);
+		}
+		
 		request.setAttribute("datas", pageData);
 		RequestDispatcher rd = request.getRequestDispatcher(view);
 		rd.forward(request, response);

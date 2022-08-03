@@ -82,6 +82,16 @@ public class EmpBoardDAO {
 		paging.setPageDatas(cursor.iterator());
 	}
 	
+	public boolean deleteData(EmpBoardDTO data) {
+		int result = session.delete("empBoardsMapper.deleteData", data.getId());
+		return result == 1 ? true : false;
+	}
+	
+	public boolean deleteStatisData(EmpBoardDTO data) {
+		int result = session.delete("empBoardsMapper.deleteStatisData", data.getId());
+		return result >= 0 ? true : false;
+	}
+	
 	public void commit() {
 		this.session.commit();
 	}

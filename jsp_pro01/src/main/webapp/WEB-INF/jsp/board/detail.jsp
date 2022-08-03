@@ -36,11 +36,45 @@
 				</div>
 			</div>
 			<div class="mb-1 text-end">
-				<button class="btn btn-primary" type="button">목록</button>
+				<c:url var="boardUrl" value="/board" />
+				<button class="btn btn-primary" type="button" onclick="location.href='${boardUrl}'">목록</button>
 				<c:if test="${data.empId eq sessionScope.loginData.empId}">
-					<button class="btn btn-primary" type="button">수정</button>
-					<button class="btn btn-primary" type="button">삭제</button>
+					<button class="btn btn-success" type="button">수정</button>
+					<button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</button>
 				</c:if>
+			</div>
+		</div>
+		<div class="modal fade" tabindex="-1" id="deleteModal">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">글 삭제</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<p>해당 게시글을 삭제하시겠습니까?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+						<button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="boardDelete(${data.id});">삭제</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" tabindex="-1" id="resultModal">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">결과 확인</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<p>삭제되었습니다.</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="location.href='${boardUrl}'">확인</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -59,6 +93,28 @@
 					}
 				}
 			});
+		}
+		function boardDelete(boardId) {
+			$.ajax({
+				type: "post",
+				url: "/board/delete",
+				data: {
+					id: boardId
+				},
+				dataType: "json",
+				success: function(data) {
+					var myModal = new bootstrap.Modal(document.getElementById("resultModal"), {
+						keyboard: false
+					});
+					
+					var title = myModal._element.querySelector(".modal-title");
+					var body = myModal._element.querySelector(".modal-body");
+					title.innerText = data.title;
+					body.innerHTML = "<p>" + data.message + "</p>"
+						
+					myModal.show();
+				}
+			})
 		}
 	</script>
 </body>

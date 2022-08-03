@@ -21,8 +21,9 @@ public class Paging {
 		this.nextPage = page + 1;
 		this.prevPage = page - 1;
 		this.pages = new ArrayList<Integer>();
-		for(int i = 0; i < totalRows; i++) {
-			this.pages.add(i + 1);
+		page = 1;
+		for(int i = 0; i < totalRows; i += limit) {
+			this.pages.add(page++);
 		}
 	}
 	
@@ -39,6 +40,8 @@ public class Paging {
 	}
 	
 	public List<Integer> getPages(int start, int end) {
+		start = start < 1 ? 1 : start;
+		end = end > pages.size() ? pages.size() : end;
 		return pages.subList(start - 1, end);
 	}
 	
@@ -66,11 +69,11 @@ public class Paging {
 	}
 	
 	public boolean hasNextPage() {
-		return this.pages.contains(this.nextPage);
+		return this.nextPage > this.pages.size() ? false : true;
 	}
 	
 	public boolean hasPrevPage() {
-		return this.pages.contains(this.prevPage);
+		return this.prevPage <= 0 ? false : true;
 	}
 	
 }

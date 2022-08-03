@@ -132,4 +132,20 @@ public class EmpBoardService {
 		return paging;
 	}
 
+	public boolean remove(EmpBoardDTO data) {
+		EmpBoardDAO dao = new EmpBoardDAO();
+		
+		dao.deleteStatisData(data);
+		boolean result = dao.deleteData(data);
+		
+		if(result) {
+			dao.commit();
+		} else {
+			dao.rollback();
+		}
+		
+		dao.close();
+		return result;
+	}
+
 }
