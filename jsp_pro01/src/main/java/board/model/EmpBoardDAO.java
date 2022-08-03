@@ -92,6 +92,11 @@ public class EmpBoardDAO {
 		return result >= 0 ? true : false;
 	}
 	
+	public boolean updateData(EmpBoardDTO data) {
+		int result = session.update("empBoardsMapper.updateData", data);
+		return result == 1 ? true : false;
+	}
+	
 	public void commit() {
 		this.session.commit();
 	}
