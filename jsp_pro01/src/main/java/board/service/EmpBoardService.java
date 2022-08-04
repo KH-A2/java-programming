@@ -131,6 +131,18 @@ public class EmpBoardService {
 		dao.selectPage(paging);
 		return paging;
 	}
+	
+
+	public Paging getPage(String page, String limit, String search) {
+		EmpBoardDAO dao = new EmpBoardDAO();
+		
+		int totalRows = dao.getTotalRows(search);
+		
+		Paging paging = new Paging(Integer.parseInt(page), Integer.parseInt(limit), totalRows);
+		dao.selectPage(paging, search);
+		
+		return paging;
+	}
 
 	public boolean remove(EmpBoardDTO data) {
 		EmpBoardDAO dao = new EmpBoardDAO();
