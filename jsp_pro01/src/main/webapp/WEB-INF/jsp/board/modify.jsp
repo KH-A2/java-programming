@@ -10,6 +10,7 @@
 	<title>수정 - ${data.title}</title>
 	<link rel="stylesheet" type="text/css" href="/static/bs5/css/bootstrap.min.css">
 	<script type="text/javascript" src="/static/bs5/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/static/ckeditor/ckeditor.js"></script>
 </head>
 <script type="text/javascript">
 	function formCheck(form) {
@@ -76,5 +77,10 @@
 			modal.show();
 		</script>
 	</c:if>
+	<script type="text/javascript">
+		CKEDITOR.replace("content", {
+			filebrowserUploadUrl: "/image/upload?type=image"
+		});
+	</script>
 </body>
 </html>

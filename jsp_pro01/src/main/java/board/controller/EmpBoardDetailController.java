@@ -37,7 +37,7 @@ public class EmpBoardDetailController extends HttpServlet {
 			EmpService empService = new EmpService();
 			EmpDTO empData = empService.getId("" + data.getEmpId());
 			
-			data.setContent(data.getContent().replace("\r\n", "<br>"));
+			// data.setContent(data.getContent().replace("\r\n", "<br>"));
 			
 			request.setAttribute("data", data);
 			request.setAttribute("empData", empData);
