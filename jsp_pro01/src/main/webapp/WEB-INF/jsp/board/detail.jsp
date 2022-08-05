@@ -46,29 +46,37 @@
 		</div>
 		
 		<div class="mb-3">
-			<div class="mb-1">
-				<div class="card border-light">
-					<div class="card-header">
-						<div class="d-flex justify-content-between">
-							<span><small>Steven King</small></span>
-							<span><small>2022년 08월 04일</small></span>
+			<c:forEach items="${commentDatas}" var="comment">
+				<div class="mb-1">
+					<div class="card border-light">
+						<div class="card-header">
+							<div class="d-flex justify-content-between">
+								<span><small>${comment.empName}</small></span>
+								<span><small>${comment.createDate}</small></span>
+							</div>
 						</div>
-					</div>
-					<div class="card-body">
-						<input type="hidden" name="cid" value="1">
-						<p class="card-text">댓글 양식 확인 중</p>
-						<div class="text-end">
-							<button class="btn btn-sm btn-outline-dark" type="button" onclick="changeModify(this);">수정</button>
-							<button class="btn btn-sm btn-outline-dark" type="button" onclick="commentDelete(this);">삭제</button>
+						<div class="card-body">
+							<input type="hidden" name="cid" value="${comment.id}">
+							<p class="card-text">${comment.content}</p>
+							<c:if test="${sessionScope.loginData.empId eq comment.empId}">
+								<div class="text-end">
+									<button class="btn btn-sm btn-outline-dark" type="button" onclick="changeModify(this);">수정</button>
+									<button class="btn btn-sm btn-outline-dark" type="button" onclick="commentDelete(this);">삭제</button>
+								</div>
+							</c:if>
 						</div>
 					</div>
 				</div>
-			</div>
+			</c:forEach>
 			<div class="mb-1">
-				<div class="input-group">
-					<textarea class="form-control" rows="3" placeholder="댓글 작성"></textarea>
-					<button class="btn btn-outline-dark" type="button">작성</button>
-				</div>
+				<c:url var="commentUrl" value="/comment" />
+				<form action="${commentUrl}/add" method="post">
+					<input type="hidden" name="bid" value="${data.id}">
+					<div class="input-group">
+						<textarea class="form-control" name="content" rows="3" placeholder="댓글 작성"></textarea>
+						<button class="btn btn-outline-dark" type="button" onclick="formCheck(this.form)">작성</button>
+					</div>
+				</form>
 			</div>
 		</div>
 		
@@ -108,6 +116,13 @@
 	</section>
 	<footer></footer>
 	<script type="text/javascript">
+		function formCheck(form) {
+			if(form.content.value.trim() === "") {
+				alert("댓글을 입력하세요.");
+			} else {
+				form.submit();
+			}
+		}
 		function changeModify(element) {
 			element.innerText = "확인";
 			element.nextElementSibling.remove();
@@ -121,7 +136,7 @@
 			
 			element.addEventListener("click", commentUpdate);
 		}
-		function changeText(element) {
+		function changeText(element, value) {
 			element.innerText = "수정";
 			
 			var btnDelete = document.createElement("button");
@@ -132,15 +147,13 @@
 			
 			element.parentElement.append(btnDelete);
 			
-			var value = element.parentElement.previousElementSibling.children[0].value;
-			
 			element.parentElement.previousElementSibling.children[0].remove();
 			element.parentElement.previousElementSibling.innerText = value;
 		}
 		function commentUpdate(e) {
 			var cid = e.target.parentElement.parentElement.firstElementChild.value;
 			var value = e.target.parentElement.previousElementSibling.children[0].value;
-			console.log(cid);
+			
 			$.ajax({
 				url: "/comment/modify",
 				type: "post",
@@ -149,14 +162,9 @@
 					content: value
 				},
 				success: function(data) {
-					if(data.code === "success") {
-						alert("수정 되었습니다.");
-					} else {
-						alert("수정에 실패하였습니다.");
-					}
+					changeText(e.target, data.value);
 				},
 				complete: function() {
-					changeText(e.target);
 					e.target.removeEventListener("click", commentUpdate);
 				}
 			});
@@ -216,5 +224,10 @@
 			})
 		}
 	</script>
+	<c:if test="${sessionScope.error}">
+		<script type="text/javascript">
+			alert("${sessionScope.error}");
+		</script>
+	</c:if>
 </body>
 </html>
