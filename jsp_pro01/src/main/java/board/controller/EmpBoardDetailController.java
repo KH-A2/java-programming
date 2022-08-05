@@ -18,6 +18,7 @@ import board.model.EmpBoardDTO;
 import board.service.EmpBoardService;
 import comment.model.CommentDTO;
 import comment.service.CommentService;
+import common.util.Paging;
 import emps.model.EmpDTO;
 import emps.service.EmpService;
 
@@ -40,13 +41,17 @@ public class EmpBoardDetailController extends HttpServlet {
 			CommentService commentService = new CommentService();
 			
 			EmpDTO empData = empService.getId("" + data.getEmpId());
-			List<CommentDTO> commentDatas = commentService.getDatas(data.getId());
+			// List<CommentDTO> commentDatas = commentService.getDatas(data.getId());
+			String page = request.getParameter("page");
+			String limit = "5";
+			page = page == null ? "1" : page;
+			Paging commentPage = commentService.getPage(page, limit, data.getId());
 			
 			// data.setContent(data.getContent().replace("\r\n", "<br>"));
 			
 			request.setAttribute("data", data);
 			request.setAttribute("empData", empData);
-			request.setAttribute("commentDatas", commentDatas);
+			request.setAttribute("commentPage", commentPage);
 			
 			RequestDispatcher rd = request.getRequestDispatcher(view);
 			rd.forward(request, response);

@@ -46,7 +46,44 @@
 		</div>
 		
 		<div class="mb-3">
-			<c:forEach items="${commentDatas}" var="comment">
+			<c:url var="pageUrl" value="/board/detail">
+				<c:param name="id">${data.id}</c:param>
+			</c:url>
+			<ul class="pagination justify-content-center">
+				<c:choose>
+					<c:when test="${commentPage.hasPrevPage()}">
+						<li class="page-item">
+							<a class="page-link bi bi-caret-left-fill" href="${pageUrl}&page=${commentPage.prevPage}"></a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item disabled">
+							<a class="page-link bi bi-caret-left-fill" href="#"></a>
+						</li>
+					</c:otherwise>
+				</c:choose>
+				<c:forEach items="${commentPage.getPages(commentPage.currentPage - 2, commentPage.currentPage + 2)}" var="item">
+					<li class="page-item ${commentPage.currentPage == item ? ' active' : ''}">
+						<a class="page-link" href="${pageUrl}&page=${item}">${item}</a>
+					</li>
+				</c:forEach>
+				<c:choose>
+					<c:when test="${commentPage.hasNextPage()}">
+						<li class="page-item">
+							<a class="page-link bi bi-caret-right-fill" href="${pageUrl}&page=${commentPage.nextPage}"></a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item disabled">
+							<a class="page-link bi bi-caret-right-fill" href="#"></a>
+						</li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</div>
+		
+		<div class="mb-3">
+			<c:forEach items="${commentPage.pageDatas}" var="comment">
 				<div class="mb-1">
 					<div class="card border-light">
 						<div class="card-header">

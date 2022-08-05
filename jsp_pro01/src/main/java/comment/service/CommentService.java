@@ -4,6 +4,7 @@ import java.util.List;
 
 import comment.model.CommentDAO;
 import comment.model.CommentDTO;
+import common.util.Paging;
 
 public class CommentService {
 
@@ -55,6 +56,17 @@ public class CommentService {
 		}
 		dao.close();
 		return result;
+	}
+
+	public Paging getPage(String page, String limit, int bid) {
+		CommentDAO dao = new CommentDAO();
+		
+		int totalRows = dao.getTotalRows(bid);
+		
+		Paging paging = new Paging(Integer.parseInt(page), Integer.parseInt(limit), totalRows);
+		dao.selectPage(paging, bid);
+		dao.close();
+		return paging;
 	}
 
 }
