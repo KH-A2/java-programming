@@ -8,9 +8,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>게시판 등록</title>
-	<link rel="stylesheet" type="text/css" href="/static/bs5/css/bootstrap.min.css">
-	<script type="text/javascript" src="/static/bs5/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/static/ckeditor/ckeditor.js"></script>
+	<jsp:include page="../module/head.jsp" />
+	<c:url value="/static/ckeditor" var="ckedit" />
+	<script type="text/javascript" src="${ckedit}/ckeditor.js"></script>
 </head>
 <script type="text/javascript">
 	function formCheck(form) {
@@ -29,7 +29,8 @@
 	<header></header>
 	<section class="container">
 		<div class="mt-3">
-			<form action="/board/add" method="post">
+			<c:url value="/board/add" var="boardAddUrl" />
+			<form action="${boardAddUrl}" method="post">
 				<div class="mb-3">
 					<input class="form-control" id="id_title" name="title" placeholder="제목을 입력하세요." value="${param.title}">
 				</div>

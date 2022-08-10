@@ -2,41 +2,70 @@ package com.myhome.web.board.service;
 
 import java.util.*;
 
+import org.apache.ibatis.cursor.Cursor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.myhome.web.board.controller.BoardController;
 import com.myhome.web.board.model.BoardDAO;
 import com.myhome.web.board.model.BoardDTO;
+import com.myhome.web.board.vo.BoardVO;
+import com.myhome.web.common.util.Paging;
+import com.myhome.web.emp.model.EmpDTO;
 
 @Service
 public class BoardService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
 
 	@Autowired
 	private BoardDAO dao;
 	
 	public List<BoardDTO> getAll() {
+		logger.info("getAll()");
 		List<BoardDTO> datas = dao.selectAll();
 		return datas;
 	}
 	
-	/*
-	public int add(BoardDTO data) {
-		boolean result = dao.insertData(data);
+	@Transactional
+	public Paging getPage(int page, int limit) {
+		logger.info("getPage(page={}, limit={})", page, limit);
+		int totalRows = dao.getTotalRows();
 		
-		if(result) {
-			dao.commit();
-			return data.getId();
-		}
-		dao.rollback();
-		return 0;
+		Paging paging = new Paging(page, limit, totalRows);
+		dao.selectPage(paging);
+		return paging;
 	}
-
+	
 	public BoardDTO getData(int id) {
 		BoardDTO data = dao.selectData(id);
-		
 		return data;
 	}
-
+	
+	public int add(EmpDTO empDto, BoardVO data) {
+		logger.info("add(empDto={}, data={})", empDto, data);
+		BoardDTO boardDto = new BoardDTO();
+		boardDto.setTitle(data.getTitle());
+		boardDto.setContent(data.getContent());
+		boardDto.setEmpId(empDto.getEmpId());
+		
+		boolean result = dao.insertData(boardDto);
+		
+		if(result) {
+			return boardDto.getId();
+		}
+		return 0;
+	}
+	
+	public boolean modify(BoardDTO data) {
+		boolean result = dao.updateData(data);
+		return result;
+	}
+	
+	/*
 	public void incViewCnt(HttpSession session, BoardDTO data) {
 		EmpDTO empData = (EmpDTO)session.getAttribute("loginData");
 
@@ -107,15 +136,6 @@ public class BoardService {
 			dao.rollback();
 		}
 	}
-
-	public Paging getPage(String page, String limit) {
-		int totalRows = dao.getTotalRows();
-		
-		Paging paging = new Paging(Integer.parseInt(page), Integer.parseInt(limit), totalRows);
-		dao.selectPage(paging);
-		
-		return paging;
-	}
 	
 
 	public Paging getPage(String page, String limit, String search) {
@@ -131,16 +151,6 @@ public class BoardService {
 		dao.deleteStatisData(data);
 		boolean result = dao.deleteData(data);
 		
-		if(result) {
-			dao.commit();
-		} else {
-			dao.rollback();
-		}
-		return result;
-	}
-
-	public boolean modify(BoardDTO data) {
-		boolean result = dao.updateData(data);
 		if(result) {
 			dao.commit();
 		} else {

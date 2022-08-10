@@ -28,7 +28,7 @@
 							<input class="form-control" type="text" name="search" data-required="부서코드를 입력하세요.">
 							<button class="btn btn-secondary" type="submit">조회</button>
 							<c:url value="/board" var="boardUrl">
-								<c:param name="pgc" />
+								<c:param name="pageCount" />
 							</c:url>
 						</div>
 					</div>
@@ -79,12 +79,12 @@
 				</c:if>
 			</tbody>
 		</table>
-		<%--
 		<nav>
-			<c:url var="pageUrl" value="/board" />
-			<%@ include file="../module/paging.jsp" %>
+			<c:url value="/board" var="boardUrl" />
+			<jsp:include page="../module/paging.jsp">
+				<jsp:param value="${boardUrl}" name="url" />
+			</jsp:include>
 		</nav>
-		 --%>
 	</section>
 	<footer></footer>
 </body>
