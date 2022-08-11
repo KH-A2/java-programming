@@ -1,5 +1,6 @@
 package com.myhome.web.board.controller;
 
+import java.sql.SQLDataException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -73,7 +74,7 @@ public class BoardController {
 		
 		if(data == null) {
 			model.addAttribute("error", "해당 데이터는 존재하지 않습니다.");
-			return "redirect:error/noExists";
+			return "error/noExists";
 		} else {
 			service.incViewCnt(empDto, data);
 			model.addAttribute("data", data);
@@ -192,14 +193,15 @@ public class BoardController {
 			json.put("code", "noData");
 			json.put("message", "데이터가 존재하지 않습니다.");
 		} else {
-			if(data.getEmpId() == empDto.getEmpId()) {
+			try {
 				service.incLike(empDto, data);
 				json.put("code", "success");
 				json.put("message", "데이터 처리가 완료되었습니다.");
 				json.put("likeCnt", data.getLike());
-			} else {
-				json.put("code", "noPermission");
-				json.put("message", "해당 작업을 수행할 권한이 없습니다.");
+			} catch(SQLDataException e) {
+				json.put("code", "fail");
+				json.put("title", "오류");
+				json.put("message", "데이터 처리 중 문제가 발생했습니다.");
 			}
 		}
 		return json.toJSONString();

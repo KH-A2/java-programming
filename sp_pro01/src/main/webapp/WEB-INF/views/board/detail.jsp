@@ -105,7 +105,7 @@
 				</div>
 			</c:forEach>
 			<div class="mb-1">
-				<c:url var="commentUrl" value="/comment" />
+				<c:url var="commentUrl" value="/board/comment" />
 				<form action="${commentUrl}/add" method="post">
 					<input type="hidden" name="bid" value="${data.id}">
 					<div class="input-group">
@@ -191,7 +191,7 @@
 			var value = e.target.parentElement.previousElementSibling.children[0].value;
 			
 			$.ajax({
-				url: "/comment/modify",
+				url: "${commentUrl}/modify",
 				type: "post",
 				data: {
 					id: cid,
@@ -210,7 +210,7 @@
 			var card = element.parentElement.parentElement.parentElement.parentElement;
 			
 			$.ajax({
-				url: "/comment/delete",
+				url: "${commentUrl}/delete",
 				type: "post",
 				data: {
 					id: cid
@@ -233,6 +233,17 @@
 				success: function(data) {
 					if(data.code === "success") {
 						element.innerText = data.likeCnt;
+					} else {
+						var myModal = new bootstrap.Modal(document.getElementById("resultModal"), {
+							keyboard: false
+						});
+						
+						var title = myModal._element.querySelector(".modal-title");
+						var body = myModal._element.querySelector(".modal-body");
+						title.innerText = data.title;
+						body.innerHTML = "<p>" + data.message + "</p>"
+						
+						myModal.show();
 					}
 				}
 			});
