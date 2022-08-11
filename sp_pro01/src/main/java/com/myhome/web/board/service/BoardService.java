@@ -2,6 +2,8 @@ package com.myhome.web.board.service;
 
 import java.util.*;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.cursor.Cursor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.myhome.web.board.controller.BoardController;
 import com.myhome.web.board.model.BoardDAO;
 import com.myhome.web.board.model.BoardDTO;
+import com.myhome.web.board.model.BoardStatisDTO;
 import com.myhome.web.board.vo.BoardVO;
 import com.myhome.web.common.util.Paging;
 import com.myhome.web.emp.model.EmpDTO;
@@ -41,6 +44,7 @@ public class BoardService {
 	}
 	
 	public BoardDTO getData(int id) {
+		logger.info("getData(id={})", id);
 		BoardDTO data = dao.selectData(id);
 		return data;
 	}
@@ -61,18 +65,28 @@ public class BoardService {
 	}
 	
 	public boolean modify(BoardDTO data) {
+		logger.info("modify(data={})", data);
 		boolean result = dao.updateData(data);
 		return result;
 	}
 	
-	/*
-	public void incViewCnt(HttpSession session, BoardDTO data) {
-		EmpDTO empData = (EmpDTO)session.getAttribute("loginData");
-
+	@Transactional
+	public boolean remove(BoardDTO data) {
+		logger.info("remove(data={})", data);
+		
+		dao.deleteStatisData(data);
+		boolean result = dao.deleteData(data);
+		return result;
+	}
+	
+	@Transactional
+	public void incViewCnt(EmpDTO empDto, BoardDTO data) throws RuntimeException {
+		logger.info("incViewCnt(empDto={}, data={})", empDto, data);
+		
 		boolean result = false;
 		BoardStatisDTO statisData = new BoardStatisDTO();
 		statisData.setbId(data.getId());
-		statisData.setEmpId(empData.getEmpId());
+		statisData.setEmpId(empDto.getEmpId());
 		
 		statisData = dao.selectStatis(statisData);
 		
@@ -80,7 +94,7 @@ public class BoardService {
 			result = dao.updateViewCnt(data);
 			statisData = new BoardStatisDTO();
 			statisData.setbId(data.getId());
-			statisData.setEmpId(empData.getEmpId());
+			statisData.setEmpId(empDto.getEmpId());
 			
 			dao.insertStatis(statisData);
 		} else {
@@ -94,14 +108,13 @@ public class BoardService {
 		
 		if(result) {
 			data.setViewCnt(data.getViewCnt() + 1);
-			dao.commit();
-		} else {
-			dao.rollback();
 		}
+		
+		// throw new RuntimeException("RuntimeException 을 발생 시키면 롤백");
 	}
 	
-	public void incLike(HttpSession session, BoardDTO data) {
-		EmpDTO empData = (EmpDTO)session.getAttribute("loginData");
+	public void incLike(EmpDTO empDto, BoardDTO data) {
+		logger.info("incLike(empDto={}, data={})", empDto, data);
 		
 		// 1. EMP_BOARDS_STATISTICS 테이블에서 추천 했던 기록을 찾는다.
 		// 2. 찾은 기록에서 ISLIKE 컬럼의 값에 따라 다음의 작업을 진행한다.
@@ -113,7 +126,7 @@ public class BoardService {
 		boolean result = false;
 		BoardStatisDTO statisData = new BoardStatisDTO();
 		statisData.setbId(data.getId());
-		statisData.setEmpId(empData.getEmpId());
+		statisData.setEmpId(empDto.getEmpId());
 		
 		statisData = dao.selectStatis(statisData);
 		
@@ -129,15 +142,9 @@ public class BoardService {
 		
 		dao.updateStatis(statisData, "like");
 		result = dao.updateLike(data);
-		
-		if(result) {
-			dao.commit();
-		} else {
-			dao.rollback();
-		}
 	}
 	
-
+	/*
 	public Paging getPage(String page, String limit, String search) {
 		int totalRows = dao.getTotalRows(search);
 		
@@ -145,18 +152,6 @@ public class BoardService {
 		dao.selectPage(paging, search);
 		
 		return paging;
-	}
-
-	public boolean remove(BoardDTO data) {
-		dao.deleteStatisData(data);
-		boolean result = dao.deleteData(data);
-		
-		if(result) {
-			dao.commit();
-		} else {
-			dao.rollback();
-		}
-		return result;
 	}
 	*/
 }

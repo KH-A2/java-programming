@@ -225,7 +225,7 @@
 		}
 		function incLike(element, id) {
 			$.ajax({
-				url: "/board/detail",
+				url: "${boardUrl}/like",
 				type: "post",
 				data: {
 					id: id
@@ -240,7 +240,7 @@
 		function boardDelete(boardId) {
 			$.ajax({
 				type: "post",
-				url: "/board/delete",
+				url: "${boardUrl}/delete",
 				data: {
 					id: boardId
 				},
@@ -254,7 +254,7 @@
 					var body = myModal._element.querySelector(".modal-body");
 					title.innerText = data.title;
 					body.innerHTML = "<p>" + data.message + "</p>"
-						
+					
 					myModal.show();
 				}
 			})
