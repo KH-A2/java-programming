@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +23,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import com.myhome.web.board.model.BoardDTO;
 import com.myhome.web.board.service.BoardService;
 import com.myhome.web.board.vo.BoardVO;
+import com.myhome.web.comment.model.CommentDTO;
+import com.myhome.web.comment.service.CommentService;
 import com.myhome.web.common.util.Paging;
 import com.myhome.web.emp.model.EmpDTO;
 
@@ -35,6 +36,9 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService service;
+	
+	@Autowired
+	private CommentService commentService;
 
 	// 조회 목록
 	@RequestMapping(value="", method=RequestMethod.GET)
@@ -181,6 +185,29 @@ public class BoardController {
 		}
 	}
 	
+	@PostMapping(value="/comment/add")
+	public String commentAdd(Model model, HttpSession session
+			, @SessionAttribute("loginData") EmpDTO empDto
+			, @RequestParam int bid
+			, @RequestParam String content) {
+		
+		CommentDTO data = new CommentDTO();
+		data.setbId(bid);
+		data.setContent(content);
+		data.setEmpId(empDto.getEmpId());
+		
+		boolean result = commentService.add(data);
+		
+		if(result) {
+			return "redirect:/board/detail?id=" + bid;
+		} else {
+			session.setAttribute("commentError", "댓글 추가 작업 중 문제가 발생하였습니다.");
+			return "redirect:/board/detail?id=" + bid;
+		}
+		
+	}
+	
+	// 추천
 	@PostMapping(value="/like", produces="application/json; charset=utf-8")
 	@ResponseBody
 	public String like(@SessionAttribute("loginData") EmpDTO empDto
