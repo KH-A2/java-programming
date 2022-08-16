@@ -76,9 +76,10 @@
 			modal.show();
 		</script>
 	</c:if>
+	<c:url var="imageUrl" value="/upload/image" />
 	<script type="text/javascript">
 		CKEDITOR.replace("content", {
-			filebrowserUploadUrl: "/image/upload?type=image"
+			filebrowserUploadUrl: "${imageUrl}?type=image"
 		});
 	</script>
 </body>
