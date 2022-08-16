@@ -57,7 +57,8 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String login(HttpSession session, LoginVO loginVo, String deptRe, Model model, HttpServletResponse response) {
+	public String login(HttpSession session, LoginVO loginVo, String deptRe, String url
+			, Model model, HttpServletRequest request, HttpServletResponse response) {
 		logger.info("login({}, {}, {}, {})", loginVo.getEmpId(), loginVo.getDeptId(), loginVo.getEmpName(), deptRe);
 		
 		boolean result = service.login(session, loginVo);
@@ -72,7 +73,7 @@ public class LoginController {
 				cookie.setMaxAge(0);
 			}
 			response.addCookie(cookie);
-			return "redirect:/index";
+			return "redirect:" + url.replaceFirst(request.getContextPath() + "/", "/");
 		} else {
 			// 로그인 실패
 			return login(model);
