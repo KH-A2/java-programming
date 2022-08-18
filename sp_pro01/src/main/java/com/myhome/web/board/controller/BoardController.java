@@ -3,6 +3,7 @@ package com.myhome.web.board.controller;
 import java.sql.SQLDataException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.myhome.web.board.model.BoardDTO;
 import com.myhome.web.board.service.BoardService;
@@ -27,6 +29,8 @@ import com.myhome.web.comment.model.CommentDTO;
 import com.myhome.web.comment.service.CommentService;
 import com.myhome.web.common.util.Paging;
 import com.myhome.web.emp.model.EmpDTO;
+import com.myhome.web.upload.model.FileUploadDTO;
+import com.myhome.web.upload.service.FileUploadService;
 
 @Controller
 @RequestMapping(value="/board")
@@ -39,6 +43,9 @@ public class BoardController {
 	
 	@Autowired
 	private CommentService commentService;
+	
+	@Autowired
+	private FileUploadService fileUploadService;
 
 	// 조회 목록
 	@RequestMapping(value="", method=RequestMethod.GET)
@@ -75,6 +82,7 @@ public class BoardController {
 		logger.info("getDetail(empDto={}, id={})", empDto, id);
 		
 		BoardDTO data = service.getData(id);
+		List<FileUploadDTO> fileDatas = fileUploadService.getDatas(id);
 		
 		if(data == null) {
 			model.addAttribute("error", "해당 데이터는 존재하지 않습니다.");
@@ -82,6 +90,7 @@ public class BoardController {
 		} else {
 			service.incViewCnt(empDto, data);
 			model.addAttribute("data", data);
+			model.addAttribute("fileDatas", fileDatas);
 			return "board/detail";
 		}
 	}
@@ -95,13 +104,21 @@ public class BoardController {
 	
 	// 추가 저장 요청
 	@PostMapping(value="/add")
-	public String add(@ModelAttribute BoardVO boardVo
-			, @SessionAttribute(name="loginData", required=true) EmpDTO empDto) {
-		logger.info("add(boardVo={}, empDto={})", boardVo, empDto);
+	public String add(HttpServletRequest request
+			, @ModelAttribute BoardVO boardVo
+			, @SessionAttribute(name="loginData", required=true) EmpDTO empDto
+			, @RequestParam("upload") MultipartFile[] files) throws Exception {
+		logger.info("add(boardVo={}, empDto={}, files={})", boardVo, empDto, files);
 		
 		int id = service.add(empDto, boardVo);
 		
 		if(id > 0) {
+			if(!files[0].getOriginalFilename().isEmpty()) {
+				String location = request.getServletContext().getRealPath("/resources/upload/board");
+				String url = "/static/upload/board";
+				FileUploadDTO fileUploadDto = new FileUploadDTO(id, location, url);
+				int result = fileUploadService.upload(files, fileUploadDto);
+			}
 			return "redirect:/board/detail?id=" + id;
 		} else {
 			return "board/add";
@@ -115,8 +132,11 @@ public class BoardController {
 			, @RequestParam int id) {
 		
 		BoardDTO data = service.getData(id);
+		List<FileUploadDTO> fileDatas = fileUploadService.getDatas(id);
+		
 		if(empDto.getEmpId() == data.getEmpId()) {
 			model.addAttribute("data", data);
+			model.addAttribute("fileDatas", fileDatas);
 			return "board/modify";
 		} else {
 			model.addAttribute("error", "해당 작업을 수행 할 권한이 없습니다.");

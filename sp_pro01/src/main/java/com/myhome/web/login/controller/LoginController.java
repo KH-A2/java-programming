@@ -73,7 +73,11 @@ public class LoginController {
 				cookie.setMaxAge(0);
 			}
 			response.addCookie(cookie);
-			return "redirect:" + url.replaceFirst(request.getContextPath() + "/", "/");
+			if(url.isEmpty()) {
+				return "redirect:/index";
+			} else {
+				return "redirect:" + url.replaceFirst(request.getContextPath() + "/", "/");
+			}
 		} else {
 			// 로그인 실패
 			return login(model);
