@@ -19,15 +19,11 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping(value="/upload")
 public class FileUploadController {
-
-	private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
-	
 	@PostMapping(value="/image", produces="application/json; charset=utf-8")
 	@ResponseBody
 	public String image(HttpServletRequest request
 			, @RequestParam("upload") MultipartFile[] files
 			, @RequestParam("type") String type) throws Exception {
-		logger.info("image(files={}, type={})", files, type);
 		
 		JSONObject json = new JSONObject();
 		

@@ -1,9 +1,11 @@
 package com.myhome.web.board.controller;
 
+import java.io.IOException;
 import java.sql.SQLDataException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -36,8 +38,6 @@ import com.myhome.web.upload.service.FileUploadService;
 @RequestMapping(value="/board")
 public class BoardController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
-	
 	@Autowired
 	private BoardService service;
 	
@@ -50,10 +50,9 @@ public class BoardController {
 	// 조회 목록
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getData(Model model, HttpSession session
+			, HttpServletResponse response
 			, @RequestParam(defaultValue="1", required=false) int page
-			, @RequestParam(defaultValue="0", required=false) int pageCount) {
-		logger.info("getData(page={}, pageCount={})", page, pageCount);
-		
+			, @RequestParam(defaultValue="0", required=false) int pageCount) throws IOException {
 		if(session.getAttribute("pageCount") == null) {
 			session.setAttribute("pageCount", 5);
 		}
@@ -63,12 +62,16 @@ public class BoardController {
 		}
 		
 		// List<BoardDTO> datas = service.getAll();
-		Paging pageData = service.getPage(page, Integer.parseInt(session.getAttribute("pageCount").toString()));
-		
-		model.addAttribute("pageData", pageData);
-		model.addAttribute("datas", pageData.getPageDatas());
-		
-		return "board/list";
+		Paging pageData = null;
+		// try {
+			pageData = service.getPage(session, page, Integer.parseInt(session.getAttribute("pageCount").toString()));
+			model.addAttribute("pageData", pageData);
+			model.addAttribute("datas", pageData.getPageDatas());
+			return "board/list";
+		// } catch (Exception e) {
+		// 	response.sendError(403, "권한이 없습니다.");
+		// 	return null;
+		// }
 	}
 	
 	// 조회 상세
@@ -76,12 +79,11 @@ public class BoardController {
 	// public String getDetail(Model model
 	// 		, @PathVariable int id) {
 	@RequestMapping(value="/detail", method=RequestMethod.GET)
-	public String getDetail(Model model
+	public String getDetail(Model model, HttpSession session
 			, @SessionAttribute("loginData") EmpDTO empDto
 			, @RequestParam int id) throws RuntimeException {
-		logger.info("getDetail(empDto={}, id={})", empDto, id);
 		
-		BoardDTO data = service.getData(id);
+		BoardDTO data = service.getData(session, id);
 		List<FileUploadDTO> fileDatas = fileUploadService.getDatas(id);
 		
 		if(data == null) {
@@ -98,19 +100,16 @@ public class BoardController {
 	// 추가 폼 요청
 	@GetMapping(value="/add")
 	public String add(@SessionAttribute(name="loginData", required=true) EmpDTO empDto) {
-		logger.info("add(empDto={})", empDto);
 		return "board/add";
 	}
 	
 	// 추가 저장 요청
 	@PostMapping(value="/add")
-	public String add(HttpServletRequest request
+	public String add(HttpServletRequest request, HttpSession session
 			, @ModelAttribute BoardVO boardVo
 			, @SessionAttribute(name="loginData", required=true) EmpDTO empDto
 			, @RequestParam("upload") MultipartFile[] files) throws Exception {
-		logger.info("add(boardVo={}, empDto={}, files={})", boardVo, empDto, files);
-		
-		int id = service.add(empDto, boardVo);
+		int id = service.add(session, empDto, boardVo);
 		
 		if(id > 0) {
 			if(!files[0].getOriginalFilename().isEmpty()) {
@@ -127,11 +126,11 @@ public class BoardController {
 	
 	// 수정 폼 요청
 	@GetMapping(value="/modify")
-	public String modify(Model model
+	public String modify(Model model, HttpSession session
 			, @SessionAttribute(name="loginData", required=true) EmpDTO empDto
 			, @RequestParam int id) {
 		
-		BoardDTO data = service.getData(id);
+		BoardDTO data = service.getData(session, id);
 		List<FileUploadDTO> fileDatas = fileUploadService.getDatas(id);
 		
 		if(empDto.getEmpId() == data.getEmpId()) {
@@ -146,16 +145,16 @@ public class BoardController {
 	
 	// 수정 저장 요청
 	@PostMapping(value="/modify")
-	public String modify(Model model
+	public String modify(Model model, HttpSession session
 			, @SessionAttribute(name="loginData", required=true) EmpDTO empDto
 			, @ModelAttribute BoardVO boardVo) {
 		
-		BoardDTO data = service.getData(boardVo.getId());
+		BoardDTO data = service.getData(session, boardVo.getId());
 		
 		if(empDto.getEmpId() == data.getEmpId()) {
 			data.setTitle(boardVo.getTitle());
 			data.setContent(boardVo.getContent());
-			boolean result = service.modify(data);
+			boolean result = service.modify(session, data);
 			if(result) {
 				return "redirect:/board/detail?id=" + data.getId();
 			} else {
@@ -171,10 +170,11 @@ public class BoardController {
 	// 삭제
 	@PostMapping(value="/delete", produces="application/json; charset=utf-8")
 	@ResponseBody
-	public String delete(@SessionAttribute("loginData") EmpDTO empDto
+	public String delete(HttpSession session
+			, @SessionAttribute("loginData") EmpDTO empDto
 			, @RequestParam int id) {
 		
-		BoardDTO data = service.getData(id);
+		BoardDTO data = service.getData(session, id);
 		
 		JSONObject json = new JSONObject();
 		
@@ -186,7 +186,7 @@ public class BoardController {
 		} else {
 			if(data.getEmpId() == empDto.getEmpId()) {
 				// 삭제 가능
-				boolean result = service.remove(data);
+				boolean result = service.remove(session, data);
 				if(result) {
 					json.put("title", "삭제 완료");
 					json.put("message", "삭제 처리가 완료되었습니다.");
@@ -230,9 +230,10 @@ public class BoardController {
 	// 추천
 	@PostMapping(value="/like", produces="application/json; charset=utf-8")
 	@ResponseBody
-	public String like(@SessionAttribute("loginData") EmpDTO empDto
+	public String like(HttpSession session
+			, @SessionAttribute("loginData") EmpDTO empDto
 			, @RequestParam int id) {
-		BoardDTO data = service.getData(id);
+		BoardDTO data = service.getData(session, id);
 		
 		JSONObject json = new JSONObject();
 		
@@ -241,7 +242,7 @@ public class BoardController {
 			json.put("message", "데이터가 존재하지 않습니다.");
 		} else {
 			try {
-				service.incLike(empDto, data);
+				service.addLike(session, empDto, data);
 				json.put("code", "success");
 				json.put("message", "데이터 처리가 완료되었습니다.");
 				json.put("likeCnt", data.getLike());

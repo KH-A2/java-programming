@@ -23,20 +23,16 @@ import com.myhome.web.emp.model.EmpDTO;
 @Service
 public class BoardService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
-
 	@Autowired
 	private BoardDAO dao;
 	
-	public List<BoardDTO> getAll() {
-		logger.info("getAll()");
+	public List<BoardDTO> getAll(HttpSession session) {
 		List<BoardDTO> datas = dao.selectAll();
 		return datas;
 	}
 	
 	@Transactional
-	public Paging getPage(int page, int limit) {
-		logger.info("getPage(page={}, limit={})", page, limit);
+	public Paging getPage(HttpSession session, int page, int limit) {
 		int totalRows = dao.getTotalRows();
 		
 		Paging paging = new Paging(page, limit, totalRows);
@@ -44,14 +40,12 @@ public class BoardService {
 		return paging;
 	}
 	
-	public BoardDTO getData(int id) {
-		logger.info("getData(id={})", id);
+	public BoardDTO getData(HttpSession session, int id) {
 		BoardDTO data = dao.selectData(id);
 		return data;
 	}
 	
-	public int add(EmpDTO empDto, BoardVO data) {
-		logger.info("add(empDto={}, data={})", empDto, data);
+	public int add(HttpSession session, EmpDTO empDto, BoardVO data) {
 		BoardDTO boardDto = new BoardDTO();
 		boardDto.setTitle(data.getTitle());
 		boardDto.setContent(data.getContent());
@@ -65,15 +59,13 @@ public class BoardService {
 		return 0;
 	}
 	
-	public boolean modify(BoardDTO data) {
-		logger.info("modify(data={})", data);
+	public boolean modify(HttpSession session, BoardDTO data) {
 		boolean result = dao.updateData(data);
 		return result;
 	}
 	
 	@Transactional
-	public boolean remove(BoardDTO data) {
-		logger.info("remove(data={})", data);
+	public boolean remove(HttpSession session, BoardDTO data) {
 		
 		dao.deleteStatisData(data);
 		boolean result = dao.deleteData(data);
@@ -82,7 +74,6 @@ public class BoardService {
 	
 	@Transactional
 	public void incViewCnt(EmpDTO empDto, BoardDTO data) {
-		logger.info("incViewCnt(empDto={}, data={})", empDto, data);
 		
 		boolean result = false;
 		BoardStatisDTO statisData = new BoardStatisDTO();
@@ -124,9 +115,12 @@ public class BoardService {
 		}
 	}
 	
+	public void addLike(HttpSession session, EmpDTO empDto, BoardDTO data) throws SQLDataException {
+		this.incLike(empDto, data);
+	}
+	
 	@Transactional(rollbackFor = SQLDataException.class)
-	public void incLike(EmpDTO empDto, BoardDTO data) throws SQLDataException {
-		logger.info("incLike(empDto={}, data={})", empDto, data);
+	private void incLike(EmpDTO empDto, BoardDTO data) throws SQLDataException {
 		
 		// 1. EMP_BOARDS_STATISTICS 테이블에서 추천 했던 기록을 찾는다.
 		// 2. 찾은 기록에서 ISLIKE 컬럼의 값에 따라 다음의 작업을 진행한다.
