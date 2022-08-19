@@ -15,6 +15,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.myhome.web.emp.model.EmpDTO;
+import com.myhome.web.exception.ForbiddenException;
+import com.myhome.web.exception.UnauthorizedException;
 import com.myhome.web.login.model.PermDTO;
 import com.myhome.web.login.model.PermissionDAO;
 
@@ -53,12 +55,12 @@ public class PermissionAOP {
 		HttpServletResponse resp = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getResponse();
 		if(result) {
 			if(!data.ispRead()) {
-				resp.sendError(HttpServletResponse.SC_FORBIDDEN, "읽기 권한이 없습니다.");
-				// throw new Exception("403:읽기 권한이 없습니다.");
+				// resp.sendError(HttpServletResponse.SC_FORBIDDEN, "읽기 권한이 없습니다.");
+				throw new ForbiddenException("읽기 권한이 없습니다.");
 			}
 		} else {
-			resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "로그인 정보가 없습니다.");
-			// throw new Exception("401:로그인 정보가 없습니다.");
+			// resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "로그인 정보가 없습니다.");
+			throw new UnauthorizedException("로그인 정보가 없습니다.");
 		}
 	}
 	
