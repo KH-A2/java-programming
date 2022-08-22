@@ -186,12 +186,12 @@ public class BoardController {
 		} else {
 			if(data.getEmpId() == empDto.getEmpId()) {
 				// 삭제 가능
-				boolean result = service.remove(session, data);
-				if(result) {
+				try {
+					boolean result = service.remove(session, data);
 					json.put("title", "삭제 완료");
 					json.put("message", "삭제 처리가 완료되었습니다.");
 					return json.toJSONString();
-				} else {
+				} catch (Exception e) {
 					json.put("title", "삭제 실패");
 					json.put("message", "삭제 작업중 알 수 없는 문제가 발생하였습니다.");
 					return json.toJSONString();
